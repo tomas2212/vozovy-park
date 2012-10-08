@@ -16,21 +16,24 @@ import javax.persistence.Temporal;
 
 /**
  *
- * @author Tomas
+ * @author Tomas Svrcek
  */
 @Entity
 @NamedQueries({
     @NamedQuery(name = Car.FIND_ALL, query = "SELECT p from Car p"),
-    @NamedQuery(name = Car.FIND_BY_ID, query = "SELECT p from Car p where p.id=:id")
+    @NamedQuery(name = Car.FIND_BY_ID, query = "SELECT p from Car p where p.id=:id"),
+    @NamedQuery(name = Car.FIND_BY_SPZ, query = "SELECT p from Car p where p.spz=:spz")
 })
 public class Car implements Serializable {
     
     public static final String FIND_ALL = "findAll";
     public static final String FIND_BY_ID = "findById";
+    public static final String FIND_BY_SPZ = "findBySpz";
     
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    //@Column(length = 20);
     private Long id;
     private String spz;
     private String brand;
