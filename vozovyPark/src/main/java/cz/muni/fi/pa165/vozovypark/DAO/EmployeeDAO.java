@@ -6,7 +6,6 @@ package cz.muni.fi.pa165.vozovypark.DAO;
 
 import cz.muni.fi.pa165.vozovypark.entities.Employee;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 /**
@@ -21,7 +20,6 @@ public class EmployeeDAO {
     public EmployeeDAO(EntityManager em) {
         this.entityManager = em;
     }
-    
     
    
     public Employee getEmployeeById(Long id){
