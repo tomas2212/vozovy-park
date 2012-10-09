@@ -5,12 +5,7 @@
 package cz.muni.fi.pa165.vozovypark.entities;
 
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+import javax.persistence.*;
 
 /**
  *
@@ -23,8 +18,8 @@ import javax.persistence.NamedQuery;
 })
 public class Employee implements Serializable {
     
-    public static final String FIND_ALL = "findAllEmployees";
-    public static final String FIND_BY_ID = "findEmployeeById";
+    public static final String FIND_ALL = "findAllEmp";
+    public static final String FIND_BY_ID = "findEmployeById";
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -34,6 +29,8 @@ public class Employee implements Serializable {
     private Enum position;
     private Boolean approve;
     private String address;
+    @OneToOne
+    private CompanyLevel companyLevel;
 
     public String getName() {
         return name;
@@ -74,6 +71,16 @@ public class Employee implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public CompanyLevel getCompanyLevel() {
+        return companyLevel;
+    }
+
+    public void setCompanyLevel(CompanyLevel companyLevel) {
+        this.companyLevel = companyLevel;
+    }
+    
+    
 
     @Override
     public int hashCode() {

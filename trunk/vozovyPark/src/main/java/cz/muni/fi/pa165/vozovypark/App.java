@@ -22,7 +22,7 @@ public class App
          
          EmployeeDAO eDAO = new EmployeeDAO(manager); 
          Employee employeeById = eDAO.getEmployeeById(new Long(2));
-         System.out.println(employeeById.getName());
+//         System.out.println(employeeById.getName());
          
          /*
          manager.getTransaction().begin();

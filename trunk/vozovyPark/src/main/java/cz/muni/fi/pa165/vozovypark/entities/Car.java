@@ -6,14 +6,7 @@ package cz.muni.fi.pa165.vozovypark.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Temporal;
+import javax.persistence.*;
 
 /**
  *
@@ -43,6 +36,8 @@ public class Car implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date creationYear;
     private Boolean available;
+    @OneToOne
+    private CompanyLevel companyLevel;
     
 
     public Long getId() {
@@ -92,6 +87,15 @@ public class Car implements Serializable {
     public void setAvailable(Boolean available) {
         this.available = available;
     }
+
+    public CompanyLevel getCompanyLevel() {
+        return companyLevel;
+    }
+
+    public void setCompanyLevel(CompanyLevel companyLevel) {
+        this.companyLevel = companyLevel;
+    }
+    
 
     @Override
     public int hashCode() {
