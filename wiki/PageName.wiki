@@ -1,0 +1,73 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+Add your content here.
+
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
+
+
+
+DU3 / CVIKO3:
+
+javaDocs v interfacaoch , testy , implementace DAO vrstvy , anotace Offer(kto psal ktoru entitu a kto pisal ktory test) , Jednotkove testy = nestardantni stavy  a hranicne pripady(vytiahnut entitu ktora tam nie je, chceme vybrat vsetky entitty s danym menom a ziadna taka tam nebude), success story(pripady ktore prejdu),
+
+usecase a class diagramy, entity, dao vrstvy,  
+
+vytvaranie interfaces (Java interfaces),  Generic DAO a potom dedenie ( v nasom projekte budeme kazdy pisat svoju dao triedu),
+
+v DAO triede budu CRUD metody,
+
+
+V netBeanoch:
+interface:
+void create(Person person);{
+EntityManager em = entityManagerFactory.createEntitymanager();
+em.getTransaction().begin
+em.persist();
+em.getTransaction.commit();
+em.close();
+}
+/*
+* Returns person entity with given ID
+*
+* @throws IllgalArgumentexception when id is null
+*/
+Person get ( Long id);
+
+void update(Person person);
+
+void remove(Person person);
+/////// je dobre vymazavat osobu, lebo vieeme, ze je to ona a nie ze to id je niekoho ineho...
+
+
+List <Person>findAll();
+findByName();
+findById();
+
+
+New java class...PersonDAOImpl....v nom entity manager,
+
+s jednym persistence kontextom mam viaanu jednu transakciu....je dobre mat tam zdielanu premennu entitymanagerfactory, a pre kazdy test(pre kazdu metodu) si vyrobime novy entity manager.....v kazdej metode budemem mat begin a na konci commit
+
+najprv testy, potom entity....
+
+testy pojdu na inmemory databazy(najlepsie pre kazde testy vytvorit novu databazu)
+
+
+
+
+ked to bude viacvlaknova aplikacia, kazda rtnasakcia musi prebehnut v ramci jedneho entity manageru...
+
+public void setEntityManagerfactory(EntityManagerFactory entityManagerFactory){
+    this.entityManagerFactory = entityManagerFactory;
+}
+
+
+create tests v menu a to vygeneruje testy....
