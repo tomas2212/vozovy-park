@@ -23,8 +23,7 @@ public class EmployeeDAO {
     
    
     public Employee getEmployeeById(Long id){
-        Query q = entityManager.createNamedQuery(Employee.FIND_BY_ID);
-        q.setParameter("id", id);
-        return (Employee) q.getSingleResult();
+        return this.entityManager.find(Employee.class, id);
+        
     }
 }
