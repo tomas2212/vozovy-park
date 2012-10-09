@@ -6,6 +6,7 @@ package cz.muni.fi.pa165.vozovypark.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,15 +27,16 @@ import javax.persistence.Temporal;
 })
 public class Car implements Serializable {
     
-    public static final String FIND_ALL = "findAll";
-    public static final String FIND_BY_ID = "findById";
-    public static final String FIND_BY_SPZ = "findBySpz";
+    public static final String FIND_ALL = "findAllCars";
+    public static final String FIND_BY_ID = "findCarById";
+    public static final String FIND_BY_SPZ = "findCarBySpz";
     
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    //@Column(length = 20);
+    //@Column(length=20)
     private Long id;
+    @Column(length=15)
     private String spz;
     private String brand;
     private String model;
@@ -113,7 +115,7 @@ public class Car implements Serializable {
 
     @Override
     public String toString() {
-        return "cz.muni.fi.pa165.vozovypark.Car[ id=" + id + " ]";
+        return "id=" + id;
     }
     
 }

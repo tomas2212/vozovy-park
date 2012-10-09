@@ -34,14 +34,10 @@ public class App
          Car car = new Car();
          car.setSpz("ZA980CD"); 
          
-         manager.getTransaction().begin();
-         manager.persist(car);
-         manager.getTransaction().commit();
-      
-        /* CarDAO cdao = new CarDAO(manager);
-         Car carById
-         cdao.insert(new Car());
-         */
-          
+         manager.getTransaction().begin();         
+         CarDAO cdao = new CarDAO(manager);
+         cdao.insert(car);
+         car.setModel("Novy");
+         manager.getTransaction().commit(); 
     }
 }

@@ -24,9 +24,7 @@ public class CarDAO {
     }
 
     public Car getCarById(Long id) {
-        Query q = entityManager.createNamedQuery(Car.FIND_BY_ID);
-        q.setParameter("id", id);
-        return (Car) q.getSingleResult();
+        return this.entityManager.find(Car.class, id);
     }
 
     public Car getCarBySpz(String spz) {
@@ -36,7 +34,7 @@ public class CarDAO {
     }
     
     public List<Car> getAllCars() {
-        TypedQuery<Car> q = (TypedQuery<Car>) entityManager.createNamedQuery("SELECT e FROM Car e");
+        TypedQuery<Car> q = (TypedQuery<Car>) entityManager.createQuery("SELECT e FROM Car e");
         return q.getResultList();
     }
  

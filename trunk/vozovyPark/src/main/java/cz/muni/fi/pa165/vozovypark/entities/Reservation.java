@@ -26,8 +26,8 @@ import javax.persistence.Temporal;
 })
 public class Reservation implements Serializable {
     
-    public static final String FIND_ALL = "findAll";
-    public static final String FIND_BY_ID = "findById";
+    public static final String FIND_ALL = "findAllReservations";
+    public static final String FIND_BY_ID = "findReservationById";
     
     private static final long serialVersionUID = 1L;
     @Id

@@ -23,8 +23,8 @@ import javax.persistence.NamedQuery;
 })
 public class Employee implements Serializable {
     
-    public static final String FIND_ALL = "findAll";
-    public static final String FIND_BY_ID = "findById";
+    public static final String FIND_ALL = "findAllEmployees";
+    public static final String FIND_BY_ID = "findEmployeeById";
 
     private static final long serialVersionUID = 1L;
     @Id
