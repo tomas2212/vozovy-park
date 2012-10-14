@@ -14,12 +14,16 @@ import javax.persistence.*;
 @Entity
 @NamedQueries({
     @NamedQuery(name = Employee.FIND_ALL, query = "SELECT p from Employee p"),
-    @NamedQuery(name = Employee.FIND_BY_ID, query = "SELECT p from Employee p where p.id=:id")
+    @NamedQuery(name = Employee.FIND_BY_ID, query = "SELECT p from Employee p where p.id=:id"),
+    @NamedQuery(name = Employee.FIND_BY_NAME, query = "SELECT p from Employee p where p.name=:name"),
+    @NamedQuery(name = Employee.FIND_BY_ADDRESS, query = "SELECT p from Employee p where p.address=:address")
 })
 public class Employee implements Serializable {
     
     public static final String FIND_ALL = "findAllEmp";
     public static final String FIND_BY_ID = "findEmployeById";
+    public static final String FIND_BY_NAME = "findEmployeByName";
+    public static final String FIND_BY_ADDRESS = "findEmployeByAddress";
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -104,6 +108,6 @@ public class Employee implements Serializable {
 
     @Override
     public String toString() {
-        return "cz.muni.fi.pa165.vozovypark.Employee[ id=" + id + " ]";
+        return "id=" + id ;
     }
 }

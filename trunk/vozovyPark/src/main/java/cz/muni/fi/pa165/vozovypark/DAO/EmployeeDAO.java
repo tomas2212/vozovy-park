@@ -4,24 +4,50 @@
  */
 package cz.muni.fi.pa165.vozovypark.DAO;
 
+import cz.muni.fi.pa165.vozovypark.entities.CompanyLevel;
 import cz.muni.fi.pa165.vozovypark.entities.Employee;
-import javax.persistence.EntityManager;
+import java.util.List;
 
 /**
  *
  * @author Tomas
  */
+public interface EmployeeDAO {
 
-public class EmployeeDAO {
-    //@PersistenceContext
-    EntityManager entityManager;
+    /**
+    
+     */
+    public Employee getEmployeeById(Long id);
 
-    public EmployeeDAO(EntityManager em) {
-        this.entityManager = em;
-    }
-     
-    public Employee getEmployeeById(Long id){
-        return this.entityManager.find(Employee.class, id);
-        
-    }
+    /**
+    
+     */
+    public Employee getEmployeeByName(String name);
+
+    /**
+    
+     */
+    public Employee getEmployeeByAddress(String address);
+
+    /**
+    
+     */
+    public void insert(Employee employee);
+
+    /**
+    
+     */
+    public void remove(Employee employee);
+
+    /**
+    
+     */
+    public void update(Employee employee);
+
+    /**
+    
+     */
+    public List<Employee> getAllEmployee();
+
+    public List<Employee> getAllEmployeeWithHigherLevel(CompanyLevel companyLevel);
 }
