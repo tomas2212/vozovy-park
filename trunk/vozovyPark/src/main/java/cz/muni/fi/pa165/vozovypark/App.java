@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.vozovypark;
 
-import cz.muni.fi.pa165.vozovypark.DAO.CarDAO;
+import cz.muni.fi.pa165.vozovypark.DAO.CarDAOImpl;
 import cz.muni.fi.pa165.vozovypark.DAO.EmployeeDAO;
 import cz.muni.fi.pa165.vozovypark.entities.Car;
 import cz.muni.fi.pa165.vozovypark.entities.Employee;
@@ -35,7 +35,7 @@ public class App
          car.setSpz("ZA980CD"); 
          
          manager.getTransaction().begin();         
-         CarDAO cdao = new CarDAO(manager);
+         CarDAOImpl cdao = new CarDAOImpl(manager);
          cdao.insert(car);
          car.setModel("Novy");
          manager.getTransaction().commit(); 

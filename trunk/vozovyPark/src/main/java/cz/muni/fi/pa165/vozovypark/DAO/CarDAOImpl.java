@@ -1,0 +1,58 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package cz.muni.fi.pa165.vozovypark.DAO;
+
+import cz.muni.fi.pa165.vozovypark.entities.Car;
+import cz.muni.fi.pa165.vozovypark.entities.CompanyLevel;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+
+/**
+ *
+ * @author Tomas Svrcek
+ */
+public class CarDAOImpl implements CarDAO{
+    //@PersistenceContext
+
+    EntityManager entityManager;
+
+    public CarDAOImpl(EntityManager em) {
+        this.entityManager = em;
+    }
+
+    public Car getCarById(Long id) {
+        return this.entityManager.find(Car.class, id);
+    }
+
+    public Car getCarBySpz(String spz) {
+        Query q = entityManager.createNamedQuery(Car.FIND_BY_SPZ);
+        q.setParameter("spz", spz);
+        return (Car) q.getSingleResult();
+    }
+    
+    public List<Car> getAllCars() {
+        TypedQuery<Car> q = (TypedQuery<Car>) entityManager.createQuery("SELECT e FROM Car e");
+        return q.getResultList();   
+    }
+ 
+    public void insert(Car car) {
+        entityManager.persist(car);
+    }
+
+    public void remove(Car car) {
+        entityManager.remove(entityManager.merge(car));
+    }
+
+    public void update(Car car) {
+        entityManager.merge(car);
+    }
+
+    public List<Car> getAllCarsWithHigherLevel(CompanyLevel companyLevel) {
+        TypedQuery<Car> q = (TypedQuery<Car> ) entityManager.createQuery("SELECT e FROM Car e WHERE (e.levelValue=>:companyLevel)");
+        return q.getResultList();   
+    }
+}
