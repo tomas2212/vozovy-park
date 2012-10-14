@@ -16,7 +16,7 @@ import javax.persistence.*;
 @NamedQueries({
     @NamedQuery(name = Car.FIND_ALL, query = "SELECT p from Car p"),
     @NamedQuery(name = Car.FIND_BY_ID, query = "SELECT p from Car p where p.id=:id"),
-    @NamedQuery(name = Car.FIND_BY_SPZ, query = "SELECT p from Car p where p.spz=:spz")
+    @NamedQuery(name = Car.FIND_BY_SPZ, query = "SELECT p from Car p where p.spz=:spz") 
 })
 public class Car implements Serializable {
     
@@ -96,7 +96,6 @@ public class Car implements Serializable {
         this.companyLevel = companyLevel;
     }
     
-
     @Override
     public int hashCode() {
         int hash = 0;

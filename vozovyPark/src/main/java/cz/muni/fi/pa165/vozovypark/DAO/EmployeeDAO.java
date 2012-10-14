@@ -6,7 +6,6 @@ package cz.muni.fi.pa165.vozovypark.DAO;
 
 import cz.muni.fi.pa165.vozovypark.entities.Employee;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 /**
  *
