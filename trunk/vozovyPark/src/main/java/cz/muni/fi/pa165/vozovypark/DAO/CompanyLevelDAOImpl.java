@@ -6,12 +6,19 @@ package cz.muni.fi.pa165.vozovypark.DAO;
 
 import cz.muni.fi.pa165.vozovypark.entities.CompanyLevel;
 import java.util.List;
+import javax.persistence.EntityManager;
 
 /**
  *
  * @author andrej
  */
-public class CompanyLevelDAOImpl implements CompanyLevelDAO{
+public class CompanyLevelDAOImpl implements CompanyLevelDAO {
+    
+    EntityManager entityManager;
+
+    public CompanyLevelDAOImpl(EntityManager em) {
+        this.entityManager = em;
+    }
 
     public void insert(CompanyLevel companyLevel) {
         throw new UnsupportedOperationException("Not supported yet.");
@@ -32,5 +39,4 @@ public class CompanyLevelDAOImpl implements CompanyLevelDAO{
     public List<CompanyLevel> getAllCompanyLevels() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
 }

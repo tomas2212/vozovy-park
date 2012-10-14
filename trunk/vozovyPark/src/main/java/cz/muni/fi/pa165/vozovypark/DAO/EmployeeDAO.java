@@ -19,8 +19,7 @@ public class EmployeeDAO {
     public EmployeeDAO(EntityManager em) {
         this.entityManager = em;
     }
-    
-   
+     
     public Employee getEmployeeById(Long id){
         return this.entityManager.find(Employee.class, id);
         
