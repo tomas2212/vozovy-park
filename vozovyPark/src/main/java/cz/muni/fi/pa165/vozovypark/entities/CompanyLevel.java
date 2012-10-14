@@ -1,7 +1,3 @@
- /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.vozovypark.entities;
 
 import java.io.Serializable;
@@ -11,8 +7,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
+ * CompanyLevel entity
+ * represent hierarchic structure of company.
  *
- * @author andrej 
+ * @author Andrej Bauer 
  */
 @Entity
 public class CompanyLevel implements Serializable {

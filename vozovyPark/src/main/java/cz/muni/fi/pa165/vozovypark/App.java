@@ -29,7 +29,7 @@ public class App
          Employee employeeById = eDAO.getEmployeeById(new Long(2));
 //         System.out.println(employeeById.getName());
          
-         CompanyLevelDAO cld = new CompanyLevelDAOImpl(manager);
+         //CompanyLevelDAO cld = new CompanyLevelDAOImpl(manager);
          
          
          manager.getTransaction().begin();

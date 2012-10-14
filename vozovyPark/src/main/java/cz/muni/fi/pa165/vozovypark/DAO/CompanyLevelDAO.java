@@ -19,7 +19,7 @@ public interface CompanyLevelDAO {
     
     void remove(CompanyLevel companyLevel);
     
-    CompanyLevel getCompanyLevelById(Long Id);
+    CompanyLevel getCompanyLevelById(Long id);
     
     List<CompanyLevel> getAllCompanyLevels();    
     
