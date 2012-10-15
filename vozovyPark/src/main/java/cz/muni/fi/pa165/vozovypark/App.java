@@ -25,8 +25,8 @@ public class App
          Employee employee = new Employee();
          CompanyLevel cl = new CompanyLevel();
          
-         EmployeeDAO eDAO = new EmployeeDAO(manager); 
-         Employee employeeById = eDAO.getEmployeeById(new Long(2));
+  ///       EmployeeDAO eDAO = new EmployeeDAO(manager); 
+//         Employee employeeById = eDAO.getEmployeeById(new Long(2));
 //         System.out.println(employeeById.getName());
          
          //CompanyLevelDAO cld = new CompanyLevelDAOImpl(manager);
@@ -42,13 +42,13 @@ public class App
          
          Car car = new Car();
          car.setSpz("ZA980CD"); 
-         
+/*         
          manager.getTransaction().begin();         
          CarDAOImpl cdao = new CarDAOImpl(manager);
          cdao.insert(car);
          car.setModel("Novyy");
          manager.getTransaction().commit(); 
-         
+*/         
   
          
     }
