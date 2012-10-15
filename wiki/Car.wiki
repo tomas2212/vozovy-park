@@ -1,4 +1,4 @@
-#Popis entity vozidla - Car
+#summary Popis entity vozidla - Car
 
 = Entita Car =
 
