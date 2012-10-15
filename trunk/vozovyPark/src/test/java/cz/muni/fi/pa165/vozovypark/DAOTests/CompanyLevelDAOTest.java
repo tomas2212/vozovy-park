@@ -7,6 +7,8 @@ package cz.muni.fi.pa165.vozovypark.DAOTests;
 import cz.muni.fi.pa165.vozovypark.DAO.CompanyLevelDAO;
 import cz.muni.fi.pa165.vozovypark.DAO.CompanyLevelDAOImpl;
 import cz.muni.fi.pa165.vozovypark.entities.CompanyLevel;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import org.junit.After;
@@ -26,14 +28,39 @@ public class CompanyLevelDAOTest {
     
     public CompanyLevelDAOTest() {
     }
-    
+    Connection connection;
     @Before
     public void setUp() {
-        emf = Persistence.createEntityManagerFactory("TestPU");
+        
+        try {
+            
+            Class.forName("org.hsqldb.jdbcDriver");
+            connection = DriverManager.getConnection("jdbc:hsqldb:mem:unit-testing-jpa", "sa", "");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            fail("Exception during HSQL database startup.");
+        }
+        try {
+            
+            emf = Persistence.createEntityManagerFactory("testPU");
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            fail("Exception during JPA EntityManager instanciation.");
+        }
     }
     
     @After
     public void tearDown() {
+        if (emf != null) {
+            emf.close();
+        }
+        
+        try {
+            connection.createStatement().execute("SHUTDOWN");
+        } catch (Exception ex) {
+            System.err.println("Shutdown failed");
+        }
         
     }
     
