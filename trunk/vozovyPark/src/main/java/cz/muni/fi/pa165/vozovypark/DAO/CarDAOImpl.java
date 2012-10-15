@@ -61,7 +61,7 @@ public class CarDAOImpl implements CarDAO{
 
     public List<Car> getAllCarsWithHigherLevel(CompanyLevel companyLevel) {
         EntityManager em = entityManagerFactory.createEntityManager();
-        TypedQuery<Car> q = em.createQuery("SELECT e FROM Car e WHERE (e.levelValue=>:companyLevel)", Car.class);
+        TypedQuery<Car> q = em.createQuery("SELECT e FROM Car e INNER JOIN FETCH e.companyLevel as c WHERE (c.levelValue=>:companyLevel)", Car.class);
         return q.getResultList();   
     }
 }
