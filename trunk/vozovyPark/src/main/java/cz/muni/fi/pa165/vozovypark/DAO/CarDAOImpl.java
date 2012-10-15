@@ -28,7 +28,7 @@ public class CarDAOImpl implements CarDAO{
 
     public Car getCarById(Long id) {
         EntityManager em = this.entityManagerFactory.createEntityManager();
-        return em.find(Car.class,id);
+        return em.find(Car.class, id);
     }
 
     public Car getCarBySpz(String spz) {
