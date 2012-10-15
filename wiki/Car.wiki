@@ -1,0 +1,16 @@
+#Popis entity vozidla - Car
+
+= Entita Car =
+
+Táto entita predstavuje vozidlo v danej firme, ktoré je možné si rezervovať.
+
+
+= Atribúty entity =
+
+<li><b>id</b> - id vozidla v databáze</li>
+<li><b>spz</b> - štátna poznávacia značka vozidla</li>
+<li><b>brand</b> - názov výrobcu/značky</li>
+<li><b>model</b> - model auta</li>
+<li><b>creationYear</b> - rok výroby</li>
+<li><b>available</b> - značí či je auto k dispozícii</li>
+<li><b>companyLevel</b> - od akého postavenia vo firme je možné auto si požičať</li>
