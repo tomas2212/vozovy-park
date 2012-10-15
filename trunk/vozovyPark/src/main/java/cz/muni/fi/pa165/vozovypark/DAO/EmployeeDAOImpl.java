@@ -14,7 +14,7 @@ import javax.persistence.TypedQuery;
 
 /**
  *
- * @author Lukas
+ * @author Lukas Maticky
  */
 public class EmployeeDAOImpl implements EmployeeDAO {
 
@@ -26,12 +26,18 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     public Employee getEmployeeById(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("ID cannot be null");
+        }
         EntityManager em = entityManagerFactory.createEntityManager();
         return em.find(Employee.class, id);
         //  return this.entityManager.find(Employee.class, id);
     }
 
     public Employee getEmployeeByName(String name) {
+        if (name == null) {
+            throw new IllegalArgumentException("you must specify the name of employee");
+        }
         EntityManager em = entityManagerFactory.createEntityManager();
         Query q = em.createNamedQuery(Employee.FIND_BY_NAME);
         q.setParameter("name", name);
@@ -39,6 +45,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     public Employee getEmployeeByAddress(String address) {
+        if (address == null) {
+            throw new IllegalArgumentException("you must specify the address of employee");
+        }
         EntityManager em = entityManagerFactory.createEntityManager();
         Query q = em.createNamedQuery(Employee.FIND_BY_ADDRESS);
         q.setParameter("address", address);
@@ -46,6 +55,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     public void insert(Employee employee) {
+        if (employee == null) {
+            throw new IllegalArgumentException("you must specify company level");
+        }
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
         em.persist(employee);
@@ -53,6 +65,12 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     public void remove(Employee employee) {
+        if (employee == null) {
+            throw new IllegalArgumentException("you must specify employee");
+        }
+        if (employee.getId() == null) {
+            throw new IllegalArgumentException("cant update not persit entity");
+        }
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
         em.remove(em.merge(employee));
@@ -60,6 +78,12 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     public void update(Employee employee) {
+        if (employee == null) {
+            throw new IllegalArgumentException("you must specify employee");
+        }
+        if (employee.getId() == null) {
+            throw new IllegalArgumentException("cant update not persit entity");
+        }
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
         em.merge(employee);
