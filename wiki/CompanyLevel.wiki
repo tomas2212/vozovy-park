@@ -1,4 +1,4 @@
-#Popis entity postavenie vo firme - Company Level.
+#summary Popis entity postavenie vo firme - Company Level.
 
 = Entita Company Level =
 
