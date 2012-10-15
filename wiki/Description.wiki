@@ -1,1 +1,26 @@
+#summary Základný návrh a špecifikácia projektu Vozový park
+#labels vozovy,park,auto,rezervacia,entity,car,employee,reservation,company,level
+
+= Úvod =
+
+Vozový park predstavuje manažéra pre spravovanie rezervácií áut vo firme. Zamestnanci si podľa svojho postavenia vo firme, môžu na určité obdobie požičiavať firemné vozidlá. Čím vyššie postavený zamestnanec je, tým mu je k dispozícií väčší výber áut. Pre spravovanie jednotlivých rezervácií musí mať zamestnanec ďalšie práva. 
+
+= Zadanie =
+
 Projekt má simulovat situaci v reálné firmě, kde si jednotlivý zaměstnanci můžou zážádat o vypůjčení auta na určitý datum z firemního vozového parku. Systém na základě požadavku výpíše seznam volných automobilů a umožní jejich rezervaci.
+
+= Entity =
+
+Car<br>
+Employeer<br>
+Reservation<br>
+CompanyLevel<br>
+
+= Class diagram =
+
+http://i.imgur.com/up7y7.jpg
+
+= Use Case Diagram =
+
+http://i.imgur.com/vqFmv.jpg
+
