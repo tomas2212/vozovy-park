@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  *
- * @author Tomas
+ * @author Lukas Maticky
  */
 public interface EmployeeDAO {
 
