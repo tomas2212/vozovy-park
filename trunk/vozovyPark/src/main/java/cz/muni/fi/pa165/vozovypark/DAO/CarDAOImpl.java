@@ -8,6 +8,7 @@ import cz.muni.fi.pa165.vozovypark.entities.Car;
 import cz.muni.fi.pa165.vozovypark.entities.CompanyLevel;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
@@ -18,41 +19,49 @@ import javax.persistence.TypedQuery;
 public class CarDAOImpl implements CarDAO{
     //@PersistenceContext
 
-    EntityManager entityManager;
+    EntityManagerFactory entityManagerFactory;
 
-    public CarDAOImpl(EntityManager em) {
-        this.entityManager = em;
+    public CarDAOImpl(EntityManagerFactory emf) {
+
+        this.entityManagerFactory = emf;
     }
 
     public Car getCarById(Long id) {
-        return this.entityManager.find(Car.class, id);
+        EntityManager em = this.entityManagerFactory.createEntityManager();
+        return em.find(Car.class,id);
     }
 
     public Car getCarBySpz(String spz) {
-        Query q = entityManager.createNamedQuery(Car.FIND_BY_SPZ);
+        EntityManager em = this.entityManagerFactory.createEntityManager();
+        Query q = em.createNamedQuery(Car.FIND_BY_SPZ);
         q.setParameter("spz", spz);
         return (Car) q.getSingleResult();
     }
     
     public List<Car> getAllCars() {
-        TypedQuery<Car> q = (TypedQuery<Car>) entityManager.createQuery("SELECT e FROM Car e");
+        EntityManager em = entityManagerFactory.createEntityManager();
+        TypedQuery<Car> q = em.createQuery("SELECT e FROM Car e", Car.class);
         return q.getResultList();   
     }
  
     public void insert(Car car) {
-        entityManager.persist(car);
+        EntityManager em = entityManagerFactory.createEntityManager();
+        em.persist(car);
     }
 
     public void remove(Car car) {
-        entityManager.remove(entityManager.merge(car));
+        EntityManager em = entityManagerFactory.createEntityManager();
+        em.remove(em.merge(car));
     }
 
     public void update(Car car) {
-        entityManager.merge(car);
+        EntityManager em = entityManagerFactory.createEntityManager();
+        em.merge(car);
     }
 
     public List<Car> getAllCarsWithHigherLevel(CompanyLevel companyLevel) {
-        TypedQuery<Car> q = (TypedQuery<Car> ) entityManager.createQuery("SELECT e FROM Car e WHERE (e.levelValue=>:companyLevel)");
+        EntityManager em = entityManagerFactory.createEntityManager();
+        TypedQuery<Car> q = em.createQuery("SELECT e FROM Car e WHERE (e.levelValue=>:companyLevel)", Car.class);
         return q.getResultList();   
     }
 }
