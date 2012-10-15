@@ -34,7 +34,6 @@ public class CompanyLevelDAOTest {
     public void setUp() {
 
         try {
-
             Class.forName("org.hsqldb.jdbcDriver");
             connection = DriverManager.getConnection("jdbc:hsqldb:mem:unit-testing-jpa", "sa", "");
         } catch (Exception ex) {
@@ -94,50 +93,50 @@ public class CompanyLevelDAOTest {
 
         assertEquals(cl1.getLevelValue(), cl2.getLevelValue());
     }
-    
+
     @Test
     public void deleteTest() {
         CompanyLevel cl1 = new CompanyLevel();
         cl1.setLevelValue(1);
-        
+
         CompanyLevelDAO clDao = new CompanyLevelDAOImpl(emf);
         clDao.insert(cl1);
-        
+
         CompanyLevel cl2 = clDao.getCompanyLevelById(cl1.getId());
         clDao.remove(cl2);
-        
+
         assertNull(clDao.getCompanyLevelById(cl1.getId()));
     }
-    
+
     @Test
     public void getCompanyLevelByIdTest() {
-         CompanyLevel cl1 = new CompanyLevel();
+        CompanyLevel cl1 = new CompanyLevel();
         cl1.setLevelValue(1);
-        
+
         CompanyLevelDAO clDao = new CompanyLevelDAOImpl(emf);
         clDao.insert(cl1);
-        
+
         CompanyLevel cl2 = clDao.getCompanyLevelById(cl1.getId());
-        
-        assertEquals(cl1,cl2);
+
+        assertEquals(cl1, cl2);
     }
-    
-     @Test
+
+    @Test
     public void getAllCompanyLevelsTest() {
-       CompanyLevel cl1 = new CompanyLevel();
+        CompanyLevel cl1 = new CompanyLevel();
         cl1.setLevelValue(1);
-        
+
         CompanyLevelDAO clDao = new CompanyLevelDAOImpl(emf);
         clDao.insert(cl1);
-        
+
         int amount1 = clDao.getAllCompanyLevels().size();
-        
+
         CompanyLevel cl2 = new CompanyLevel();
         cl2.setLevelValue(2);
         clDao.insert(cl2);
-        
+
         int amount2 = clDao.getAllCompanyLevels().size();
-        
-        assertEquals(amount1, amount2 - 1);  
-     }
+
+        assertEquals(amount1, amount2 - 1);
+    }
 }

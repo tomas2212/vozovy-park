@@ -30,7 +30,7 @@ public class Employee implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    private Enum position;
+    private String position;
     private Boolean approve;
     private String address;
     @OneToOne
@@ -44,11 +44,11 @@ public class Employee implements Serializable {
         this.name = name;
     }
 
-    public Enum getPosition() {
+    public String getPosition() {
         return position;
     }
 
-    public void setPosition(Enum position) {
+    public void setPosition(String position) {
         this.position = position;
     }
 
