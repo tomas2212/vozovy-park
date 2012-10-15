@@ -11,10 +11,10 @@ Projekt má simulovat situaci v reálné firmě, kde si jednotlivý zaměstnanci
 
 = Entity =
 
-Car<br>
-Employeer<br>
-Reservation<br>
-CompanyLevel<br>
+[Car]<br>
+[Employee]<br>
+[Reservation]<br>
+[CompanyLevel]<br>
 
 = Class diagram =
 
@@ -23,4 +23,3 @@ http://i.imgur.com/up7y7.jpg
 = Use Case Diagram =
 
 http://i.imgur.com/vqFmv.jpg
-
