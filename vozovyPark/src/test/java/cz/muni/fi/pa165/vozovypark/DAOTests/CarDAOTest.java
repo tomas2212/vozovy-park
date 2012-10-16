@@ -172,7 +172,6 @@ public class CarDAOTest {
         carDao.insert(car1);
         
         
-        
         CompanyLevel cl2 = new CompanyLevel();
         cl2.setLevelValue(3);
         
