@@ -97,9 +97,10 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     public List<Employee> getAllEmployeeWithHigherLevel(CompanyLevel companyLevel) {
-        EntityManager em = entityManagerFactory.createEntityManager();
-        TypedQuery<Employee> q = em.createQuery("SELECT e FROM Employee e INNER JOIN FETCH e.companyLevel as c WHERE (c.levelValue >= :companyLevelValue)", Employee.class);
-        q.setParameter("companyLevelValue", companyLevel.getLevelValue());
-        return q.getResultList();   
+          EntityManager em = entityManagerFactory.createEntityManager();
+          TypedQuery<Employee> q = em.createQuery("SELECT e FROM Employee e INNER JOIN FETCH e.companyLevel as c WHERE (c.levelValue >= :companyLevelValue)", Employee.class);
+          q.setParameter("companyLevelValue", companyLevel.getLevelValue());
+          return q.getResultList();   
+
     }
 }
