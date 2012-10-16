@@ -86,6 +86,12 @@ public class ReservationDAOTest {
         rdao.insert(reservation);
         Reservation reservation2 = rdao.getReservationById(reservation.getId());
         assertEquals(reservation, reservation2);
+        
+        try{
+            rdao.insert(null);
+            fail("Inserted null entity");
+        }
+        catch(IllegalArgumentException e){}
     }
 
     @Test
@@ -121,6 +127,19 @@ public class ReservationDAOTest {
         rdao.update(reservation);
         Reservation reservation2 = rdao.getReservationById(reservation.getId());
         assertEquals(reservation, reservation2);
+        
+        try{
+            rdao.update(null);
+            fail("Updated null entity");
+        }
+        catch(IllegalArgumentException e){}
+        
+        try{
+            Reservation rWithoutId = new Reservation();
+            rdao.update(rWithoutId);
+            fail("Updated entity with null id");
+        }
+        catch(IllegalArgumentException e){}
     }
 
     @Test
@@ -149,6 +168,21 @@ public class ReservationDAOTest {
         Reservation reservation2 = rdao.getReservationById(reservation.getId());
         rdao.remove(reservation2);
         assertNull(rdao.getReservationById(reservation.getId()));
+        
+        try{
+            rdao.remove(null);
+            fail("Removed null entity");
+        }
+        catch(IllegalArgumentException e){}
+        
+        try{
+            Reservation rWithoutId = new Reservation();
+            rdao.remove(rWithoutId);
+            fail("Removed entity with null id");
+        }
+        catch(IllegalArgumentException e){}
+        
+        
     }
 
     @Test
@@ -189,6 +223,19 @@ public class ReservationDAOTest {
         List<Reservation> list = rdao.getReservationByCar(car);
 
         assertEquals(2, list.size());
+        
+        try{
+            rdao.getReservationByCar(null);
+            fail("You cant find reservation by car as null");
+        }
+        catch(IllegalArgumentException e){}
+        
+        try{
+            Car carWithoutId = new Car();
+            rdao.getReservationByCar(carWithoutId);
+            fail("You cant find reservation by car without id");
+        }
+        catch(IllegalArgumentException e){}
     }
 
     @Test
@@ -231,6 +278,19 @@ public class ReservationDAOTest {
         List<Reservation> list = rdao.getReservationByEmployee(employee);
 
         assertEquals(2, list.size());
+        
+        try{
+            rdao.getReservationByEmployee(null);
+            fail("You cant find reservation by employee as null");
+        }
+        catch(IllegalArgumentException e){}
+        
+        try{
+            Employee empWithoutId = new Employee();
+            rdao.getReservationByEmployee(empWithoutId);
+            fail("You cant find reservation by employee without id");
+        }
+        catch(IllegalArgumentException e){}
     }
 
     @Test
@@ -269,6 +329,22 @@ public class ReservationDAOTest {
         rdao.insert(reservation2);
 
         assertTrue(rdao.getReservationByCarAndEmployee(car, employee).contains(reservation));
+        
+        try{
+            rdao.getReservationByCarAndEmployee(null, null);
+            fail("You cant find reservation by car as null and employee as null");
+        }
+        catch(IllegalArgumentException e){}
+        
+        try{
+            Car carWithoutId = new Car();
+            Employee employeeWithoutId = new Employee();
+            rdao.getReservationByCarAndEmployee(carWithoutId, employeeWithoutId);
+            fail("You cant find reservation by car and employee with null ids");
+        }
+        catch(IllegalArgumentException e){}
+        
+     
     }
 
     @Test
