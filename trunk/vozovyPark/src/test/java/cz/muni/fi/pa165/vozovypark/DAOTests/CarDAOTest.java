@@ -7,6 +7,8 @@ package cz.muni.fi.pa165.vozovypark.DAOTests;
 
 import cz.muni.fi.pa165.vozovypark.DAO.CarDAO;
 import cz.muni.fi.pa165.vozovypark.DAO.CarDAOImpl;
+import cz.muni.fi.pa165.vozovypark.DAO.CompanyLevelDAO;
+import cz.muni.fi.pa165.vozovypark.DAO.CompanyLevelDAOImpl;
 import cz.muni.fi.pa165.vozovypark.entities.Car;
 import cz.muni.fi.pa165.vozovypark.entities.CompanyLevel;
 import java.sql.Connection;
@@ -157,7 +159,10 @@ public class CarDAOTest {
         cl.setLevelValue(2);
         
         CarDAO carDao = new CarDAOImpl(emf);
+        CompanyLevelDAO clDao = new CompanyLevelDAOImpl(emf);
+        clDao.insert(cl);
         int amount1 = carDao.getAllCarsWithHigherLevel(cl).size();
+
         
         CompanyLevel cl1 = new CompanyLevel();
         cl1.setLevelValue(1);
@@ -165,6 +170,8 @@ public class CarDAOTest {
         Car car1 = new Car();
         car1.setCompanyLevel(cl1);
         carDao.insert(car1);
+        
+        
         
         CompanyLevel cl2 = new CompanyLevel();
         cl2.setLevelValue(3);
