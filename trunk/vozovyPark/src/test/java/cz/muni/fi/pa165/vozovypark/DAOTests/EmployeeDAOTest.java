@@ -73,7 +73,7 @@ public class EmployeeDAOTest {
         assertNotNull(em1);
         assertEquals(em,em1);
         
-        em1 = dao.getEmployeeById(1L);
+        em1 = dao.getEmployeeById(34567L);
         assertNull(em1);
         //wrong parameters
         try{
@@ -146,7 +146,7 @@ public class EmployeeDAOTest {
         Long id = em.getId();
         dao.remove(em);
         assertNull(dao.getEmployeeById(id));
-        assertNull(em.getId());
+        assertNull(dao.getEmployeeById(em.getId()));
         assertNotNull(dao.getEmployeeById(em2.getId()));
         
         //wrong parameters
@@ -166,6 +166,8 @@ public class EmployeeDAOTest {
         
         
     }
+    
+    
     
     
     
