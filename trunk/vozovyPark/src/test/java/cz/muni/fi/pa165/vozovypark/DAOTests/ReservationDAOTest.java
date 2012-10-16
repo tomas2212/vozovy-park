@@ -1,31 +1,21 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.vozovypark.DAOTests;
 
 import cz.muni.fi.pa165.vozovypark.DAO.CarDAO;
 import cz.muni.fi.pa165.vozovypark.DAO.CarDAOImpl;
-import cz.muni.fi.pa165.vozovypark.DAO.CompanyLevelDAO;
-import cz.muni.fi.pa165.vozovypark.DAO.CompanyLevelDAOImpl;
 import cz.muni.fi.pa165.vozovypark.DAO.EmployeeDAO;
 import cz.muni.fi.pa165.vozovypark.DAO.EmployeeDAOImpl;
 import cz.muni.fi.pa165.vozovypark.DAO.ReservationDAO;
 import cz.muni.fi.pa165.vozovypark.DAO.ReservationDAOImpl;
 import cz.muni.fi.pa165.vozovypark.entities.Car;
-import cz.muni.fi.pa165.vozovypark.entities.CompanyLevel;
 import cz.muni.fi.pa165.vozovypark.entities.Employee;
 import cz.muni.fi.pa165.vozovypark.entities.Reservation;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.List;
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
