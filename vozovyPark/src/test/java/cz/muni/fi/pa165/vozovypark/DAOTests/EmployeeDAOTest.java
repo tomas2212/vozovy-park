@@ -132,7 +132,7 @@ public class EmployeeDAOTest {
     }
     
     @Test
-    public void RemoveTest(){
+    public void removeTest(){
         Employee em = new Employee();
         em.setName("Ferdo M");
         EmployeeDAO dao = new EmployeeDAOImpl(emf);
@@ -166,7 +166,7 @@ public class EmployeeDAOTest {
     }
     
     @Test
-    public void HierarchyTest(){
+    public void hierarchyTest(){
         CompanyLevel cl1 = new CompanyLevel();
         cl1.setLevelValue(0);
         
