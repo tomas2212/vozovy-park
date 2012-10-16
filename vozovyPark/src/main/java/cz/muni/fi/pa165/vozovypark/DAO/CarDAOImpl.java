@@ -84,6 +84,12 @@ public class CarDAOImpl implements CarDAO{
     }
 
     public List<Car> getAllCarsWithHigherLevel(CompanyLevel companyLevel) {
+        if (companyLevel == null) {
+            throw new IllegalArgumentException("You have to specify company level");
+        }
+        if (companyLevel.getId() == null) {
+            throw new IllegalArgumentException("Company level must have specified ID");
+        }
         EntityManager em = entityManagerFactory.createEntityManager();
         TypedQuery<Car> q = em.createQuery("SELECT e FROM Car e INNER JOIN FETCH e.companyLevel as c WHERE (c.levelValue >= :companyLevelValue)", Car.class);
         q.setParameter("companyLevelValue", companyLevel.getLevelValue());
