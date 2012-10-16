@@ -90,7 +90,7 @@ public class CarDAOTest {
         
         Car car3 = carDao.getCarById(car1.getId());
         
-        assertEquals(car1.getSpz(),car2.getSpz());
+        assertEquals(car3.getSpz(),car2.getSpz());
     }
     
     @Test
@@ -166,6 +166,7 @@ public class CarDAOTest {
         
         CompanyLevel cl1 = new CompanyLevel();
         cl1.setLevelValue(1);
+        clDao.insert(cl1);
         
         Car car1 = new Car();
         car1.setCompanyLevel(cl1);
@@ -174,6 +175,7 @@ public class CarDAOTest {
         
         CompanyLevel cl2 = new CompanyLevel();
         cl2.setLevelValue(3);
+        clDao.insert(cl2);
         
         Car car2 = new Car();
         car2.setCompanyLevel(cl2);
