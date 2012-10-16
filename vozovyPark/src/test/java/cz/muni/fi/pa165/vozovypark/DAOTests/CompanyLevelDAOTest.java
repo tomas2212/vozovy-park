@@ -91,7 +91,7 @@ public class CompanyLevelDAOTest {
 
         CompanyLevel cl3 = clDao.getCompanyLevelById(cl1.getId());
 
-        assertEquals(cl1.getLevelValue(), cl2.getLevelValue());
+        assertEquals(cl3.getLevelValue(), cl2.getLevelValue());
     }
 
     @Test
