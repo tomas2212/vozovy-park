@@ -11,6 +11,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -29,10 +30,8 @@ public class ReservationDAOImpl implements ReservationDAO {
         if(id==null) {
             throw new IllegalArgumentException("ID cannot be null");
         }
-        EntityManager entityManager = this.entityManagerFactory.createEntityManager();
-        Query q = entityManager.createNamedQuery(Reservation.FIND_BY_ID);
-        q.setParameter("id", id);
-        return (Reservation) q.getSingleResult();
+        EntityManager entityManager = this.entityManagerFactory.createEntityManager();    
+        return entityManager.find(Reservation.class, id);
     }
     
     public void insert(Reservation r) {
@@ -119,7 +118,7 @@ public class ReservationDAOImpl implements ReservationDAO {
    
    public List<Reservation> getAllReservations() {
        EntityManager entityManager = this.entityManagerFactory.createEntityManager();
-       Query q = entityManager.createQuery(Reservation.FIND_ALL);
+       TypedQuery<Reservation> q = entityManager.createNamedQuery(Reservation.FIND_ALL, Reservation.class);
        return q.getResultList();
    }
 }
