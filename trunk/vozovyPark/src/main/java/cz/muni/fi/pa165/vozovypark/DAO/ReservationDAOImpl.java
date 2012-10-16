@@ -40,7 +40,9 @@ public class ReservationDAOImpl implements ReservationDAO {
             throw new IllegalArgumentException("You must specify reservation to insert");
         }
         EntityManager entityManager = this.entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
         entityManager.persist(r);
+        entityManager.getTransaction().begin();
     }
     
     public void update(Reservation r) {
@@ -51,7 +53,9 @@ public class ReservationDAOImpl implements ReservationDAO {
             throw new IllegalArgumentException("Reservation to update must have specified ID");
         }
         EntityManager entityManager = this.entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
         entityManager.merge(r);
+        entityManager.getTransaction().commit();
     }
     
     public void remove(Reservation r) {
@@ -62,7 +66,9 @@ public class ReservationDAOImpl implements ReservationDAO {
             throw new IllegalArgumentException("Reservation to remove must have specified ID");
         }
         EntityManager entityManager = this.entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
         entityManager.remove(entityManager.merge(r));
+        entityManager.getTransaction().commit();
     }
 
   public List<Reservation> getReservationByCar(Car car) {
