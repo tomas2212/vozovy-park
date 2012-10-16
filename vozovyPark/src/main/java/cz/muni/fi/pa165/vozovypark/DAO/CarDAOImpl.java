@@ -32,6 +32,9 @@ public class CarDAOImpl implements CarDAO{
     }
 
     public Car getCarBySpz(String spz) {
+        if(spz == null){
+            throw new IllegalArgumentException("You have to set spz.");
+        }
         EntityManager em = this.entityManagerFactory.createEntityManager();
         Query q = em.createNamedQuery(Car.FIND_BY_SPZ);
         q.setParameter("spz", spz);
@@ -45,6 +48,9 @@ public class CarDAOImpl implements CarDAO{
     }
  
     public void insert(Car car) {
+        if(car == null){
+            throw new IllegalArgumentException("You have to set car");
+        }
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
         em.persist(car);
@@ -52,6 +58,12 @@ public class CarDAOImpl implements CarDAO{
     }
 
     public void remove(Car car) {
+        if(car == null){
+            throw new IllegalArgumentException("You have to set car");
+        }
+        if(car.getId() == null){
+            throw new IllegalArgumentException("Can't remove, because entity doesn't have ID");
+        }
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
         em.remove(em.merge(car));
@@ -59,6 +71,12 @@ public class CarDAOImpl implements CarDAO{
     }
 
     public void update(Car car) {
+        if(car == null){
+            throw new IllegalArgumentException("You have to specify car");
+        }
+        if(car.getId() == null){
+            throw new IllegalArgumentException("Can't update, because entity doesn't have ID");
+        }
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
         em.merge(car);
