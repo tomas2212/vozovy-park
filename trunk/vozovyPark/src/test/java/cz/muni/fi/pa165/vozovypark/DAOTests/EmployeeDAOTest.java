@@ -5,8 +5,9 @@
 package cz.muni.fi.pa165.vozovypark.DAOTests;
 
 
-import cz.muni.fi.pa165.vozovypark.DAO.EmployeeDAO;
-import cz.muni.fi.pa165.vozovypark.DAO.EmployeeDAOImpl;
+import cz.muni.fi.pa165.vozovypark.DAO.*;
+import cz.muni.fi.pa165.vozovypark.entities.Car;
+import cz.muni.fi.pa165.vozovypark.entities.CompanyLevel;
 import cz.muni.fi.pa165.vozovypark.entities.Employee;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -167,7 +168,79 @@ public class EmployeeDAOTest {
         
     }
     
+    @Test
+    public void HierarchyTest(){
+        CompanyLevel cl1 = new CompanyLevel();
+        cl1.setLevelValue(0);
+        
+        CompanyLevel cl2 = new CompanyLevel();
+        cl2.setLevelValue(1);
+        
+        CompanyLevelDAO clDao = new CompanyLevelDAOImpl(emf);
+        clDao.insert(cl1);
+        clDao.insert(cl2);
+        
+        Employee ceo = new Employee();
+        ceo.setPosition("CEO");
+        ceo.setCompanyLevel(cl1);
+        
+        Employee assistent = new Employee();
+        assistent.setPosition("asistent");
+        assistent.setCompanyLevel(cl2);
+        
+        EmployeeDAO employeeDao = new EmployeeDAOImpl(emf);
+        employeeDao.insert(ceo);
+        employeeDao.insert(assistent);
+        
+        Car limo = new Car();
+        limo.setCompanyLevel(cl1);
+        
+        Car skodovka = new Car();
+        skodovka.setCompanyLevel(cl2);
+        
+        CarDAO carDao = new CarDAOImpl(emf);
+        carDao.insert(limo);
+        carDao.insert(skodovka);
+        
+        assertEquals(employeeDao.getAllEmployeeWithHigherLevel(cl1).size(), 2);
+        assertEquals(employeeDao.getAllEmployeeWithHigherLevel(cl2).size(), 1);
+        
+        
+        
+    }
     
+    @Test
+    public void getAllEmployeesWithHigherLevelTest(){
+        CompanyLevel cl = new CompanyLevel();
+        cl.setLevelValue(2);
+        
+        EmployeeDAO employeeDao = new EmployeeDAOImpl(emf);
+        CompanyLevelDAO clDao = new CompanyLevelDAOImpl(emf);
+        clDao.insert(cl);
+        int amount1 = employeeDao.getAllEmployeeWithHigherLevel(cl).size();
+
+        
+        CompanyLevel cl1 = new CompanyLevel();
+        cl1.setLevelValue(1);
+        clDao.insert(cl1);
+        
+        Employee employee1 = new Employee();
+        employee1.setCompanyLevel(cl1);
+        employeeDao.insert(employee1);
+        
+        
+        CompanyLevel cl2 = new CompanyLevel();
+        cl2.setLevelValue(3);
+        clDao.insert(cl2);
+        
+        Employee employee2 = new Employee();
+        employee2.setCompanyLevel(cl2);
+        employeeDao.insert(employee2);
+        
+        int amount2 = employeeDao.getAllEmployeeWithHigherLevel(cl).size();
+        
+        assertEquals(amount1, amount2-1);
+    }
     
     
     
