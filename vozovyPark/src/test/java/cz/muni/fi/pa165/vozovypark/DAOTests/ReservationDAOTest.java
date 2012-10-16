@@ -4,8 +4,12 @@
  */
 package cz.muni.fi.pa165.vozovypark.DAOTests;
 
+import cz.muni.fi.pa165.vozovypark.DAO.CarDAO;
+import cz.muni.fi.pa165.vozovypark.DAO.CarDAOImpl;
 import cz.muni.fi.pa165.vozovypark.DAO.CompanyLevelDAO;
 import cz.muni.fi.pa165.vozovypark.DAO.CompanyLevelDAOImpl;
+import cz.muni.fi.pa165.vozovypark.DAO.EmployeeDAO;
+import cz.muni.fi.pa165.vozovypark.DAO.EmployeeDAOImpl;
 import cz.muni.fi.pa165.vozovypark.DAO.ReservationDAO;
 import cz.muni.fi.pa165.vozovypark.DAO.ReservationDAOImpl;
 import cz.muni.fi.pa165.vozovypark.entities.Car;
@@ -239,6 +243,9 @@ public class ReservationDAOTest {
         Car car = new Car();
         car.setAvailable(true);
         car.setBrand("Mercedes");
+        
+        CarDAO carDao = new CarDAOImpl(emf);
+        carDao.insert(car);
 
         Employee employee = new Employee();
         CompanyLevel cl = new CompanyLevel();
@@ -246,6 +253,9 @@ public class ReservationDAOTest {
         employee.setCompanyLevel(cl);
         employee.setName("Tomas");
         employee.setAddress("Zilina");
+        
+        EmployeeDAO eDao = new EmployeeDAOImpl(emf);
+        eDao.insert(employee);
 
         Reservation reservation = new Reservation();
         if (car.getAvailable()){
@@ -259,6 +269,8 @@ public class ReservationDAOTest {
         employee2.setCompanyLevel(cl2);
         employee2.setName("Martin");
         employee2.setAddress("Brno");
+        
+        eDao.insert(employee2);
 
         Reservation reservation2 = new Reservation();
         if (car.getAvailable()){
@@ -278,6 +290,9 @@ public class ReservationDAOTest {
         Car car = new Car();
         car.setAvailable(true);
         car.setBrand("Mercedes");
+        
+        CarDAO carDao = new CarDAOImpl(emf);
+        carDao.insert(car);
 
         Employee employee = new Employee();
         CompanyLevel cl = new CompanyLevel();
@@ -285,6 +300,9 @@ public class ReservationDAOTest {
         employee.setCompanyLevel(cl);
         employee.setName("Tomas");
         employee.setAddress("Zilina");
+        
+        EmployeeDAO eDao = new EmployeeDAOImpl(emf);
+        eDao.insert(employee);
 
         Reservation reservation = new Reservation();
         if (car.getAvailable()){
@@ -301,6 +319,8 @@ public class ReservationDAOTest {
         car2.setAvailable(true);
         car2.setBrand("Audi");
         car2.setSpz("Ahoj-ko");
+        
+        carDao.insert(car2);
 
         Reservation reservation2 = new Reservation();
         if (car2.getAvailable()){
