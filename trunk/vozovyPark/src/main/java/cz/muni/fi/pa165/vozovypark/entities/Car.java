@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.vozovypark.entities;
 
 import java.io.Serializable;
@@ -27,7 +23,6 @@ public class Car implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    //@Column(length=20)
     private Long id;
     @Column(length=15)
     private String spz;
@@ -105,7 +100,6 @@ public class Car implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Car)) {
             return false;
         }
@@ -119,6 +113,5 @@ public class Car implements Serializable {
     @Override
     public String toString() {
         return "id=" + id;
-    }
-    
+    }  
 }

@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * Dao for entity {@link CompanyLevel} provides data operations into database
- * @author Andre Bauer
+ * @author Andrej Bauer
  */
 public interface CompanyLevelDAO {
     
