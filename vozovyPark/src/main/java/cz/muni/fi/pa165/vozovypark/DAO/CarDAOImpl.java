@@ -46,22 +46,29 @@ public class CarDAOImpl implements CarDAO{
  
     public void insert(Car car) {
         EntityManager em = entityManagerFactory.createEntityManager();
+        em.getTransaction().begin();
         em.persist(car);
+        em.getTransaction().commit();
     }
 
     public void remove(Car car) {
         EntityManager em = entityManagerFactory.createEntityManager();
+        em.getTransaction().begin();
         em.remove(em.merge(car));
+        em.getTransaction().commit();
     }
 
     public void update(Car car) {
         EntityManager em = entityManagerFactory.createEntityManager();
+        em.getTransaction().begin();
         em.merge(car);
+        em.getTransaction().commit();
     }
 
     public List<Car> getAllCarsWithHigherLevel(CompanyLevel companyLevel) {
         EntityManager em = entityManagerFactory.createEntityManager();
-        TypedQuery<Car> q = em.createQuery("SELECT e FROM Car e INNER JOIN FETCH e.companyLevel as c WHERE (c.levelValue=>:companyLevel)", Car.class);
+        TypedQuery<Car> q = em.createQuery("SELECT e FROM Car e INNER JOIN FETCH e.companyLevel as c WHERE (c.levelValue >= :companyLevelValue)", Car.class);
+        q.setParameter("companyLevelValue", companyLevel.getLevelValue());
         return q.getResultList();   
     }
 }
