@@ -74,6 +74,12 @@ public class CarDAOTest {
         Car car2 = carDao.getCarById(car1.getId());
         
         assertEquals(car1,car2);
+        
+        try{
+            carDao.insert(null);
+            fail("Inserted null entity");
+        }
+        catch(IllegalArgumentException e){}
     }
     
     @Test
@@ -91,6 +97,19 @@ public class CarDAOTest {
         Car car3 = carDao.getCarById(car1.getId());
         
         assertEquals(car3.getSpz(),car2.getSpz());
+        
+        try{
+            carDao.update(null);
+            fail("Updated null entity");
+        }
+        catch(IllegalArgumentException e){}
+        
+        try{
+            Car carWithoutId = new Car();
+            carDao.update(carWithoutId);
+            fail("Updated entity with null id");
+        }
+        catch(IllegalArgumentException e){}
     }
     
     @Test
@@ -105,6 +124,20 @@ public class CarDAOTest {
         carDao.remove(car2);
         
         assertNull(carDao.getCarById(car1.getId()));
+        
+        try{
+            carDao.remove(null);
+            fail("Removed null entity");
+        }
+        catch(IllegalArgumentException e){}
+        
+        try{
+            Car carWithoutId = new Car();
+            carDao.remove(carWithoutId);
+            fail("Removed entity with null id");
+        }
+        catch(IllegalArgumentException e){}
+        
     }
     
     @Test
@@ -137,6 +170,12 @@ public class CarDAOTest {
         Car car2 = carDao.getCarById(car1.getId());
         
         assertEquals(car1,car2);
+        
+        try{
+            carDao.getCarById(null);
+            fail("Queried with null id");
+        }
+        catch(IllegalArgumentException e){}
     }
     
     @Test
@@ -151,6 +190,12 @@ public class CarDAOTest {
         Car car2 = carDao.getCarBySpz(spz);
         
         assertEquals(car1,car2);
+        
+        try{
+            carDao.getCarBySpz(null);
+            fail("Queried with null spz");
+        }
+        catch(IllegalArgumentException e){}
     }
     
     @Test
@@ -184,5 +229,18 @@ public class CarDAOTest {
         int amount2 = carDao.getAllCarsWithHigherLevel(cl).size();
         
         assertEquals(amount1, amount2-1);
+        
+        try{
+            carDao.getAllCarsWithHigherLevel(null);
+            fail("Queried with null company level");
+        }
+        catch(IllegalArgumentException e){}
+        
+        try{
+            CompanyLevel clWithoutId = new CompanyLevel();
+            carDao.getAllCarsWithHigherLevel(clWithoutId);
+            fail("Queried entity with null id");
+        }
+        catch(IllegalArgumentException e){}
     }
 }
