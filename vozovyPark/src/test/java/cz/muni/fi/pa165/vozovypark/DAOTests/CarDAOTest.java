@@ -1,9 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.vozovypark.DAOTests;
-
 
 import cz.muni.fi.pa165.vozovypark.DAO.CarDAO;
 import cz.muni.fi.pa165.vozovypark.DAO.CarDAOImpl;
@@ -22,7 +17,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author acer
+ * @author Eduard Krak
  */
 public class CarDAOTest {
     private EntityManagerFactory emf;
@@ -31,7 +26,6 @@ public class CarDAOTest {
     public CarDAOTest() {
     }
 
-    
     @Before
     public void setUp() {
          try {

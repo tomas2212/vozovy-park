@@ -15,7 +15,7 @@ import javax.persistence.TypedQuery;
  */
 
 public class ReservationDAOImpl implements ReservationDAO {
-    //@PersistenceContext
+
     EntityManagerFactory entityManagerFactory;
 
     public ReservationDAOImpl(EntityManagerFactory emf) {
