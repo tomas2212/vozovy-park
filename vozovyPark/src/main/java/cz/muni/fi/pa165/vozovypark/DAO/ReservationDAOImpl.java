@@ -42,7 +42,7 @@ public class ReservationDAOImpl implements ReservationDAO {
         EntityManager entityManager = this.entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
         entityManager.persist(r);
-        entityManager.getTransaction().begin();
+        entityManager.getTransaction().commit();
     }
     
     public void update(Reservation r) {
