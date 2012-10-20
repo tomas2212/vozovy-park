@@ -32,6 +32,7 @@ public class Car implements Serializable {
     private Date creationYear;
     private Boolean available;
     @OneToOne
+//    @JoinColumn(name="COMPANYLEVEL_ID")
     private CompanyLevel companyLevel;
     
 

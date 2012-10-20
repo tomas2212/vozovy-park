@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -44,8 +45,10 @@ public class Reservation implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date returnDate;
     @OneToOne
+//    @JoinColumn(name="EMPLOYEE_ID")
     private Employee employee;
     @OneToOne
+//    @JoinColumn(name="CAR_ID")
     private Car car;
 
     public Long getId() {

@@ -30,6 +30,7 @@ public class Employee implements Serializable {
     private Boolean approve;
     private String address;
     @OneToOne
+//    @JoinColumn(name="COMPANYLEVEL_ID")
     private CompanyLevel companyLevel;
 
     public String getName() {
