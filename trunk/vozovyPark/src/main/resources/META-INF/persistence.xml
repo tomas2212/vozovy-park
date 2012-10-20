@@ -23,6 +23,4 @@
         <property name="hibernate.connection.password" value=""/>
     </properties>
 </persistence-unit>
-  
-  
 </persistence>
