@@ -45,7 +45,7 @@ public class Reservation implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date returnDate;
     @OneToOne
-//    @JoinColumn(name="EMPLOYEE_ID")
+//    @JoinColumn(name="EMPLOYEE_ID", referencedColumnName="ID")
     private Employee employee;
     @OneToOne
 //    @JoinColumn(name="CAR_ID")
