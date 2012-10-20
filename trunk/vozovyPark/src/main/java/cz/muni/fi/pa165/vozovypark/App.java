@@ -20,8 +20,8 @@ public class App
 {
     public static void main( String[] args )
     {
-         EntityManagerFactory em = Persistence.createEntityManagerFactory("CarPark");
-         EntityManager manager = em.createEntityManager();
+         EntityManagerFactory emf = Persistence.createEntityManagerFactory("CarPark");
+         EntityManager manager = emf.createEntityManager();
          Employee employee = new Employee();
          CompanyLevel cl = new CompanyLevel();
          
