@@ -16,10 +16,10 @@ Projekt má simulovat situaci v reálné firmě, kde si jednotlivý zaměstnanci
 [Reservation]<br>
 [CompanyLevel]<br>
 
+= Use Case Diagram =
+
+http://img.imgur.com/0Hhga.png
+
 = Class diagram =
 
 http://i.imgur.com/up7y7.jpg
-
-= Use Case Diagram =
-
-http://i.imgur.com/vqFmv.jpg
