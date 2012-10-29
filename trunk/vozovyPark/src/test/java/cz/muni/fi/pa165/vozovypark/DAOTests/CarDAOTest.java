@@ -14,55 +14,25 @@ import org.junit.After;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
  * @author Eduard Krak
  */
-public class CarDAOTest {
-    private EntityManagerFactory emf;
-    private Connection connection;
+public class CarDAOTest extends AbstractDAOTest{
+    @Autowired
+    private CarDAO carDao;
     
-    public CarDAOTest() {
-    }
-
-    @Before
-    public void setUp() {
-         try {
-            
-            Class.forName("org.hsqldb.jdbcDriver");
-            connection = DriverManager.getConnection("jdbc:hsqldb:mem:unit-testing-jpa", "sa", "");
-        } catch (Exception ex) {
-            fail("Exception during HSQL database startup.");
-        }
-        try {
-            
-            emf = Persistence.createEntityManagerFactory("testPU");
-            
-        } catch (Exception ex) {
-            fail("Exception during JPA EntityManager instanciation.");
-        }
-    }
-    
-    @After
-    public void tearDown() {
-        if (emf != null) {
-            emf.close();
-        }
-        
-        try {
-            connection.createStatement().execute("SHUTDOWN");
-        } catch (Exception ex) {
-            System.err.println("Shutdown failed");
-        }
-    }
+    @Autowired
+    private CompanyLevelDAO companyLevelDao;
     
     @Test
     public void insertTest(){
         Car car1 = new Car();
         car1.setSpz("BR975AM");
         
-        CarDAO carDao = new CarDAOImpl(emf);
+        
         carDao.insert(car1);
         
         Car car2 = carDao.getCarById(car1.getId());
@@ -81,7 +51,7 @@ public class CarDAOTest {
         Car car1 = new Car();
         car1.setSpz("BR975AM");
         
-        CarDAO carDao = new CarDAOImpl(emf);
+        
         carDao.insert(car1);
         
         Car car2 = carDao.getCarById(car1.getId());
@@ -111,7 +81,7 @@ public class CarDAOTest {
         Car car1 = new Car();
         car1.setSpz("BR975AM");
         
-        CarDAO carDao = new CarDAOImpl(emf);
+        
         carDao.insert(car1);
         
         Car car2 = carDao.getCarById(car1.getId());
@@ -139,7 +109,7 @@ public class CarDAOTest {
         Car car1 = new Car();
         car1.setSpz("BR975AM");
         
-        CarDAO carDao = new CarDAOImpl(emf);
+        
         carDao.insert(car1);
         
         int amount1 = carDao.getAllCars().size();
@@ -158,7 +128,7 @@ public class CarDAOTest {
         Car car1 = new Car();
         car1.setSpz("BR975AM");
         
-        CarDAO carDao = new CarDAOImpl(emf);
+        
         carDao.insert(car1);
         
         Car car2 = carDao.getCarById(car1.getId());
@@ -173,12 +143,12 @@ public class CarDAOTest {
     }
     
     @Test
-    public void getCarBySpz() {
+    public void getCarBySpz()   {
         String spz = "BR975AM";
         Car car1 = new Car();
         car1.setSpz(spz);
         
-        CarDAO carDao = new CarDAOImpl(emf);
+        
         carDao.insert(car1);
         
         Car car2 = carDao.getCarBySpz(spz);
@@ -197,15 +167,15 @@ public class CarDAOTest {
         CompanyLevel cl = new CompanyLevel();
         cl.setLevelValue(2);
         
-        CarDAO carDao = new CarDAOImpl(emf);
-        CompanyLevelDAO clDao = new CompanyLevelDAOImpl(emf);
-        clDao.insert(cl);
+        
+       
+        companyLevelDao.insert(cl);
         int amount1 = carDao.getAllCarsWithHigherLevel(cl).size();
 
         
         CompanyLevel cl1 = new CompanyLevel();
         cl1.setLevelValue(1);
-        clDao.insert(cl1);
+        companyLevelDao.insert(cl1);
         
         Car car1 = new Car();
         car1.setCompanyLevel(cl1);
@@ -214,7 +184,7 @@ public class CarDAOTest {
         
         CompanyLevel cl2 = new CompanyLevel();
         cl2.setLevelValue(3);
-        clDao.insert(cl2);
+        companyLevelDao.insert(cl2);
         
         Car car2 = new Car();
         car2.setCompanyLevel(cl2);
