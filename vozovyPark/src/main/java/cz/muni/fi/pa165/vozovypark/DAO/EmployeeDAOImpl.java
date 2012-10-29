@@ -3,10 +3,7 @@ package cz.muni.fi.pa165.vozovypark.DAO;
 import cz.muni.fi.pa165.vozovypark.entities.CompanyLevel;
 import cz.muni.fi.pa165.vozovypark.entities.Employee;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 
 /**
  *
@@ -14,18 +11,24 @@ import javax.persistence.TypedQuery;
  */
 public class EmployeeDAOImpl implements EmployeeDAO {
     
-    EntityManagerFactory entityManagerFactory;
+    @PersistenceContext
+    protected EntityManager entityManager;
+  
 
     public EmployeeDAOImpl(EntityManagerFactory factory) {
-        this.entityManagerFactory = factory;
+        
+    }
+     @Deprecated
+    public EmployeeDAOImpl(){
+        
     }
 
     public Employee getEmployeeById(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("ID cannot be null");
         }
-        EntityManager em = entityManagerFactory.createEntityManager();
-        return em.find(Employee.class, id);
+        
+        return entityManager.find(Employee.class, id);
         //  return this.entityManager.find(Employee.class, id);
     }
 
@@ -33,8 +36,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         if (name == null) {
             throw new IllegalArgumentException("you must specify the name of employee");
         }
-        EntityManager em = entityManagerFactory.createEntityManager();
-        Query q = em.createNamedQuery(Employee.FIND_BY_NAME);
+        
+        Query q = entityManager.createNamedQuery(Employee.FIND_BY_NAME);
         q.setParameter("name", name);
         return (Employee) q.getSingleResult();
     }
@@ -43,8 +46,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         if (address == null) {
             throw new IllegalArgumentException("you must specify the address of employee");
         }
-        EntityManager em = entityManagerFactory.createEntityManager();
-        Query q = em.createNamedQuery(Employee.FIND_BY_ADDRESS);
+        
+        Query q = entityManager.createNamedQuery(Employee.FIND_BY_ADDRESS);
         q.setParameter("address", address);
         return (Employee) q.getSingleResult();
     }
@@ -52,11 +55,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     public void insert(Employee employee) {
         if (employee == null) {
             throw new IllegalArgumentException("you must specify company level");
-        }
-        EntityManager em = entityManagerFactory.createEntityManager();
-        em.getTransaction().begin();
-        em.persist(employee);
-        em.getTransaction().commit();
+        } 
+        entityManager.persist(employee);
+       
     }
 
     public void remove(Employee employee) {
@@ -66,10 +67,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         if (employee.getId() == null) {
             throw new IllegalArgumentException("cant update not persit entity");
         }
-        EntityManager em = entityManagerFactory.createEntityManager();
-        em.getTransaction().begin();
-        em.remove(em.merge(employee));
-        em.getTransaction().commit();
+       
+        entityManager.remove(entityManager.merge(employee));
+        
     }
 
     public void update(Employee employee) {
@@ -79,21 +79,20 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         if (employee.getId() == null) {
             throw new IllegalArgumentException("cant update not persit entity");
         }
-        EntityManager em = entityManagerFactory.createEntityManager();
-        em.getTransaction().begin();
-        em.merge(employee);
-        em.getTransaction().commit();
+       
+        entityManager.merge(employee);
+      
     }
 
     public List<Employee> getAllEmployee() {
-        EntityManager em = entityManagerFactory.createEntityManager();
-        TypedQuery<Employee> q = (TypedQuery<Employee>) em.createQuery("SELECT e FROM Employee e");
+        
+        TypedQuery<Employee> q = (TypedQuery<Employee>) entityManager.createQuery("SELECT e FROM Employee e");
         return q.getResultList();
     }
 
     public List<Employee> getAllEmployeeWithHigherLevel(CompanyLevel companyLevel) {
-          EntityManager em = entityManagerFactory.createEntityManager();
-          TypedQuery<Employee> q = em.createQuery("SELECT e FROM Employee e INNER JOIN FETCH e.companyLevel as c WHERE (c.levelValue >= :companyLevelValue)", Employee.class);
+          
+          TypedQuery<Employee> q = entityManager.createQuery("SELECT e FROM Employee e INNER JOIN FETCH e.companyLevel as c WHERE (c.levelValue >= :companyLevelValue)", Employee.class);
           q.setParameter("companyLevelValue", companyLevel.getLevelValue());
           return q.getResultList();   
 

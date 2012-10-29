@@ -1,7 +1,8 @@
 package cz.muni.fi.pa165.vozovypark.DAOTests;
 
 
-import cz.muni.fi.pa165.vozovypark.DAO.*;
+import cz.muni.fi.pa165.vozovypark.DAO.CompanyLevelDAO;
+import cz.muni.fi.pa165.vozovypark.DAO.EmployeeDAO;
 import cz.muni.fi.pa165.vozovypark.entities.Car;
 import cz.muni.fi.pa165.vozovypark.entities.CompanyLevel;
 import cz.muni.fi.pa165.vozovypark.entities.Employee;
@@ -13,68 +14,34 @@ import org.junit.After;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
  * @author Andrej Bauer
  */
-public class EmployeeDAOTest {
+public class EmployeeDAOTest extends AbstractDAOTest{
     
-    private EntityManagerFactory emf;
+    @Autowired
+    private EmployeeDAO employeeDao;
     
-    public EmployeeDAOTest() {
-    }
-    Connection connection;
-    @Before
-    public void setUp() {
-        
-        try {
-            
-            Class.forName("org.hsqldb.jdbcDriver");
-            connection = DriverManager.getConnection("jdbc:hsqldb:mem:unit-testing-jpa", "sa", "");
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            fail("Exception during HSQL database startup.");
-        }
-        try {
-            
-            emf = Persistence.createEntityManagerFactory("testPU");
-            
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            fail("Exception during JPA EntityManager instanciation.");
-        }
-    }
-    
-    @After
-    public void tearDown() {
-        if (emf != null) {
-            emf.close();
-        }
-        
-        try {
-            connection.createStatement().execute("SHUTDOWN");
-        } catch (Exception ex) {
-            System.err.println("Shutdown failed");
-        }
-        
-    }
-    
+    @Autowired
+    private CompanyLevelDAO companyLevelDao;
+   
     @Test
     public void findEmployeeTest(){
         Employee em = new Employee();
-        em.setName("Ferdo M");
-        EmployeeDAO dao = new EmployeeDAOImpl(emf);
-        dao.insert(em);                  
-        Employee em1 = dao.getEmployeeById(em.getId());
+        em.setName("Ferdo M");       
+        employeeDao.insert(em);                  
+        Employee em1 = employeeDao.getEmployeeById(em.getId());
         assertNotNull(em1);
         assertEquals(em,em1);
         
-        em1 = dao.getEmployeeById(34567L);
+        em1 = employeeDao.getEmployeeById(34567L);
         assertNull(em1);
         //wrong parameters
         try{
-            dao.getEmployeeById(null);
+            employeeDao.getEmployeeById(null);
             fail("queried with null ID");
         }
         catch(IllegalArgumentException e){}
@@ -84,16 +51,15 @@ public class EmployeeDAOTest {
     @Test
     public void insertTest(){
         Employee em = new Employee();
-        em.setName("Ferdo M");
-        EmployeeDAO dao = new EmployeeDAOImpl(emf);
-        dao.insert(em);
+        em.setName("Ferdo M");      
+        employeeDao.insert(em);
         assertNotNull(em.getId());                
-        Employee em1 = dao.getEmployeeById(em.getId());
+        Employee em1 = employeeDao.getEmployeeById(em.getId());
         assertEquals(em,em1);
         
         //Wrong inputs
         try{
-            dao.insert(null);
+            employeeDao.insert(null);
             fail("inserted null");
         }
         catch(IllegalArgumentException e){
@@ -104,17 +70,16 @@ public class EmployeeDAOTest {
     @Test
     public void updateTest(){
         Employee em = new Employee();
-        em.setName("Ferdo M");
-        EmployeeDAO dao = new EmployeeDAOImpl(emf);
-        dao.insert(em);
+        em.setName("Ferdo M");      
+        employeeDao.insert(em);
         em.setPosition("CEO");
-        dao.update(em);
-        Employee em1 = dao.getEmployeeById(em.getId());
+        employeeDao.update(em);
+        Employee em1 = employeeDao.getEmployeeById(em.getId());
         assertEquals(em1.getPosition(), "CEO");
         
         //Wrong inputs
         try{
-            dao.update(null);
+            employeeDao.update(null);
             fail("Updated null entity");
         }
         catch(IllegalArgumentException e){}
@@ -122,7 +87,7 @@ public class EmployeeDAOTest {
         Employee nullId = new Employee();
         nullId.setPosition("CEO");
         try{
-            dao.update(nullId);
+            employeeDao.update(nullId);
             fail("Updated with null ID");
         }
         catch(IllegalArgumentException e){}
@@ -133,22 +98,21 @@ public class EmployeeDAOTest {
     @Test
     public void removeTest(){
         Employee em = new Employee();
-        em.setName("Ferdo M");
-        EmployeeDAO dao = new EmployeeDAOImpl(emf);
-        dao.insert(em);
-        Employee em1 = dao.getEmployeeById(em.getId());
+        em.setName("Ferdo M");        
+        employeeDao.insert(em);
+        Employee em1 = employeeDao.getEmployeeById(em.getId());
         Employee em2 = new Employee();
         em2.setName("Maro Potokolo");
-        dao.insert(em2);
+        employeeDao.insert(em2);
         Long id = em.getId();
-        dao.remove(em);
-        assertNull(dao.getEmployeeById(id));
-        assertNull(dao.getEmployeeById(em.getId()));
-        assertNotNull(dao.getEmployeeById(em2.getId()));
+        employeeDao.remove(em);
+        assertNull(employeeDao.getEmployeeById(id));
+        assertNull(employeeDao.getEmployeeById(em.getId()));
+        assertNotNull(employeeDao.getEmployeeById(em2.getId()));
         
         //wrong parameters
         try{
-            dao.remove(null);
+            employeeDao.remove(null);
             fail("Removed null");
         }
         catch(IllegalArgumentException e){}
@@ -156,7 +120,7 @@ public class EmployeeDAOTest {
         Employee nullId = new Employee();
         nullId.setPosition("CEO");
         try{
-            dao.update(nullId);
+            employeeDao.update(nullId);
             fail("Removed with null ID");
         }
         catch(IllegalArgumentException e){}
@@ -172,9 +136,9 @@ public class EmployeeDAOTest {
         CompanyLevel cl2 = new CompanyLevel();
         cl2.setLevelValue(1);
         
-        CompanyLevelDAO clDao = new CompanyLevelDAOImpl(emf);
-        clDao.insert(cl1);
-        clDao.insert(cl2);
+      
+        companyLevelDao.insert(cl1);
+        companyLevelDao.insert(cl2);
         
         Employee ceo = new Employee();
         ceo.setPosition("CEO");
@@ -184,19 +148,10 @@ public class EmployeeDAOTest {
         assistent.setPosition("asistent");
         assistent.setCompanyLevel(cl2);
         
-        EmployeeDAO employeeDao = new EmployeeDAOImpl(emf);
+      
         employeeDao.insert(ceo);
-        employeeDao.insert(assistent);
+        employeeDao.insert(assistent);      
         
-        Car limo = new Car();
-        limo.setCompanyLevel(cl1);
-        
-        Car skodovka = new Car();
-        skodovka.setCompanyLevel(cl2);
-        
-        CarDAO carDao = new CarDAOImpl(emf);
-        carDao.insert(limo);
-        carDao.insert(skodovka);
         
         assertEquals(employeeDao.getAllEmployeeWithHigherLevel(cl1).size(), 2);
         assertEquals(employeeDao.getAllEmployeeWithHigherLevel(cl2).size(), 1);
@@ -210,15 +165,14 @@ public class EmployeeDAOTest {
         CompanyLevel cl = new CompanyLevel();
         cl.setLevelValue(2);
         
-        EmployeeDAO employeeDao = new EmployeeDAOImpl(emf);
-        CompanyLevelDAO clDao = new CompanyLevelDAOImpl(emf);
-        clDao.insert(cl);
+       
+        companyLevelDao.insert(cl);
         int amount1 = employeeDao.getAllEmployeeWithHigherLevel(cl).size();
 
         
         CompanyLevel cl1 = new CompanyLevel();
         cl1.setLevelValue(1);
-        clDao.insert(cl1);
+        companyLevelDao.insert(cl1);
         
         Employee employee1 = new Employee();
         employee1.setCompanyLevel(cl1);
@@ -227,7 +181,7 @@ public class EmployeeDAOTest {
         
         CompanyLevel cl2 = new CompanyLevel();
         cl2.setLevelValue(3);
-        clDao.insert(cl2);
+        companyLevelDao.insert(cl2);
         
         Employee employee2 = new Employee();
         employee2.setCompanyLevel(cl2);
