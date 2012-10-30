@@ -16,18 +16,7 @@ public class CompanyLevelDAOImpl implements CompanyLevelDAO {
     @PersistenceContext
     protected EntityManager entityManager;
     
-    @Deprecated
-    public CompanyLevelDAOImpl(EntityManagerFactory entityManager) {
-       
-    }
-    
-    public CompanyLevelDAOImpl(){
-        
-    }
-    
-    
-    
-
+   
     public void insert(CompanyLevel companyLevel) {
         if(companyLevel == null){
             throw new IllegalArgumentException("you must specify company level");
@@ -69,5 +58,22 @@ public class CompanyLevelDAOImpl implements CompanyLevelDAO {
     public List<CompanyLevel> getAllCompanyLevels() {        
         TypedQuery<CompanyLevel> q = entityManager.createQuery("SELECT c FROM CompanyLevel c", CompanyLevel.class);
         return q.getResultList();
+        
+    }
+
+    public CompanyLevel getRootCompanyLevel() {
+        TypedQuery<CompanyLevel> q = entityManager.createQuery("SELECT c.levelValue FROM CompanyLevel c where c.levelValue = :levelValue", CompanyLevel.class);
+        q.setParameter("levelValue", getMinLevelValue());
+        return q.getSingleResult();
+    }
+    
+    public Integer getMaxLevelValue() {
+        TypedQuery<Integer> q = entityManager.createQuery("SELECT max(c.levelValue) FROM CompanyLevel c", Integer.class);
+        return q.getSingleResult();
+    }
+
+    public Integer getMinLevelValue() {
+        TypedQuery<Integer> q = entityManager.createQuery("SELECT min(c.levelValue) FROM CompanyLevel c", Integer.class);
+        return q.getSingleResult();
     }
 }
