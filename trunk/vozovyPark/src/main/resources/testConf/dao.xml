@@ -19,6 +19,10 @@
     <bean id="carDao" class="cz.muni.fi.pa165.vozovypark.DAO.CarDAOImpl" />
     <bean id="reservationDao" class="cz.muni.fi.pa165.vozovypark.DAO.ReservationDAOImpl" />
     
+    <bean id="CompanyLevelService" class="cz.muni.fi.pa165.vozovypark.service.CompanyServiceImpl" >
+        <property name="companyLevelDao" ref="companyLevelDao"/>
+    </bean>
+        
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="persistenceUnitName" value="CarPark"/>
         <property name="dataSource" ref="dataSource"/>
@@ -27,5 +31,6 @@
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
+    
 
 </beans>

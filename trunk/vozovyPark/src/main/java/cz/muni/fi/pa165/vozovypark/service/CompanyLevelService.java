@@ -15,7 +15,7 @@ public interface CompanyLevelService {
     
     CompanyLevelDTO createCompanyLevel(String CompanyLevelName);
     
-    CompanyLevelDTO updateCompanyLevel(String CompanyLevelName);
+    CompanyLevelDTO updateCompanyLevel(CompanyLevelDTO companyLevel);
     
     CompanyLevelDTO setCompanyLevelAsRoot(Long id);
     

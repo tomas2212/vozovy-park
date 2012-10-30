@@ -42,6 +42,12 @@ public interface CompanyLevelDAO {
      */
     List<CompanyLevel> getAllCompanyLevels();    
     
+    CompanyLevel getRootCompanyLevel();
+    
+    Integer getMaxLevelValue();
+    
+    Integer getMinLevelValue();
+    
     
     
     
