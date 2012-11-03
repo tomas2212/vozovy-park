@@ -13,11 +13,15 @@
     <context:component-scan base-package="cz.muni.fi.pa165.vozovypark"/>
 
     <tx:annotation-driven/>    
-    <imimport resource="dataSource.xml">
+    <import resource="dataSource.xml" />
     <bean id="employeeDao" class="cz.muni.fi.pa165.vozovypark.DAO.EmployeeDAOImpl" />
     <bean id="companyLevelDao" class="cz.muni.fi.pa165.vozovypark.DAO.CompanyLevelDAOImpl" />
     <bean id="carDao" class="cz.muni.fi.pa165.vozovypark.DAO.CarDAOImpl" />
     <bean id="reservationDao" class="cz.muni.fi.pa165.vozovypark.DAO.ReservationDAOImpl" />
+    
+    <bean id="companyLevelService" class="cz.muni.fi.pa165.vozovypark.service.CompanyServiceImpl">
+        <property name="companyLevelDao" ref="companyLevelDao" />
+    </bean>
     
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="persistenceUnitName" value="CarPark"/>
