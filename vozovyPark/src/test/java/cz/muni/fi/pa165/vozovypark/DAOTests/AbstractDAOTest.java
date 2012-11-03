@@ -1,4 +1,3 @@
-
 package cz.muni.fi.pa165.vozovypark.DAOTests;
 
 import org.junit.runner.RunWith;
@@ -12,11 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  * @author Andrej Bauer
  */
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:/testConf/dao.xml", "classpath:/testConf/dataSource.xml"})
 @TransactionConfiguration(defaultRollback = true)
 @Transactional
-public abstract class  AbstractDAOTest {
-    
+public abstract class AbstractDAOTest {
 }
