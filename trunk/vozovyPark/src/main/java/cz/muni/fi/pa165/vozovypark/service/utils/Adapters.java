@@ -101,6 +101,7 @@ public class Adapters {
             return null;
         }
         Reservation resToReturn = new Reservation();
+        resToReturn.setId(reservation.getId());
         resToReturn.setCar(CarDtoToEntity(reservation.getCar()));
         resToReturn.setDateFrom(reservation.getDateFrom());
         resToReturn.setDateTo(reservation.getDateTo());
@@ -115,6 +116,7 @@ public class Adapters {
             return null;
         }
         ReservationDTO resToReturn = new ReservationDTO();
+        resToReturn.setId(reservation.getId());
         resToReturn.setCar(CarEntityToDto(reservation.getCar()));
         resToReturn.setDateFrom(reservation.getDateFrom());
         resToReturn.setDateTo(reservation.getDateTo());
