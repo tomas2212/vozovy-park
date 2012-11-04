@@ -232,6 +232,7 @@ public class EmployeeServiceTest {
         when(employeeDao.getAllEmployee()).thenReturn(allEntities); //if in some case when implementation wants to call it
         when(employeeDao.getAllEmployeeWithHigherLevel(eq(cl3))).thenReturn(cl2Entities);
         List<EmployeeDTO> returnedEmployees = employeeService.getEmployeesByCompanyLevel(cl2dto);
+        assertEquals(cl2Entities.size(), returnedEmployees.size());
         for(EmployeeDTO em : returnedEmployees){
             assertTrue(em.getCompanyLevel().getLevelValue() >= cl2dto.getLevelValue());
         }
