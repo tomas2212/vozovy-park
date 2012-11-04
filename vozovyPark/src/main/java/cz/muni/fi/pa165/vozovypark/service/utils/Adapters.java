@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.vozovypark.service.utils;
 
 import cz.muni.fi.pa165.vozovypark.DTO.CarDTO;
@@ -36,7 +32,6 @@ public class Adapters {
         entity.setAddress(employee.getAddress());
 
         return entity;
-
     }
     
     public static CarDTO CarEntityToDto(Car car) {
@@ -44,7 +39,7 @@ public class Adapters {
         dto.setId(car.getId());
         dto.setAvailable(car.getAvailable());
         dto.setBrand(car.getBrand());
-//        dto.setCompanyLevel(car.getCompanyLevel());
+        dto.setCompanyLevel(CompanyLevelEntityToDto(car.getCompanyLevel()));
         dto.setCreationYear(car.getCreationYear());
         dto.setModel(car.getModel());
         dto.setSpz(car.getSpz());
@@ -57,7 +52,7 @@ public class Adapters {
         entity.setId(car.getId());
         entity.setSpz(car.getSpz());
         entity.setBrand(car.getBrand());
-        entity.setCompanyLevel(  CompanyLevelDtoToEntity(car.getCompanyLevel()));
+        entity.setCompanyLevel(CompanyLevelDtoToEntity(car.getCompanyLevel()));
         entity.setCreationYear(car.getCreationYear());
         entity.setModel(car.getModel());
 
@@ -77,7 +72,6 @@ public class Adapters {
         entity.setId(companyLevel.getId());
         entity.setLevelValue(companyLevel.getLevelValue());
         entity.setName(companyLevel.getName());
-        return entity;
-        
+        return entity;     
     }
 }
