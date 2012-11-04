@@ -22,7 +22,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import static org.mockito.Mockito.*;
 /**
  *
- * @author acer
+ * @author Eduard Krak
  */
 @RunWith(MockitoJUnitRunner.class)
 public class CarServiceTest {
@@ -81,6 +81,32 @@ public class CarServiceTest {
         }
     }
     
+    /*
+    @Test
+    public void testSetCarAvailable() {
+        CarDTO carDto = new CarDTO();
+        carDto.setModel("Volkswagen");
+        carDto.setAvailable(Boolean.FALSE);
+
+        carDto = carService.updateCar(carDto);
+        verify(carDao, times(1)).update(any(Car.class));
+
+        try {
+            carService.createCar(null);
+            fail("Implementation accepted null value");
+        } catch (IllegalArgumentException e) {
+        }
+
+        //testing if employeDao was called before throwing exception
+        verify(carDao, never()).update(null);
+
+        try {
+            carService.createCar(noIdDto);
+            fail("Implementation accepted no id");
+        } catch (IllegalArgumentException e) {
+        }
+    }
+    */
     @Test
     public void testGetCarById() {
         Car car = new Car();
