@@ -6,11 +6,15 @@ import cz.muni.fi.pa165.vozovypark.entities.CompanyLevel;
 import cz.muni.fi.pa165.vozovypark.service.utils.Adapters;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author andrej
  */
+@Service
+@Transactional
 public class CompanyServiceImpl implements CompanyLevelService {
 
     CompanyLevelDAO companyLevelDao;
