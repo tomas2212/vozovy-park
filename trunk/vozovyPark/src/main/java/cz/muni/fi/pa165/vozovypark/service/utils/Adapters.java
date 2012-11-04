@@ -9,7 +9,7 @@ import cz.muni.fi.pa165.vozovypark.entities.Employee;
 
 /**
  *
- * @author andrej
+ * @author Andrej Bauer
  */
 public class Adapters {
     public static EmployeeDTO EmployeeEntityToDto(Employee employee) {

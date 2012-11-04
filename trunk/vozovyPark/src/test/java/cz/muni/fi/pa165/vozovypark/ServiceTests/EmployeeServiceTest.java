@@ -23,7 +23,7 @@ import static org.mockito.Mockito.*;
 
 /**
  *
- * @author andrej
+ * @author Andrej Bauer
  */
 @RunWith(MockitoJUnitRunner.class)
 public class EmployeeServiceTest {
