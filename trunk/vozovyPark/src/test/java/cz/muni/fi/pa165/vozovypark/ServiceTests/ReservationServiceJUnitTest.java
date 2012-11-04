@@ -302,7 +302,64 @@ public class ReservationServiceJUnitTest {
         when(reservationDao.getReservationByEmployee(employee)).thenReturn(allEntities);
         List<ReservationDTO> reservations = reservationService.getReservationsByEmployee(edto);
         assertEquals(allDTO.size(), reservations.size());
-
     }
-}
 
+    @Test
+    public void testGetReservationsByCar() {
+        Employee employee = new Employee();
+        employee.setId(new Long(1));
+        employee.setName("Johny Star");
+        
+        Employee employee2 = new Employee();
+        employee2.setId(new Long(2));
+        employee2.setName("Jozko Mrkvicka");
+
+        Car car1 = new Car();
+        car1.setSpz("ahoja");
+
+        Reservation reservation1 = new Reservation();
+        reservation1.setId(new Long(1));
+        reservation1.setCar(car1);
+        reservation1.setEmployee(employee);
+
+        Reservation reservation2 = new Reservation();
+        reservation2.setId(new Long(2));
+        reservation2.setCar(car1);
+        reservation2.setEmployee(employee2);
+
+
+        EmployeeDTO edto = new EmployeeDTO();
+        edto.setName("Johny Star");
+        
+        EmployeeDTO e2dto = new EmployeeDTO();
+        edto.setName("Jozko Mrkvicka");        
+
+        CarDTO cdto = new CarDTO();
+        cdto.setSpz("ahoja");
+
+        ReservationDTO rdto = new ReservationDTO();
+        rdto.setId(new Long(1));
+        rdto.setCar(cdto);
+        rdto.setEmployee(edto);
+
+        ReservationDTO r2dto = new ReservationDTO();
+        r2dto.setId(new Long(1));
+        r2dto.setCar(cdto);
+        r2dto.setEmployee(e2dto);
+
+
+        List<Reservation> allEntities = new ArrayList<Reservation>();
+        allEntities.add(reservation1);
+        allEntities.add(reservation2);
+
+        List<ReservationDTO> allDTO = new ArrayList<ReservationDTO>();
+        allDTO.add(rdto);
+        allDTO.add(r2dto);
+
+        when(reservationDao.getReservationByCar(car1)).thenReturn(allEntities);
+        List<ReservationDTO> reservations = reservationService.getReservationsByCar(cdto);
+        assertEquals(allDTO.size(), reservations.size());
+    }
+    
+    
+}
