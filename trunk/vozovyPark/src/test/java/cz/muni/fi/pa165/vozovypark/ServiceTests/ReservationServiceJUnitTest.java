@@ -123,9 +123,11 @@ public class ReservationServiceJUnitTest {
 
 
         EmployeeDTO edto = new EmployeeDTO();
+        edto.setId(new Long(1));
         edto.setName("Johny Star");
 
         CarDTO cdto = new CarDTO();
+        cdto.setId(new Long(1));
         cdto.setSpz("ahoja");
 
         ReservationDTO rdto = new ReservationDTO();
