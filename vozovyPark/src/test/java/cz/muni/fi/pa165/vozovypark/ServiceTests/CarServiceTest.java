@@ -66,7 +66,7 @@ public class CarServiceTest {
         verify(carDao, times(1)).update(any(Car.class));
 
         try {
-            carService.createCar(null);
+            carService.updateCar(null);
             fail("Implementation accepted null value");
         } catch (IllegalArgumentException e) {
         }
@@ -75,7 +75,7 @@ public class CarServiceTest {
         verify(carDao, never()).update(null);
 
         try {
-            carService.createCar(noIdDto);
+            carService.updateCar(noIdDto);
             fail("Implementation accepted no id");
         } catch (IllegalArgumentException e) {
         }
@@ -210,14 +210,18 @@ public class CarServiceTest {
          Car car1 = new Car();
         car1.setId(new Long(1));
         car1.setModel("Volkswagen");
-
+        car1.setCompanyLevel(cl3);
+        car1.setCompanyLevel(cl1);
+        
         Car car2 = new Car();
         car2.setId(new Long(2));
         car2.setModel("Mercedes");
-
+        car2.setCompanyLevel(cl2);
+        
         Car car3 = new Car();
         car3.setId(new Long(3));
         car3.setModel("Skoda");
+        car3.setCompanyLevel(cl3);
         
         List<Car> allEntities = new ArrayList<Car>();
         allEntities.add(car1);
@@ -229,7 +233,7 @@ public class CarServiceTest {
         cl2Entities.add(car3);
          
         when(carDao.getAllCars()).thenReturn(allEntities); //if in some case when implementation wants to call it
-        when(carDao.getAllCarsWithHigherLevel(eq(cl3))).thenReturn(cl2Entities);
+        when(carDao.getAllCarsWithHigherLevel(eq(cl2))).thenReturn(cl2Entities);
         List<CarDTO> returnedEmployees = carService.getCarsByCompanyLevel(cl2dto);
         assertEquals(cl2Entities.size(), returnedEmployees.size());
         for(CarDTO em : returnedEmployees){
