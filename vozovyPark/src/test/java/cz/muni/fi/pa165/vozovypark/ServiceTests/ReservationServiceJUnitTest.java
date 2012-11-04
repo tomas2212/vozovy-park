@@ -14,9 +14,11 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 import static org.mockito.Mockito.*;
+import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  *
@@ -240,12 +242,6 @@ public class ReservationServiceJUnitTest {
             assertEquals(allDTO.get(i), returnedReservations.get(i));
         }
         verify(reservationDao, times(1)).getAllReservations();
-    }
-    
-    
-    @Test
-    public void removeReservation(){
-        
     }
     
     
