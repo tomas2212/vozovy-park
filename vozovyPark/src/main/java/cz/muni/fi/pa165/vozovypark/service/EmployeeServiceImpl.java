@@ -27,8 +27,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (employee == null) {
             throw new IllegalArgumentException("Employee is not specified");
         }
-        if (Adapters.EmployeeDtoToEntity(employee).getId() == null) {
-            throw new IllegalArgumentException("Employee is not in db");
+        if (employee.getName() == null) {
+            throw new IllegalArgumentException("Employee name is not specified");
         }
         employeeDAO.insert(Adapters.EmployeeDtoToEntity(employee));
 

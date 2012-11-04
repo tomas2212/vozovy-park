@@ -226,7 +226,7 @@ public class EmployeeServiceTest {
         cl2Entities.add(employee3);
         
         when(employeeDao.getAllEmployee()).thenReturn(allEntities); //if in some case when implementation wants to call it
-        when(employeeDao.getAllEmployeeWithHigherLevel(eq(cl3))).thenReturn(cl2Entities);
+        when(employeeDao.getAllEmployeeWithHigherLevel(eq(cl2))).thenReturn(cl2Entities);
         List<EmployeeDTO> returnedEmployees = employeeService.getEmployeesByCompanyLevel(cl2dto);
         assertEquals(cl2Entities.size(), returnedEmployees.size());
         for(EmployeeDTO em : returnedEmployees){
