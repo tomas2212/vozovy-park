@@ -14,7 +14,6 @@ public class CarDAOImpl implements CarDAO{
     protected EntityManager entityManager;
 
     public CarDAOImpl() {
-
        
     }
 
