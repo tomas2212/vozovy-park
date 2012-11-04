@@ -25,11 +25,8 @@ public class CarServiceImpl implements CarService {
         if (car == null) {
             throw new IllegalArgumentException("Car is not specified");
         }
-        if (Adapters.CarDtoToEntity(car).getId() == null) {
-            throw new IllegalArgumentException("Car is not in db");
-        }
         carDao.insert(Adapters.CarDtoToEntity(car));
-        
+
         return car;
     }
 
@@ -37,10 +34,12 @@ public class CarServiceImpl implements CarService {
         if (car == null) {
             throw new IllegalArgumentException("Car name is not specified");
         }
-        if (car.getId() == null) {
+        
+        Car entity = Adapters.CarDtoToEntity(car);
+        
+        if (entity.getId() == null) {
             throw new IllegalArgumentException("Car ID is not specified");
         }
-        Car entity = Adapters.CarDtoToEntity(car);
         carDao.update(entity);
         return Adapters.CarEntityToDto(entity);
     }
