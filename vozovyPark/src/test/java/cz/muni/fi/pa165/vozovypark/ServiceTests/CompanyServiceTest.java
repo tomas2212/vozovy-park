@@ -52,7 +52,7 @@ public class CompanyServiceTest {
             companyLevelService.createCompanyLevel(noNameDto);
             fail("accepted no name");
         } catch (IllegalArgumentException e) {
-        }*/
+        }
 
     }
     @Test
@@ -149,6 +149,6 @@ public class CompanyServiceTest {
             assertEquals(allDTO.get(i), returnedCompanyLevels.get(i));
         }
         verify(companyLevelDao, times(1)).getAllCompanyLevels();
-        
+       
     } */
 }
