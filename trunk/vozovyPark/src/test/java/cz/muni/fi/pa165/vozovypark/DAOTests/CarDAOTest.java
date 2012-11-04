@@ -15,6 +15,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 
 /**
  *
@@ -43,7 +44,7 @@ public class CarDAOTest extends AbstractDAOTest{
             carDao.insert(null);
             fail("Inserted null entity");
         }
-        catch(IllegalArgumentException e){}
+        catch(DataAccessException e){}
     }
     
     @Test
@@ -66,14 +67,14 @@ public class CarDAOTest extends AbstractDAOTest{
             carDao.update(null);
             fail("Updated null entity");
         }
-        catch(IllegalArgumentException e){}
+        catch(DataAccessException e){}
         
         try{
             Car carWithoutId = new Car();
             carDao.update(carWithoutId);
             fail("Updated entity with null id");
         }
-        catch(IllegalArgumentException e){}
+        catch(DataAccessException e){}
     }
     
     @Test
@@ -93,14 +94,14 @@ public class CarDAOTest extends AbstractDAOTest{
             carDao.remove(null);
             fail("Removed null entity");
         }
-        catch(IllegalArgumentException e){}
+        catch(DataAccessException e){}
         
         try{
             Car carWithoutId = new Car();
             carDao.remove(carWithoutId);
             fail("Removed entity with null id");
         }
-        catch(IllegalArgumentException e){}
+        catch(DataAccessException e){}
         
     }
     
@@ -139,7 +140,7 @@ public class CarDAOTest extends AbstractDAOTest{
             carDao.getCarById(null);
             fail("Queried with null id");
         }
-        catch(IllegalArgumentException e){}
+        catch(DataAccessException e){}
     }
     
     @Test
@@ -159,7 +160,7 @@ public class CarDAOTest extends AbstractDAOTest{
             carDao.getCarBySpz(null);
             fail("Queried with null spz");
         }
-        catch(IllegalArgumentException e){}
+        catch(DataAccessException e){}
     }
     
     @Test
@@ -198,13 +199,13 @@ public class CarDAOTest extends AbstractDAOTest{
             carDao.getAllCarsWithHigherLevel(null);
             fail("Queried with null company level");
         }
-        catch(IllegalArgumentException e){}
+        catch(DataAccessException e){}
         
         try{
             CompanyLevel clWithoutId = new CompanyLevel();
             carDao.getAllCarsWithHigherLevel(clWithoutId);
             fail("Queried entity with null id");
         }
-        catch(IllegalArgumentException e){}
+        catch(DataAccessException e){}
     }
 }

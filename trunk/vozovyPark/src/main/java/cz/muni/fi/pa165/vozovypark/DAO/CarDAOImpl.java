@@ -4,10 +4,12 @@ import cz.muni.fi.pa165.vozovypark.entities.Car;
 import cz.muni.fi.pa165.vozovypark.entities.CompanyLevel;
 import java.util.List;
 import javax.persistence.*;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author Tomas Svrcek
  */
+@Repository
 public class CarDAOImpl implements CarDAO{
 
     @PersistenceContext

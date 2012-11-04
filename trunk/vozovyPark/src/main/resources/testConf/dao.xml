@@ -12,7 +12,8 @@
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
     <context:component-scan base-package="cz.muni.fi.pa165.vozovypark"/>
 
-    <tx:annotation-driven/>    
+    <tx:annotation-driven/>   
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" /> 
     
     <bean id="employeeDao" class="cz.muni.fi.pa165.vozovypark.DAO.EmployeeDAOImpl" />
     <bean id="companyLevelDao" class="cz.muni.fi.pa165.vozovypark.DAO.CompanyLevelDAOImpl" />

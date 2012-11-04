@@ -14,6 +14,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 
 /**
  *
@@ -58,7 +59,7 @@ public class ReservationDAOTest extends AbstractDAOTest {
         try {
             reservationDao.insert(null);
             fail("Inserted null entity");
-        } catch (IllegalArgumentException e) {
+        } catch (DataAccessException e) {
         }
     }
 
@@ -99,14 +100,14 @@ public class ReservationDAOTest extends AbstractDAOTest {
         try {
             reservationDao.update(null);
             fail("Updated null entity");
-        } catch (IllegalArgumentException e) {
+        } catch (DataAccessException e) {
         }
 
         try {
             Reservation rWithoutId = new Reservation();
             reservationDao.update(rWithoutId);
             fail("Updated entity with null id");
-        } catch (IllegalArgumentException e) {
+        } catch (DataAccessException e) {
         }
     }
 
@@ -140,14 +141,14 @@ public class ReservationDAOTest extends AbstractDAOTest {
         try {
             reservationDao.remove(null);
             fail("Removed null entity");
-        } catch (IllegalArgumentException e) {
+        } catch (DataAccessException e) {
         }
 
         try {
             Reservation rWithoutId = new Reservation();
             reservationDao.remove(rWithoutId);
             fail("Removed entity with null id");
-        } catch (IllegalArgumentException e) {
+        } catch (DataAccessException e) {
         }
 
 
@@ -195,14 +196,14 @@ public class ReservationDAOTest extends AbstractDAOTest {
         try {
             reservationDao.getReservationByCar(null);
             fail("You cant find reservation by car as null");
-        } catch (IllegalArgumentException e) {
+        } catch (DataAccessException e) {
         }
 
         try {
             Car carWithoutId = new Car();
             reservationDao.getReservationByCar(carWithoutId);
             fail("You cant find reservation by car without id");
-        } catch (IllegalArgumentException e) {
+        } catch (DataAccessException e) {
         }
     }
 
@@ -250,14 +251,14 @@ public class ReservationDAOTest extends AbstractDAOTest {
         try {
             reservationDao.getReservationByEmployee(null);
             fail("You cant find reservation by employee as null");
-        } catch (IllegalArgumentException e) {
+        } catch (DataAccessException e) {
         }
 
         try {
             Employee empWithoutId = new Employee();
             reservationDao.getReservationByEmployee(empWithoutId);
             fail("You cant find reservation by employee without id");
-        } catch (IllegalArgumentException e) {
+        } catch (DataAccessException e) {
         }
     }
 
@@ -300,19 +301,19 @@ public class ReservationDAOTest extends AbstractDAOTest {
         try {
             reservationDao.getReservationByCarAndEmployee(null, null);
             fail("You cant find reservation by car as null and employee as null");
-        } catch (IllegalArgumentException e) {
+        } catch (DataAccessException e) {
         }
 
         try {
             reservationDao.getReservationByCarAndEmployee(null, employee);
             fail("You can't find reservation by employee when car is null");
-        } catch (IllegalArgumentException e) {
+        } catch (DataAccessException e) {
         }
 
         try {
             reservationDao.getReservationByCarAndEmployee(car, null);
             fail("You can't find reservation by employee when employee is null");
-        } catch (IllegalArgumentException e) {
+        } catch (DataAccessException e) {
         }
 
         try {
@@ -320,13 +321,13 @@ public class ReservationDAOTest extends AbstractDAOTest {
             Employee employeeWithoutId = new Employee();
             reservationDao.getReservationByCarAndEmployee(carWithoutId, employeeWithoutId);
             fail("You cant find reservation by car and employee with null ids");
-        } catch (IllegalArgumentException e) {
+        } catch (DataAccessException e) {
         }
 
         try {
             reservationDao.getReservationByCarAndEmployee(new Car(), new Employee());
             fail("Missing employee ID and car ID");
-        } catch (IllegalArgumentException e) {
+        } catch (DataAccessException e) {
         }
 
     }

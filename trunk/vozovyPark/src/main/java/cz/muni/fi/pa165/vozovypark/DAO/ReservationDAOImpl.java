@@ -5,12 +5,13 @@ import cz.muni.fi.pa165.vozovypark.entities.Employee;
 import cz.muni.fi.pa165.vozovypark.entities.Reservation;
 import java.util.List;
 import javax.persistence.*;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Eduard Krak
  */
-
+@Repository
 public class ReservationDAOImpl implements ReservationDAO {
 
    @PersistenceContext
