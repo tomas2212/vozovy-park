@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.vozovypark.service;
 import cz.muni.fi.pa165.vozovypark.DAO.CompanyLevelDAO;
 import cz.muni.fi.pa165.vozovypark.DTO.CompanyLevelDTO;
 import cz.muni.fi.pa165.vozovypark.entities.CompanyLevel;
+import cz.muni.fi.pa165.vozovypark.service.utils.Adapters;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class CompanyServiceImpl implements CompanyLevelService {
         companyLevel.setLevelValue(levelValue);
         companyLevelDao.insert(companyLevel);
         
-        return EntityToDtoAdapter(companyLevel);
+        return Adapters.CompanyLevelEntityToDto(companyLevel);
     }
 
     public CompanyLevelDTO updateCompanyLevel(CompanyLevelDTO companyLevel) {
@@ -40,9 +41,9 @@ public class CompanyServiceImpl implements CompanyLevelService {
         if(companyLevel.getId() == null){
             throw new IllegalArgumentException("CompanyLevel ID is not specified");
         }
-        CompanyLevel entity = DtoToEntityAdapter(companyLevel);
+        CompanyLevel entity = Adapters.CompanyLevelDtoToEntity(companyLevel);
         companyLevelDao.update(entity);
-        return EntityToDtoAdapter(entity);
+        return Adapters.CompanyLevelEntityToDto(entity);
         
     }
 
@@ -58,7 +59,7 @@ public class CompanyServiceImpl implements CompanyLevelService {
         
         companyLevel.setLevelValue(rootValue - 1);
         companyLevelDao.update(companyLevel);
-        return EntityToDtoAdapter(companyLevel);
+        return Adapters.CompanyLevelEntityToDto(companyLevel);
         
     }
 
@@ -80,21 +81,21 @@ public class CompanyServiceImpl implements CompanyLevelService {
         companyLevel.setLevelValue(position);
         companyLevelDao.update(companyLevel);
         
-        return EntityToDtoAdapter(companyLevel);
+        return Adapters.CompanyLevelEntityToDto(companyLevel);
     }
 
     public CompanyLevelDTO getCompanyLevelById(Long id) {
         if(id == null){
             throw new IllegalArgumentException("ID is not specified");
         }
-        return EntityToDtoAdapter(companyLevelDao.getCompanyLevelById(id));
+        return Adapters.CompanyLevelEntityToDto(companyLevelDao.getCompanyLevelById(id));
     }
 
     public List<CompanyLevelDTO> getAllCompanyLeves() {
         List<CompanyLevelDTO> companyLevels = new ArrayList<CompanyLevelDTO>();
         List<CompanyLevel> allCompanyLevels = companyLevelDao.getAllCompanyLevels();
         for(CompanyLevel cl : allCompanyLevels){
-            companyLevels.add(EntityToDtoAdapter(cl));
+            companyLevels.add(Adapters.CompanyLevelEntityToDto(cl));
         }
         return companyLevels;
     }
@@ -111,21 +112,6 @@ public class CompanyServiceImpl implements CompanyLevelService {
         
     }
     
-    private CompanyLevelDTO EntityToDtoAdapter(CompanyLevel companyLevel){
-        CompanyLevelDTO dto = new CompanyLevelDTO();
-        dto.setId(companyLevel.getId());
-        dto.setLevelValue(companyLevel.getLevelValue());
-        dto.setName(companyLevel.getName());
-        return dto;
-    }
     
-    private CompanyLevel DtoToEntityAdapter(CompanyLevelDTO companyLevel){
-        CompanyLevel entity = new CompanyLevel();
-        entity.setId(companyLevel.getId());
-        entity.setLevelValue(companyLevel.getLevelValue());
-        entity.setName(companyLevel.getName());
-        return entity;
-        
-    }
     
 }
