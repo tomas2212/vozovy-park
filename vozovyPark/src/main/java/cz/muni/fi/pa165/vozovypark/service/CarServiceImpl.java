@@ -5,6 +5,7 @@ import cz.muni.fi.pa165.vozovypark.DTO.CarDTO;
 import cz.muni.fi.pa165.vozovypark.DTO.CompanyLevelDTO;
 import cz.muni.fi.pa165.vozovypark.entities.Car;
 import cz.muni.fi.pa165.vozovypark.entities.CompanyLevel;
+import cz.muni.fi.pa165.vozovypark.service.utils.Adapters;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,11 +32,12 @@ public class CarServiceImpl implements CarService {
         car.setModel(carName.getModel());
         car.setSpz(carName.getSpz());
         car.setCreationYear(carName.getCreationYear());
-//        car.setCompanyLevel(carName.getCompanyLevel());
+        car.setCompanyLevel(Adapters.CompanyLevelDtoToEntity(carName.getCompanyLevel()));
 
         carDao.insert(car);
-
-        return EntityToDtoAdapter(car);
+        //carDao.insert(Adapters.CarDtoToEntity(carDTO))
+        
+        return Adapters.CarEntityToDto(car);
     }
 
     public CarDTO updateCar(CarDTO car) {
@@ -45,9 +47,9 @@ public class CarServiceImpl implements CarService {
         if (car.getId() == null) {
             throw new IllegalArgumentException("Car ID is not specified");
         }
-        Car entity = DtoToEntityAdapter(car);
+        Car entity = Adapters.CarDtoToEntity(car);
         carDao.update(entity);
-        return EntityToDtoAdapter(entity);
+        return Adapters.CarEntityToDto(entity);
     }
 
     public CarDTO setCarAvailable(Long id, Boolean available) {
@@ -56,11 +58,12 @@ public class CarServiceImpl implements CarService {
         }
         if (available == null) {
             throw new IllegalArgumentException("Availability is not specified");
-        }   
+        }
         Car car = carDao.getCarById(id);
         car.setAvailable(available);
         carDao.update(car);
-        return EntityToDtoAdapter(car);
+        
+        return Adapters.CarEntityToDto(car);
     }
 
     public void removeCar(Long id) {
@@ -78,14 +81,14 @@ public class CarServiceImpl implements CarService {
         if (id == null) {
             throw new IllegalArgumentException("ID is not specified");
         }
-        return EntityToDtoAdapter(carDao.getCarById(id));
+        return Adapters.CarEntityToDto(carDao.getCarById(id));
     }
 
     public List<CarDTO> getAllCars() {
         List<CarDTO> cars = new ArrayList<CarDTO>();
         List<Car> allCars = carDao.getAllCars();
-        for(Car c : allCars){
-            cars.add(EntityToDtoAdapter(c));
+        for (Car c : allCars) {
+            cars.add(Adapters.CarEntityToDto(c));
         }
         return cars;
     }
@@ -93,38 +96,13 @@ public class CarServiceImpl implements CarService {
     public List<CarDTO> getCarsByCompanyLevel(CompanyLevelDTO companyLevel) {
         if (companyLevel == null) {
             throw new IllegalArgumentException("CompanyLevel is not specified");
-        }        
+        }
         List<CarDTO> cars = new ArrayList<CarDTO>();
- //       CompanyLevel cl = DtoToEntityAdapter(companyLevel);
-//        List<Car> clCars = carDao.getAllCarsWithHigherLevel(cl);
- //       for(Car c : clCars){
- //           cars.add(EntityToDtoAdapter(c));
- //       }
+        CompanyLevel cl = Adapters.CompanyLevelDtoToEntity(companyLevel);
+        List<Car> clCars = carDao.getAllCarsWithHigherLevel(cl);
+        for (Car c : clCars) {
+            cars.add(Adapters.CarEntityToDto(c));
+        }
         return cars;
-    }
-
-    private CarDTO EntityToDtoAdapter(Car car) {
-        CarDTO dto = new CarDTO();
-        dto.setId(car.getId());
-        dto.setAvailable(car.getAvailable());
-        dto.setBrand(car.getBrand());
-//        dto.setCompanyLevel(car.getCompanyLevel());
-        dto.setCreationYear(car.getCreationYear());
-        dto.setModel(car.getModel());
-        dto.setSpz(car.getSpz());
-
-        return dto;
-    }
-
-    private Car DtoToEntityAdapter(CarDTO car) {
-        Car entity = new Car();
-        entity.setId(car.getId());
-        entity.setSpz(car.getSpz());
-        entity.setBrand(car.getBrand());
-        //       entity.setCompanyLevel(car.getCompanyLevel());
-        entity.setCreationYear(car.getCreationYear());
-        entity.setModel(car.getModel());
-
-        return entity;
     }
 }
