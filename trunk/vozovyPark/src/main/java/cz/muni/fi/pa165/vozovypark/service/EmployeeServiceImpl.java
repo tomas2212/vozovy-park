@@ -54,7 +54,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         Employee employee = employeeDAO.getEmployeeById(id);
         if (employee == null) {
-            throw new IllegalArgumentException("Car with this ID does not exist");
+            throw new IllegalArgumentException("Employee with this ID does not exist");
         }
         employeeDAO.remove(employee);
     }
