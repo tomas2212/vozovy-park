@@ -24,7 +24,7 @@ public class Adapters {
         dto.setPosition(employee.getPosition());
         dto.setApprove(employee.getApprove());
         dto.setAddress(employee.getAddress());
-
+        dto.setCompanyLevel(CompanyLevelEntityToDto(employee.getCompanyLevel()));
         return dto;
     }
     
@@ -38,6 +38,7 @@ public class Adapters {
         entity.setPosition(employee.getPosition());
         entity.setApprove(employee.getApprove());
         entity.setAddress(employee.getAddress());
+        entity.setCompanyLevel(CompanyLevelDtoToEntity(employee.getCompanyLevel()));
 
         return entity;
     }
