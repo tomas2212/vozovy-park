@@ -21,23 +21,16 @@ public class CarServiceImpl implements CarService {
         this.carDao = carDao;
     }
 
-    public CarDTO createCar(CarDTO carName) {
-        if (carName == null) {
+    public CarDTO createCar(CarDTO car) {
+        if (car == null) {
             throw new IllegalArgumentException("Car is not specified");
         }
-        Car car = new Car();
-        car.setId(carName.getId());
-        car.setAvailable(carName.getAvailable());
-        car.setBrand(carName.getBrand());
-        car.setModel(carName.getModel());
-        car.setSpz(carName.getSpz());
-        car.setCreationYear(carName.getCreationYear());
-        car.setCompanyLevel(Adapters.CompanyLevelDtoToEntity(carName.getCompanyLevel()));
-
-        carDao.insert(car);
-        //carDao.insert(Adapters.CarDtoToEntity(carDTO))
+        if (Adapters.CarDtoToEntity(car).getId() == null) {
+            throw new IllegalArgumentException("Car is not in db");
+        }
+        carDao.insert(Adapters.CarDtoToEntity(car));
         
-        return Adapters.CarEntityToDto(car);
+        return car;
     }
 
     public CarDTO updateCar(CarDTO car) {
@@ -62,7 +55,7 @@ public class CarServiceImpl implements CarService {
         Car car = carDao.getCarById(id);
         car.setAvailable(available);
         carDao.update(car);
-        
+
         return Adapters.CarEntityToDto(car);
     }
 
