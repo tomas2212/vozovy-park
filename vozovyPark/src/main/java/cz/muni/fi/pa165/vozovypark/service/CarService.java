@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.vozovypark.service;
 
 import cz.muni.fi.pa165.vozovypark.DTO.CarDTO;
@@ -10,7 +6,7 @@ import java.util.List;
 
 /**
  *
- * @author andrej
+ * @author Tomas Svrcek
  */
 public interface CarService {
     
