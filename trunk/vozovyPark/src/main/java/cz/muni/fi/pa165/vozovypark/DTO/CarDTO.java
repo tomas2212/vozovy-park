@@ -1,14 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.vozovypark.DTO;
 
 import java.util.Date;
 
 /**
  *
- * @author andrej
+ * @author Tomas Svrcek
  */
 public class CarDTO {
     private Long id;
