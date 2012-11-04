@@ -76,13 +76,16 @@ public class ReservationServiceJUnitTest {
         employeeDto.setId(new Long(1));
 
         CarDTO carDto = new CarDTO();
+        carDto.setId(new Long(1));
         carDto.setSpz("ZA979AZ");
 
         ReservationDTO resDto = new ReservationDTO();
+        resDto.setId(new Long(1));
         resDto.setCar(carDto);
         resDto.setEmployee(employeeDto);
 
         ReservationDTO res2Dto = new ReservationDTO();
+        res2Dto.setId(new Long(2));
         res2Dto.setEmployee(employeeDto);
 
 
