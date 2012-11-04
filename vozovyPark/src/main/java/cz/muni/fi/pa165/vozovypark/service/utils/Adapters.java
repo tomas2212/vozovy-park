@@ -3,9 +3,11 @@ package cz.muni.fi.pa165.vozovypark.service.utils;
 import cz.muni.fi.pa165.vozovypark.DTO.CarDTO;
 import cz.muni.fi.pa165.vozovypark.DTO.CompanyLevelDTO;
 import cz.muni.fi.pa165.vozovypark.DTO.EmployeeDTO;
+import cz.muni.fi.pa165.vozovypark.DTO.ReservationDTO;
 import cz.muni.fi.pa165.vozovypark.entities.Car;
 import cz.muni.fi.pa165.vozovypark.entities.CompanyLevel;
 import cz.muni.fi.pa165.vozovypark.entities.Employee;
+import cz.muni.fi.pa165.vozovypark.entities.Reservation;
 
 /**
  *
@@ -73,5 +75,27 @@ public class Adapters {
         entity.setLevelValue(companyLevel.getLevelValue());
         entity.setName(companyLevel.getName());
         return entity;     
+    }
+    
+    public static Reservation ReservationDtoToEntity(ReservationDTO reservation) {
+        Reservation resToReturn = new Reservation();
+        resToReturn.setCar(CarDtoToEntity(reservation.getCar()));
+        resToReturn.setDateFrom(reservation.getDateFrom());
+        resToReturn.setDateTo(reservation.getDateTo());
+        resToReturn.setEmployee(EmployeeDtoToEntity(reservation.getEmployee()));
+        resToReturn.setReturnDate(reservation.getReturnDate());
+        resToReturn.setStartDate(reservation.getStartDate());
+        return resToReturn;
+    }
+    
+    public static ReservationDTO ReservationEntityToDto(Reservation reservation) {
+        ReservationDTO resToReturn = new ReservationDTO();
+        resToReturn.setCar(CarEntityToDto(reservation.getCar()));
+        resToReturn.setDateFrom(reservation.getDateFrom());
+        resToReturn.setDateTo(reservation.getDateTo());
+        resToReturn.setEmployee(EmployeeEntityToDto(reservation.getEmployee()));
+        resToReturn.setReturnDate(reservation.getReturnDate());
+        resToReturn.setStartDate(reservation.getStartDate());
+        return resToReturn;
     }
 }

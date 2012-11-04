@@ -22,7 +22,8 @@ import javax.persistence.Temporal;
     @NamedQuery(name = Reservation.FIND_BY_ID, query = "SELECT p from Reservation p where p.id=:id"),
     @NamedQuery(name = Reservation.FIND_BY_EMPLOYEE, query = "SELECT p from Reservation p where p.employee=:employee"),
     @NamedQuery(name = Reservation.FIND_BY_CAR, query = "SELECT p from Reservation p where p.car=:car"),
-    @NamedQuery(name = Reservation.FIND_BY_CAR_AND_EMPLOYEE, query = "SELECT p from Reservation p where p.car=:car and p.employee =:employee")
+    @NamedQuery(name = Reservation.FIND_BY_CAR_AND_EMPLOYEE, query = "SELECT p from Reservation p where p.car=:car and p.employee =:employee"),
+    @NamedQuery(name = Reservation.FIND_TO_CONFIRM, query = "SELECT p from Reservation p where p.confirmed is false")
 })
 public class Reservation implements Serializable {
     
@@ -31,6 +32,7 @@ public class Reservation implements Serializable {
     public static final String FIND_BY_EMPLOYEE = "findReservationByEmployee";
     public static final String FIND_BY_CAR = "findReservationByCar";
     public static final String FIND_BY_CAR_AND_EMPLOYEE = "findReservationByCarAndEmployee";
+    public static final String FIND_TO_CONFIRM = "findReservationsToConfirm";
     
     private static final long serialVersionUID = 1L;
     @Id
@@ -50,6 +52,9 @@ public class Reservation implements Serializable {
     @OneToOne
 //    @JoinColumn(name="CAR_ID")
     private Car car;
+    
+    private boolean confirmed = false;
+    
 
     public Long getId() {
         return id;
@@ -106,6 +111,16 @@ public class Reservation implements Serializable {
     public void setCar(Car car) {
         this.car = car;
     }
+
+    public boolean isConfirmed() {
+        return confirmed;
+    }
+
+    public void setConfirmed(boolean confirmed) {
+        this.confirmed = confirmed;
+    }
+    
+    
 
     @Override
     public int hashCode() {
