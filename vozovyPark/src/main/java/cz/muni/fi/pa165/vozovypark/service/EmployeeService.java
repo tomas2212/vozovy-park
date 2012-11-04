@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  *
- * @author andrej
+ * @author Lukas Maticky
  */
 public interface EmployeeService {
     

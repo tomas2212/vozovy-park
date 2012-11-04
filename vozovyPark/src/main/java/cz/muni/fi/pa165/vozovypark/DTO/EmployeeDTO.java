@@ -2,7 +2,7 @@ package cz.muni.fi.pa165.vozovypark.DTO;
 
 /**
  *
- * @author andrej
+ * @author Lukas Maticky
  */
 public class EmployeeDTO {
     private Long id;
