@@ -5,6 +5,7 @@ import cz.muni.fi.pa165.vozovypark.DTO.CompanyLevelDTO;
 import cz.muni.fi.pa165.vozovypark.DTO.EmployeeDTO;
 import cz.muni.fi.pa165.vozovypark.entities.CompanyLevel;
 import cz.muni.fi.pa165.vozovypark.entities.Employee;
+import cz.muni.fi.pa165.vozovypark.service.utils.Adapters;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Repository;
@@ -22,20 +23,16 @@ public class EmployeeServiceImpl implements EmployeeService {
         this.employeeDAO = employeeDAO;
     }
 
-    public EmployeeDTO createEmployee(EmployeeDTO employeeName) {
-        if (employeeName == null) {
-            throw new IllegalArgumentException("Employee name is not specified");
+    public EmployeeDTO createEmployee(EmployeeDTO employee) {
+        if (employee == null) {
+            throw new IllegalArgumentException("Employee is not specified");
         }
+        if (Adapters.EmployeeDtoToEntity(employee).getId() == null) {
+            throw new IllegalArgumentException("Employee is not in db");
+        }
+        employeeDAO.insert(Adapters.EmployeeDtoToEntity(employee));
 
-        Employee employee = new Employee();
-        employee.setAddress(employeeName.getAddress());
-        employee.setId(employeeName.getId());
-        employee.setName(employeeName.getName());
-        employee.setPosition(employeeName.getPosition());
-        employee.setApprove(employeeName.getApprove());
-        employeeDAO.insert(employee);
-
-        return EntityToDtoAdapter(employee);
+        return employee;
     }
 
     public EmployeeDTO updateEmployee(EmployeeDTO employee) {
@@ -45,9 +42,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (employee.getId() == null) {
             throw new IllegalArgumentException("Employee ID is not specified");
         }
-        Employee entity = DtoToEntityAdapter(employee);
+        Employee entity = Adapters.EmployeeDtoToEntity(employee);
         employeeDAO.update(entity);
-        return EntityToDtoAdapter(entity);
+        return Adapters.EmployeeEntityToDto(entity);
 
     }
 
@@ -55,14 +52,14 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (id == null) {
             throw new IllegalArgumentException("ID is not specified");
         }
-        return EntityToDtoAdapter(employeeDAO.getEmployeeById(id));
+        return Adapters.EmployeeEntityToDto(employeeDAO.getEmployeeById(id));
     }
 
     public List<EmployeeDTO> getAllEmployees() {
         List<EmployeeDTO> employee = new ArrayList<EmployeeDTO>();
         List<Employee> allEmployee = employeeDAO.getAllEmployee();
         for (Employee el : allEmployee) {
-            employee.add(EntityToDtoAdapter(el));
+            employee.add(Adapters.EmployeeEntityToDto(el));
         }
         return employee;
     }
@@ -72,30 +69,12 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new IllegalArgumentException("CompanyLevel is not specified");
         }
         List<EmployeeDTO> employee = new ArrayList<EmployeeDTO>();
+        CompanyLevel cl = Adapters.CompanyLevelDtoToEntity(companyLevel);
+        List<Employee> clEmployees = employeeDAO.getAllEmployeeWithHigherLevel(cl);
+        for (Employee e : clEmployees) {
+            employee.add(Adapters.EmployeeEntityToDto(e));
+        }
 
         return employee;
-    }
-
-    private EmployeeDTO EntityToDtoAdapter(Employee employee) {
-        EmployeeDTO dto = new EmployeeDTO();
-        dto.setId(employee.getId());
-        dto.setName(employee.getName());
-        dto.setPosition(employee.getPosition());
-        dto.setApprove(employee.getApprove());
-        dto.setAddress(employee.getAddress());
-
-        return dto;
-    }
-
-    private Employee DtoToEntityAdapter(EmployeeDTO employee) {
-        Employee entity = new Employee();
-        entity.setId(employee.getId());
-        entity.setName(employee.getName());
-        entity.setPosition(employee.getPosition());
-        entity.setApprove(employee.getApprove());
-        entity.setAddress(employee.getAddress());
-
-        return entity;
-
     }
 }
