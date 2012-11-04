@@ -33,6 +33,12 @@ public class ReservationServiceImpl implements ReservationService{
         if (reservation==null) {
             throw new IllegalArgumentException("Reservation name is not specified");
         }
+        if (reservation.getEmployee() == null) {
+            throw new IllegalArgumentException("Employee in reservation is not specified");
+        }
+        if (reservation.getCar() == null) {
+            throw new IllegalArgumentException("Car in reservation is not specified");
+        }
         Reservation res = Adapters.ReservationDtoToEntity(reservation);
         reservationDao.insert(res);
         
@@ -45,6 +51,12 @@ public class ReservationServiceImpl implements ReservationService{
         }
         if (reservation.getId() == null) {
             throw new IllegalArgumentException("Reservation ID is not specified");
+        }
+        if (reservation.getEmployee() == null) {
+            throw new IllegalArgumentException("Employee in reservation is not specified");
+        }
+        if (reservation.getCar() == null) {
+            throw new IllegalArgumentException("Car in reservation is not specified");
         }
         Reservation res = Adapters.ReservationDtoToEntity(reservation);
         reservationDao.update(res);
@@ -151,4 +163,16 @@ public class ReservationServiceImpl implements ReservationService{
         return reservations;
     }
     
+    public ReservationDTO acceptReservation(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("Reservation ID is not specified");
+        }
+        Reservation reservation = reservationDao.getReservationById(id);
+        if (reservation == null) {
+            throw new IllegalArgumentException("Reservation with this ID does not exist");
+        }
+        reservation.setConfirmed(true);
+        reservationDao.update(reservation);
+        return Adapters.ReservationEntityToDto(reservation);
+    }
 }

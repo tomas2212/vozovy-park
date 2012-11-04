@@ -87,6 +87,11 @@ public interface ReservationService {
      */
     void removeReservation(Long id);
     
-     
+    /**
+     * Accepts unconfirmed reservation
+     * @param id ID of reservation
+     * @return Accepted reservation
+     */
+    ReservationDTO acceptReservation(Long id);    
     
 }
