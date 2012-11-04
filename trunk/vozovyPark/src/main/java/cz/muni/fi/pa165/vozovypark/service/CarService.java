@@ -16,7 +16,7 @@ public interface CarService {
     
     CarDTO setCarAvailable(Long id, Boolean available);
     
-    CarDTO removeCar(Long id);
+    void removeCar(Long id);
     
     CarDTO getCarById(Long id);
     
