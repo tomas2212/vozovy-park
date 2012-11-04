@@ -4,11 +4,13 @@ import cz.muni.fi.pa165.vozovypark.entities.CompanyLevel;
 import cz.muni.fi.pa165.vozovypark.entities.Employee;
 import java.util.List;
 import javax.persistence.*;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Lukas Maticky
  */
+@Repository
 public class EmployeeDAOImpl implements EmployeeDAO {
     
     @PersistenceContext

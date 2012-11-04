@@ -7,11 +7,13 @@ import cz.muni.fi.pa165.vozovypark.entities.CompanyLevel;
 import cz.muni.fi.pa165.vozovypark.entities.Employee;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Lukas Maticky
  */
+@Repository
 public class EmployeeServiceImpl implements EmployeeService {
 
     private EmployeeDAO employeeDAO;

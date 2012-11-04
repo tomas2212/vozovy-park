@@ -15,6 +15,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 
 /**
  *
@@ -44,7 +45,10 @@ public class EmployeeDAOTest extends AbstractDAOTest{
             employeeDao.getEmployeeById(null);
             fail("queried with null ID");
         }
-        catch(IllegalArgumentException e){}
+        catch(Exception e){
+            int a = 4;
+            
+        }
         
     }
     
@@ -62,7 +66,7 @@ public class EmployeeDAOTest extends AbstractDAOTest{
             employeeDao.insert(null);
             fail("inserted null");
         }
-        catch(IllegalArgumentException e){
+        catch(DataAccessException e){
             
         }
     }
@@ -82,7 +86,7 @@ public class EmployeeDAOTest extends AbstractDAOTest{
             employeeDao.update(null);
             fail("Updated null entity");
         }
-        catch(IllegalArgumentException e){}
+        catch(DataAccessException e){}
         
         Employee nullId = new Employee();
         nullId.setPosition("CEO");
@@ -90,7 +94,7 @@ public class EmployeeDAOTest extends AbstractDAOTest{
             employeeDao.update(nullId);
             fail("Updated with null ID");
         }
-        catch(IllegalArgumentException e){}
+        catch(DataAccessException e){}
         
         
     }
@@ -115,7 +119,7 @@ public class EmployeeDAOTest extends AbstractDAOTest{
             employeeDao.remove(null);
             fail("Removed null");
         }
-        catch(IllegalArgumentException e){}
+        catch(DataAccessException e){}
         
         Employee nullId = new Employee();
         nullId.setPosition("CEO");
@@ -123,7 +127,7 @@ public class EmployeeDAOTest extends AbstractDAOTest{
             employeeDao.update(nullId);
             fail("Removed with null ID");
         }
-        catch(IllegalArgumentException e){}
+        catch(DataAccessException e){}
         
         
     }

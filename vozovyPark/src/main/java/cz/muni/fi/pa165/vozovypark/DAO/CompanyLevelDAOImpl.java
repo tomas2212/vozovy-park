@@ -6,11 +6,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Andrej Bauer
  */
+@Repository
 public class CompanyLevelDAOImpl implements CompanyLevelDAO {
     
     @PersistenceContext
