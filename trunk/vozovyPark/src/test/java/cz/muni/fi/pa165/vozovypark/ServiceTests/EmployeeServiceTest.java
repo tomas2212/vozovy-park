@@ -98,12 +98,12 @@ public class EmployeeServiceTest {
         employee.setName("Johny Bravo");
 
         EmployeeDTO dto = new EmployeeDTO();
-        employee.setId(new Long(1));
-        employee.setName("Johny Bravo");
+        dto.setId(new Long(1));
+        dto.setName("Johny Bravo");
 
         when(employeeDao.getEmployeeById(new Long(1))).thenReturn(employee);
-
-        assertEquals( dto, employeeService.getEmployeeById(new Long(1)));
+        EmployeeDTO employeeById = employeeService.getEmployeeById(new Long(1));
+        assertEquals( dto, employeeById);
         
         verify(employeeDao, times(1)).getEmployeeById(eq(new Long(1)));
 
