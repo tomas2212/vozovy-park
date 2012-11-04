@@ -47,6 +47,17 @@ public class EmployeeServiceImpl implements EmployeeService {
         return Adapters.EmployeeEntityToDto(entity);
 
     }
+    
+     public void removeEmployee(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("ID is not specified");
+        }
+        Employee employee = employeeDAO.getEmployeeById(id);
+        if (employee == null) {
+            throw new IllegalArgumentException("Car with this ID does not exist");
+        }
+        employeeDAO.remove(employee);
+    }
 
     public EmployeeDTO getEmployeeById(Long id) {
         if (id == null) {
@@ -77,4 +88,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         return employee;
     }
+
+    
 }
