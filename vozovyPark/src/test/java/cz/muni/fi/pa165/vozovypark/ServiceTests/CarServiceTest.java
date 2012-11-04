@@ -38,7 +38,6 @@ public class CarServiceTest {
         CarDTO carDto = new CarDTO();
         carDto.setBrand("Volkswagen");
 
-        CarDTO noNameDto = new CarDTO();
         
         carService.createCar(carDto);
         verify(carDao, times(1)).insert(any(Car.class));
@@ -52,11 +51,6 @@ public class CarServiceTest {
         //testing if employeDao was called before throwing exception
         verify(carDao, never()).insert(null);
 
-        try {
-            carService.createCar(noNameDto);
-            fail("accepted no name");
-        } catch (IllegalArgumentException e) {
-        }
     }
     
     @Test
