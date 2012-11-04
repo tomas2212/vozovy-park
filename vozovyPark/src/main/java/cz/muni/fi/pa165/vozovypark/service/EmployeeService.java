@@ -55,7 +55,7 @@ public interface EmployeeService {
      * @param id employee to remove
      * @return void
      */
-    void removeCar(Long id);
+    void removeEmployee(Long id);
     
         
 }
