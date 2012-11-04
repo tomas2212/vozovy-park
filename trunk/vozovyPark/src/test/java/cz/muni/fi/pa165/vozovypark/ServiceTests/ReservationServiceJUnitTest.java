@@ -199,7 +199,7 @@ public class ReservationServiceJUnitTest {
         reservation1dto.setCar(car1dto);
         reservation1dto.setEmployee(employee1dto);
 
-        
+
         EmployeeDTO employee2dto = new EmployeeDTO();
         employee2dto.setId(new Long(2));
         employee2dto.setName("Silvester Vlkoucho");
@@ -211,7 +211,7 @@ public class ReservationServiceJUnitTest {
         reservation2dto.setCar(car2dto);
         reservation2dto.setEmployee(employee2dto);
 
-        
+
         EmployeeDTO employee3dto = new EmployeeDTO();
         employee3dto.setId(new Long(3));
         employee3dto.setName("Margareta Svietislnkova");
@@ -221,9 +221,9 @@ public class ReservationServiceJUnitTest {
 
         ReservationDTO reservation3dto = new ReservationDTO();
         reservation3dto.setCar(car3dto);
-        reservation3dto.setEmployee(employee3dto);   
-        
-        
+        reservation3dto.setEmployee(employee3dto);
+
+
 
         List<Reservation> allEntities = new ArrayList<Reservation>();
         allEntities.add(reservation1);
@@ -243,6 +243,61 @@ public class ReservationServiceJUnitTest {
         }
         verify(reservationDao, times(1)).getAllReservations();
     }
-    
-    
+
+    @Test
+    public void testGetReservationsByEmployee() {
+        Employee employee = new Employee();
+        employee.setName("Johny Star");
+
+        Car car1 = new Car();
+        car1.setSpz("ahoja");
+
+        Car car2 = new Car();
+        car2.setSpz("tralala");
+
+        Reservation reservation1 = new Reservation();
+        reservation1.setId(new Long(1));
+        reservation1.setCar(car1);
+        reservation1.setEmployee(employee);
+
+        Reservation reservation2 = new Reservation();
+        reservation2.setId(new Long(2));
+        reservation2.setCar(car2);
+        reservation2.setEmployee(employee);
+
+
+        EmployeeDTO edto = new EmployeeDTO();
+        edto.setName("Johny Star");
+
+        CarDTO cdto = new CarDTO();
+        cdto.setSpz("ahoja");
+
+        CarDTO c2dto = new CarDTO();
+        c2dto.setSpz("tralala");
+
+        ReservationDTO rdto = new ReservationDTO();
+        rdto.setId(new Long(1));
+        rdto.setCar(cdto);
+        rdto.setEmployee(edto);
+
+        ReservationDTO r2dto = new ReservationDTO();
+        r2dto.setId(new Long(1));
+        r2dto.setCar(c2dto);
+        r2dto.setEmployee(edto);
+
+
+        List<Reservation> allEntities = new ArrayList<Reservation>();
+        allEntities.add(reservation1);
+        allEntities.add(reservation2);
+
+        List<ReservationDTO> allDTO = new ArrayList<ReservationDTO>();
+        allDTO.add(rdto);
+        allDTO.add(r2dto);
+
+        when(reservationDao.getReservationByEmployee(employee)).thenReturn(allEntities);
+        List<ReservationDTO> reservations = reservationService.getReservationsByEmployee(edto);
+        assertEquals(allDTO.size(), reservations.size());
+
+    }
 }
+
