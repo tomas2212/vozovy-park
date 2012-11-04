@@ -241,4 +241,22 @@ public class EmployeeServiceTest {
         
 
     }
+    
+    @Test
+    public void testRemoveEmployee(){
+       Employee employee = new Employee();
+        employee.setId(new Long(1));
+        employee.setName("Johny Bravo");
+
+        when(employeeDao.getEmployeeById(new Long(1))).thenReturn(employee);
+         
+        employeeService.removeEmployee(new Long(1));
+        verify(employeeDao, times(1)).remove(any(Employee.class));
+        
+        try{
+            employeeService.removeEmployee(null);
+            fail("accepted null id");
+        }
+        catch(IllegalArgumentException e) {}
+    }
 }
