@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  *
- * @author acer
+ * @author Eduard Krak
  */
 public class ReservationServiceImpl implements ReservationService{
 
