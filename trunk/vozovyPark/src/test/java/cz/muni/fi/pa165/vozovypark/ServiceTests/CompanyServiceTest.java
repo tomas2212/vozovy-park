@@ -16,6 +16,8 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import static org.mockito.Mockito.*;
+import static org.junit.Assert.*;
 
 /**
  *
@@ -31,13 +33,10 @@ public class CompanyServiceTest {
 
     @Test
     public void testCreateCompanyLevel() {
-        CompanyLevelDTO companyLevelDto = new CompanyLevelDTO();
-        companyLevelDto.setName("first level");
-
-        CompanyLevelDTO noNameDto = new CompanyLevelDTO();
+       
 
 
-        companyLevelService.createCompanyLevel(companyLevelDto);
+        companyLevelService.createCompanyLevel("first level");
         verify(companyLevelDao, times(1)).insert(any(CompanyLevel.class));
 
         try {
@@ -49,11 +48,11 @@ public class CompanyServiceTest {
         //testing if companyLevelDao was called before throwing exception
         verify(companyLevelDao, never()).insert(null);
 
-        try {
+        /*try {
             companyLevelService.createCompanyLevel(noNameDto);
             fail("accepted no name");
         } catch (IllegalArgumentException e) {
-        }
+        }*/
 
     }
     @Test
@@ -77,11 +76,7 @@ public class CompanyServiceTest {
         //testing if companyLevelDao was called before throwing exception
         verify(companyLevelDao, never()).update(null);
 
-        try {
-            companyLevelService.createCompanyLevel(noIdDto);
-            fail("Implementation accepted no id");
-        } catch (IllegalArgumentException e) {
-        }
+       
     }
     
     @Test
@@ -153,7 +148,7 @@ public class CompanyServiceTest {
         for(int i = 0; i < returnedCompanyLevels.size(); i++){
             assertEquals(allDTO.get(i), returnedCompanyLevels.get(i));
         }
-        verify(companyLevelDao, times(1)).getAllEmployee();
+        verify(companyLevelDao, times(1)).getAllCompanyLevels();
         
     }
 }
