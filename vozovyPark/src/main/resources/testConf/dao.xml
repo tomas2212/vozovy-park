@@ -30,10 +30,7 @@
     <bean id="carDao" class="cz.muni.fi.pa165.vozovypark.DAO.CarDAOImpl" />
     <bean id="reservationDao" class="cz.muni.fi.pa165.vozovypark.DAO.ReservationDAOImpl" />
     
-    <bean id="CompanyLevelService" class="cz.muni.fi.pa165.vozovypark.service.CompanyServiceImpl" >
-        <property name="companyLevelDao" ref="companyLevelDao"/>
-    </bean>
-        
+    
     
     
 
