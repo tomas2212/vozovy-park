@@ -152,4 +152,23 @@ public class CompanyServiceTest {
         verify(companyLevelDao, times(1)).getAllCompanyLevels();
         
     }
+     
+          
+     @Test
+    public void testRemooveCompanyLevel() {
+         CompanyLevel companyLevel = new CompanyLevel();
+        companyLevel.setId(new Long(1));
+        companyLevel.setName("first level");
+
+        when(companyLevelDao.getCompanyLevelById(new Long(1))).thenReturn(companyLevel);
+         
+        companyLevelService.removeCompanyLevel(new Long(1));
+        verify(companyLevelDao, times(1)).remove(any(CompanyLevel.class));
+        
+        try{
+            companyLevelService.removeCompanyLevel(null);
+            fail("accepted null id");
+        }
+        catch(IllegalArgumentException e) {}
+     }
 }
