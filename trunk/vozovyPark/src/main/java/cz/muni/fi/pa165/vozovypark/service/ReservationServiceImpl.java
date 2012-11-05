@@ -4,6 +4,7 @@
  */
 package cz.muni.fi.pa165.vozovypark.service;
 
+import cz.muni.fi.pa165.vozovypark.DAO.CarDAO;
 import cz.muni.fi.pa165.vozovypark.DAO.ReservationDAO;
 import cz.muni.fi.pa165.vozovypark.DTO.CarDTO;
 import cz.muni.fi.pa165.vozovypark.DTO.EmployeeDTO;
@@ -23,6 +24,11 @@ import java.util.List;
 public class ReservationServiceImpl implements ReservationService{
 
     private ReservationDAO reservationDao;
+    private CarDAO carDao;
+
+    public void setCarDao(CarDAO carDao) {
+        this.carDao = carDao;
+    }
 
     public void setReservationDao(ReservationDAO reservationDao) {
         this.reservationDao = reservationDao;
@@ -125,6 +131,11 @@ public class ReservationServiceImpl implements ReservationService{
             throw new IllegalArgumentException("Reservation with this ID does not exist");
         }
         res.setStartDate(new Date());
+        
+        Car car = res.getCar();
+        car.setAvailable(Boolean.FALSE);
+        carDao.update(car);
+        
         reservationDao.update(res);
         return Adapters.ReservationEntityToDto(res);
     }
@@ -138,6 +149,11 @@ public class ReservationServiceImpl implements ReservationService{
             throw new IllegalArgumentException("Reservation with this ID does not exist");
         }
         res.setReturnDate(new Date());
+        
+        Car car = res.getCar();
+        car.setAvailable(Boolean.TRUE);
+        carDao.update(car);
+        
         reservationDao.update(res);
         return Adapters.ReservationEntityToDto(res);
     }

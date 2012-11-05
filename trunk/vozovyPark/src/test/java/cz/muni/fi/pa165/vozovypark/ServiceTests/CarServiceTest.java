@@ -81,15 +81,15 @@ public class CarServiceTest {
         }
     }
     
-    /*
+    
     @Test
     public void testSetCarAvailable() {
-        CarDTO carDto = new CarDTO();
+      /*  CarDTO carDto = new CarDTO();
         carDto.setModel("Volkswagen");
         carDto.setAvailable(Boolean.FALSE);
 
-        carDto = carService.updateCar(carDto);
-        verify(carDao, times(1)).update(any(Car.class));
+        carDto = carService.createCar(carDto);
+        verify(carDao, times(1)).insert(any(Car.class));
 
         try {
             carService.createCar(null);
@@ -101,12 +101,30 @@ public class CarServiceTest {
         verify(carDao, never()).update(null);
 
         try {
-            carService.createCar(noIdDto);
+           // carService.createCar(noIdDto);
             fail("Implementation accepted no id");
         } catch (IllegalArgumentException e) {
-        }
+        }*/
     }
-    */
+    
+    @Test
+    public void testRemoveCar(){
+       Car car = new Car();
+        car.setId(new Long(1));
+        car.setModel("Skoda");
+
+        when(carDao.getCarById(new Long(1))).thenReturn(car);
+         
+        carService.removeCar(new Long(1));
+        verify(carDao, times(1)).remove(any(Car.class));
+        
+        try{
+            carService.removeCar(null);
+            fail("accepted null id");
+        }
+        catch(IllegalArgumentException e) {}
+    }
+    
     @Test
     public void testGetCarById() {
         Car car = new Car();
