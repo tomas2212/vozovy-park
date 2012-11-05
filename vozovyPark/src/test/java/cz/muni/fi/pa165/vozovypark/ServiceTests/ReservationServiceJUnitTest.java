@@ -309,7 +309,7 @@ public class ReservationServiceJUnitTest {
         Employee employee = new Employee();
         employee.setId(new Long(1));
         employee.setName("Johny Star");
-        
+
         Employee employee2 = new Employee();
         employee2.setId(new Long(2));
         employee2.setName("Jozko Mrkvicka");
@@ -330,9 +330,9 @@ public class ReservationServiceJUnitTest {
 
         EmployeeDTO edto = new EmployeeDTO();
         edto.setName("Johny Star");
-        
+
         EmployeeDTO e2dto = new EmployeeDTO();
-        edto.setName("Jozko Mrkvicka");        
+        edto.setName("Jozko Mrkvicka");
 
         CarDTO cdto = new CarDTO();
         cdto.setSpz("ahoja");
@@ -360,6 +360,69 @@ public class ReservationServiceJUnitTest {
         List<ReservationDTO> reservations = reservationService.getReservationsByCar(cdto);
         assertEquals(allDTO.size(), reservations.size());
     }
-    
-    
+
+    @Test
+    public void testRentCar() {
+
+        Employee employee = new Employee();
+        employee.setId(new Long(1));
+        employee.setName("Johny Bravo");
+
+        Car car = new Car();
+        car.setId(new Long(1));
+        car.setAvailable(true);
+        car.setSpz("CA123GD");
+
+        Reservation reservation = new Reservation();
+        reservation.setId(new Long(1));
+        reservation.setCar(car);
+        reservation.setEmployee(employee);
+
+        EmployeeDTO edto = new EmployeeDTO();
+        edto.setName("Johny Bravo");
+
+        CarDTO cdto = new CarDTO();
+        cdto.setId(new Long(1));
+        cdto.setAvailable(true);
+        cdto.setSpz("CA123GD");
+
+        ReservationDTO rdto = new ReservationDTO();
+        rdto.setId(new Long(1));
+        rdto.setCar(cdto);
+        rdto.setEmployee(edto);
+
+        when(reservationDao.getReservationById(new Long(1))).thenReturn(reservation);
+        
+        ReservationDTO reservation2 = (reservationService.getReservationById(reservation.getId()));
+   //     assertEquals(, car);
+
+    }
+
+    @Test
+    public void testRemoveReservation() {
+        Employee employee = new Employee();
+        employee.setId(new Long(1));
+        employee.setName("Johny Bravo");
+
+        Car car = new Car();
+        car.setId(new Long(1));
+        car.setAvailable(true);
+        car.setSpz("CA123GD");
+
+        Reservation reservation = new Reservation();
+        reservation.setId(new Long(1));
+        reservation.setCar(car);
+        reservation.setEmployee(employee);
+
+        when(reservationDao.getReservationById(new Long(1))).thenReturn(reservation);
+
+        reservationService.removeReservation(new Long(1));
+        verify(reservationDao, times(1)).remove(any(Reservation.class));
+
+        try {
+            reservationService.removeReservation(null);
+            fail("accepted null id");
+        } catch (IllegalArgumentException e) {
+        }
+    }
 }
