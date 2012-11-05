@@ -23,6 +23,7 @@ import static org.junit.Assert.*;
  *
  * @author Lukas Maticky
  */
+
 @RunWith(MockitoJUnitRunner.class)
 public class CompanyServiceTest {
     
