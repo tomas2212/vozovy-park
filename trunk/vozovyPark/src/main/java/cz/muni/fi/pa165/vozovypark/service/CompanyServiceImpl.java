@@ -29,7 +29,10 @@ public class CompanyServiceImpl implements CompanyLevelService {
         if(companyLevelName == null){
             throw new IllegalArgumentException("CompanyLevel name is not specified");
         }
-        Integer levelValue = companyLevelDao.getMaxLevelValue() + 1;
+        Integer levelValue = 0;
+        if(companyLevelDao.getMaxLevelValue() != null){
+            levelValue = companyLevelDao.getMaxLevelValue() + 1;
+        }
         CompanyLevel companyLevel = new CompanyLevel();
         companyLevel.setName(companyLevelName);
         companyLevel.setLevelValue(levelValue);
