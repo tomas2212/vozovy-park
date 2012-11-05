@@ -63,14 +63,14 @@ public interface ReservationService {
     
     /**
      * Rent the car to employee and save current date to reservation
-     * @param reserVationId Reservation to start
+     * @param reservationId Reservation to start
      * @return Reservation - informations about rent
      */
-    ReservationDTO rentCar(Long reserVationId);
+    ReservationDTO rentCar(Long reservationId);
    
     /**
      * Car is returned and current date is saved to reservation
-     * @param reserVationId Reservation to end
+     * @param reservationId Reservation to end
      * @return Reservation - informations about rent
      */
     ReservationDTO returnCar(Long reservationId);
