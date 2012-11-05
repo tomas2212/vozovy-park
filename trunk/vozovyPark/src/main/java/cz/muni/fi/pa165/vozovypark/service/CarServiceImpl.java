@@ -8,11 +8,15 @@ import cz.muni.fi.pa165.vozovypark.entities.CompanyLevel;
 import cz.muni.fi.pa165.vozovypark.service.utils.Adapters;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Tomas Svrcek
  */
+@Service
+@Transactional
 public class CarServiceImpl implements CarService {
 
     CarDAO carDao;
