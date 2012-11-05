@@ -16,11 +16,16 @@ import cz.muni.fi.pa165.vozovypark.service.utils.Adapters;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Eduard Krak
  */
+
+@Service
+@Transactional
 public class ReservationServiceImpl implements ReservationService{
 
     private ReservationDAO reservationDao;
