@@ -48,7 +48,7 @@ public class CarServiceTest {
         } catch (IllegalArgumentException e) {
         }
 
-        //testing if employeDao was called before throwing exception
+        //testing if carDao was called before throwing exception
         verify(carDao, never()).insert(null);
 
     }
@@ -71,7 +71,7 @@ public class CarServiceTest {
         } catch (IllegalArgumentException e) {
         }
 
-        //testing if employeDao was called before throwing exception
+        //testing if carDao was called before throwing exception
         verify(carDao, never()).update(null);
 
         try {
@@ -84,27 +84,19 @@ public class CarServiceTest {
     
     @Test
     public void testSetCarAvailable() {
-      /*  CarDTO carDto = new CarDTO();
-        carDto.setModel("Volkswagen");
-        carDto.setAvailable(Boolean.FALSE);
-
-        carDto = carService.createCar(carDto);
+        Car car = new Car();
+        car.setModel("Volkswagen");
+        car.setAvailable(Boolean.FALSE);
+        car.setId(new Long(1));
+        
+        when(carDao.getCarById(new Long(1))).thenReturn(car);
+        
+        carDao.insert(car);
         verify(carDao, times(1)).insert(any(Car.class));
 
-        try {
-            carService.createCar(null);
-            fail("Implementation accepted null value");
-        } catch (IllegalArgumentException e) {
-        }
-
-        //testing if employeDao was called before throwing exception
-        verify(carDao, never()).update(null);
-
-        try {
-           // carService.createCar(noIdDto);
-            fail("Implementation accepted no id");
-        } catch (IllegalArgumentException e) {
-        }*/
+        carService.setCarAvailable(car.getId(), Boolean.TRUE);
+        
+        assertTrue(carDao.getCarById(car.getId()).getAvailable());
     }
     
     @Test
