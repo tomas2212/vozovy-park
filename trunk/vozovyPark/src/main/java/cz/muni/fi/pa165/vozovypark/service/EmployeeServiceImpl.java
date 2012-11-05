@@ -34,9 +34,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (employee.getName() == null) {
             throw new IllegalArgumentException("Employee name is not specified");
         }
-        employeeDAO.insert(Adapters.EmployeeDtoToEntity(employee));
+        Employee ead = Adapters.EmployeeDtoToEntity(employee);
+        employeeDAO.insert(ead);
 
-        return employee;
+
+        return Adapters.EmployeeEntityToDto(ead);
     }
 
     public EmployeeDTO updateEmployee(EmployeeDTO employee) {
@@ -51,8 +53,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         return Adapters.EmployeeEntityToDto(entity);
 
     }
-    
-     public void removeEmployee(Long id) {
+
+    public void removeEmployee(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("ID is not specified");
         }
@@ -92,6 +94,4 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         return employee;
     }
-
-    
 }
