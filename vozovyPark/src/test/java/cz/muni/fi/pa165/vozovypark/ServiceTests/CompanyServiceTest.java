@@ -57,7 +57,7 @@ public class CompanyServiceTest {
 
     }
     @Test
-    public void testUpdateEmployee() {
+    public void testUpdateCompanyLevel() {
         CompanyLevelDTO companyLevelDto = new CompanyLevelDTO();
         companyLevelDto.setName("first level");
         companyLevelDto.setId(new Long(1));
