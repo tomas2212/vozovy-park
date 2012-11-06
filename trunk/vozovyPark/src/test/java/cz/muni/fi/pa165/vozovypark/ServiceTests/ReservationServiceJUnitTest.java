@@ -1,5 +1,7 @@
 package cz.muni.fi.pa165.vozovypark.ServiceTests;
 
+import cz.muni.fi.pa165.vozovypark.DAO.CarDAO;
+import cz.muni.fi.pa165.vozovypark.DAO.EmployeeDAO;
 import cz.muni.fi.pa165.vozovypark.DAO.ReservationDAO;
 import cz.muni.fi.pa165.vozovypark.DTO.CarDTO;
 import cz.muni.fi.pa165.vozovypark.DTO.EmployeeDTO;
@@ -14,8 +16,6 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
 import org.mockito.Mock;
 import static org.mockito.Mockito.*;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -29,6 +29,10 @@ public class ReservationServiceJUnitTest {
 
     @Mock
     private ReservationDAO reservationDao;
+    @Mock
+    private CarDAO carDao;
+    @Mock
+    private EmployeeDAO employeeDao;
     @InjectMocks
     private ReservationServiceImpl reservationService;
 
@@ -104,6 +108,34 @@ public class ReservationServiceJUnitTest {
         try {
             reservationService.createReservation(res2Dto);
             fail("Implementation accepted but was no car");
+        } catch (IllegalArgumentException e) {
+        }
+    }
+
+    @Test
+    public void testRemoveReservation() {
+        Employee employee = new Employee();
+        employee.setId(new Long(1));
+        employee.setName("Johny Bravo");
+
+        Car car = new Car();
+        car.setId(new Long(1));
+        car.setAvailable(true);
+        car.setSpz("CA123GD");
+
+        Reservation reservation = new Reservation();
+        reservation.setId(new Long(1));
+        reservation.setCar(car);
+        reservation.setEmployee(employee);
+
+        when(reservationDao.getReservationById(new Long(1))).thenReturn(reservation);
+
+        reservationService.removeReservation(new Long(1));
+        verify(reservationDao, times(1)).remove(any(Reservation.class));
+
+        try {
+            reservationService.removeReservation(null);
+            fail("accepted null id");
         } catch (IllegalArgumentException e) {
         }
     }
@@ -191,8 +223,6 @@ public class ReservationServiceJUnitTest {
         reservation3.setEmployee(employee3);
 
 
-
-
         EmployeeDTO employee1dto = new EmployeeDTO();
         employee1dto.setId(new Long(1));
         employee1dto.setName("Johny Bravo");
@@ -227,7 +257,6 @@ public class ReservationServiceJUnitTest {
         ReservationDTO reservation3dto = new ReservationDTO();
         reservation3dto.setCar(car3dto);
         reservation3dto.setEmployee(employee3dto);
-
 
 
         List<Reservation> allEntities = new ArrayList<Reservation>();
@@ -378,6 +407,7 @@ public class ReservationServiceJUnitTest {
         reservation.setCar(car);
         reservation.setEmployee(employee);
 
+
         EmployeeDTO edto = new EmployeeDTO();
         edto.setName("Johny Bravo");
 
@@ -392,14 +422,16 @@ public class ReservationServiceJUnitTest {
         rdto.setEmployee(edto);
 
         when(reservationDao.getReservationById(new Long(1))).thenReturn(reservation);
-        
-        ReservationDTO reservation2 = (reservationService.getReservationById(reservation.getId()));
-   //     assertEquals(, car);
+        reservationService.rentCar(car.getId());
+
+        verify(reservationDao, times(1)).update(any(Reservation.class));
+        verify(carDao, times(1)).update(any(Car.class));
 
     }
 
     @Test
-    public void testRemoveReservation() {
+    public void testReturnCar() {
+
         Employee employee = new Employee();
         employee.setId(new Long(1));
         employee.setName("Johny Bravo");
@@ -414,15 +446,216 @@ public class ReservationServiceJUnitTest {
         reservation.setCar(car);
         reservation.setEmployee(employee);
 
+        EmployeeDTO edto = new EmployeeDTO();
+        edto.setName("Johny Bravo");
+
+        CarDTO cdto = new CarDTO();
+        cdto.setId(new Long(1));
+        cdto.setAvailable(true);
+        cdto.setSpz("CA123GD");
+
+        ReservationDTO rdto = new ReservationDTO();
+        rdto.setId(new Long(1));
+        rdto.setCar(cdto);
+        rdto.setEmployee(edto);
+
         when(reservationDao.getReservationById(new Long(1))).thenReturn(reservation);
+        reservationService.returnCar(car.getId());
 
-        reservationService.removeReservation(new Long(1));
-        verify(reservationDao, times(1)).remove(any(Reservation.class));
+        verify(reservationDao, times(1)).update(any(Reservation.class));
+        verify(carDao, times(1)).update(any(Car.class));
 
-        try {
-            reservationService.removeReservation(null);
-            fail("accepted null id");
-        } catch (IllegalArgumentException e) {
-        }
     }
+
+    @Test
+    public void testGetReservationsByCarAndEmployee() {
+        Employee employee1 = new Employee();
+        employee1.setId(new Long(1));
+        employee1.setName("Johny Bravo");
+
+        Car car1 = new Car();
+        car1.setSpz("CA123GD");
+
+        Reservation reservation1 = new Reservation();
+        reservation1.setCar(car1);
+        reservation1.setEmployee(employee1);
+
+
+        Employee employee2 = new Employee();
+        employee2.setId(new Long(2));
+        employee2.setName("Silvester Vlkoucho");
+
+        Car car2 = new Car();
+        car2.setSpz("BA125EX");
+
+        Reservation reservation2 = new Reservation();
+        reservation2.setCar(car2);
+        reservation2.setEmployee(employee2);
+
+
+        Reservation reservation3 = new Reservation();
+        reservation3.setCar(car1);
+        reservation3.setEmployee(employee1);
+
+
+
+        EmployeeDTO employee1dto = new EmployeeDTO();
+        employee1dto.setId(new Long(1));
+        employee1dto.setName("Johny Bravo");
+
+        CarDTO car1dto = new CarDTO();
+        car1dto.setSpz("CA123GD");
+
+        ReservationDTO reservation1dto = new ReservationDTO();
+        reservation1dto.setCar(car1dto);
+        reservation1dto.setEmployee(employee1dto);
+
+
+        EmployeeDTO employee2dto = new EmployeeDTO();
+        employee2dto.setId(new Long(2));
+        employee2dto.setName("Silvester Vlkoucho");
+
+        CarDTO car2dto = new CarDTO();
+        car2.setSpz("BA125EX");
+
+        ReservationDTO reservation2dto = new ReservationDTO();
+        reservation2dto.setCar(car2dto);
+        reservation2dto.setEmployee(employee2dto);
+
+        ReservationDTO reservation3dto = new ReservationDTO();
+        reservation3dto.setCar(car1dto);
+        reservation3dto.setEmployee(employee1dto);
+
+
+        List<Reservation> allEntities = new ArrayList<Reservation>();
+        allEntities.add(reservation1);
+        allEntities.add(reservation2);
+        allEntities.add(reservation3);
+
+        List<ReservationDTO> allDTO = new ArrayList<ReservationDTO>();
+        allDTO.add(reservation1dto);
+        allDTO.add(reservation2dto);
+        allDTO.add(reservation3dto);
+
+        when(reservationDao.getReservationByCarAndEmployee(car1, employee1)).thenReturn(allEntities);
+        List<ReservationDTO> reservations = reservationService.getReservationsByCarAndEmployee(car1dto, employee1dto);
+        assertEquals(allDTO.size(), reservations.size());
+
+    }
+
+    @Test
+    public void testGetReservationsToConfirm() {
+
+        Employee employee1 = new Employee();
+        employee1.setId(new Long(1));
+        employee1.setName("Johny Bravo");
+
+        Car car1 = new Car();
+        car1.setSpz("CA123GD");
+
+        Reservation reservation1 = new Reservation();
+        reservation1.setId(new Long(1));
+        reservation1.setCar(car1);
+        reservation1.setEmployee(employee1);
+
+        Employee employee2 = new Employee();
+        employee2.setId(new Long(2));
+        employee2.setName("Silvester Vlkoucho");
+
+        Car car2 = new Car();
+        car2.setSpz("BA125EX");
+
+        Reservation reservation2 = new Reservation();
+        reservation2.setCar(car2);
+        reservation2.setEmployee(employee2);
+
+        EmployeeDTO employee1dto = new EmployeeDTO();
+        employee1dto.setId(new Long(1));
+        employee1dto.setName("Johny Bravo");
+
+        CarDTO car1dto = new CarDTO();
+        car1dto.setId(new Long(1));
+        car1dto.setSpz("CA123GD");
+
+        ReservationDTO reservation1dto = new ReservationDTO();
+        reservation1dto.setId(new Long(1));
+        reservation1dto.setCar(car1dto);
+        reservation1dto.setEmployee(employee1dto);
+
+        EmployeeDTO employee2dto = new EmployeeDTO();
+        employee2dto.setId(new Long(2));
+        employee2dto.setName("Silvester Vlkoucho");
+
+        CarDTO car2dto = new CarDTO();
+        car2.setSpz("BA125EX");
+
+        ReservationDTO reservation2dto = new ReservationDTO();
+        reservation2dto.setCar(car2dto);
+        reservation2dto.setEmployee(employee2dto);
+        
+        List<Reservation> reser = new ArrayList<Reservation>();
+        reser.add(reservation1);
+        reser.add(reservation2);
+        
+        List<ReservationDTO> reserDto = new ArrayList<ReservationDTO>();
+        reserDto.add(reservation1dto);
+        reserDto.add(reservation2dto);
+        
+        when(reservationDao.getReservationsToConfirm()).thenReturn(reser);
+        List<ReservationDTO> reservations = reservationService.getReservationsToConfirm();
+        assertEquals(reserDto.size(), reservations.size());
+            
+    }
+
+    @Test
+    public void testAcceptReservation() {
+        Employee employee1 = new Employee();
+        employee1.setId(new Long(1));
+        employee1.setName("Johny Bravo");
+
+        Car car1 = new Car();
+        car1.setSpz("CA123GD");
+
+        Reservation reservation1 = new Reservation();
+        reservation1.setId(new Long(1));
+        reservation1.setCar(car1);
+        reservation1.setEmployee(employee1);
+
+        EmployeeDTO employee1dto = new EmployeeDTO();
+        employee1dto.setId(new Long(1));
+        employee1dto.setName("Johny Bravo");
+
+        CarDTO car1dto = new CarDTO();
+        car1dto.setId(new Long(1));
+        car1dto.setSpz("CA123GD");
+
+        ReservationDTO reservation1dto = new ReservationDTO();
+        reservation1dto.setId(new Long(1));
+        reservation1dto.setCar(car1dto);
+        reservation1dto.setEmployee(employee1dto);
+
+        when(reservationDao.getReservationById(new Long(1))).thenReturn(reservation1);
+        reservationService.acceptReservation(reservation1.getId());
+
+        verify(reservationDao, times(1)).update(any(Reservation.class));
+    }
+    /*
+     class testovacieDao {
+
+     List getAll() {
+     return new Array
+    
+     }
+
+     getById(int i) {
+     if (i == 2) {
+     return null;
+     }
+
+     if (i == 0) {
+     return Object
+     }
+     }
+     }
+     */
 }
