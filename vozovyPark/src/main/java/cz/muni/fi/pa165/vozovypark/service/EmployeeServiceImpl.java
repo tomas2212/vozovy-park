@@ -5,9 +5,10 @@ import cz.muni.fi.pa165.vozovypark.DTO.CompanyLevelDTO;
 import cz.muni.fi.pa165.vozovypark.DTO.EmployeeDTO;
 import cz.muni.fi.pa165.vozovypark.entities.CompanyLevel;
 import cz.muni.fi.pa165.vozovypark.entities.Employee;
-import cz.muni.fi.pa165.vozovypark.service.utils.Adapters;
+
 import java.util.ArrayList;
 import java.util.List;
+import org.dozer.Mapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,9 +23,15 @@ import org.springframework.transaction.annotation.Transactional;
 public class EmployeeServiceImpl implements EmployeeService {
 
     private EmployeeDAO employeeDAO;
+    
+    private Mapper mapper;
 
     public void setEmployeeDAO(EmployeeDAO employeeDAO) {
         this.employeeDAO = employeeDAO;
+    }
+    
+    public void setMapper(Mapper mapper){
+        this.mapper = mapper;
     }
 
     public EmployeeDTO createEmployee(EmployeeDTO employee) {
@@ -34,11 +41,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (employee.getName() == null) {
             throw new IllegalArgumentException("Employee name is not specified");
         }
-        Employee ead = Adapters.EmployeeDtoToEntity(employee);
+        Employee ead = mapper.map(employee, Employee.class);
         employeeDAO.insert(ead);
 
 
-        return Adapters.EmployeeEntityToDto(ead);
+        return mapper.map(ead, EmployeeDTO.class);
     }
 
     public EmployeeDTO updateEmployee(EmployeeDTO employee) {
@@ -48,9 +55,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (employee.getId() == null) {
             throw new IllegalArgumentException("Employee ID is not specified");
         }
-        Employee entity = Adapters.EmployeeDtoToEntity(employee);
+        Employee entity = mapper.map(employee, Employee.class);
         employeeDAO.update(entity);
-        return Adapters.EmployeeEntityToDto(entity);
+        return mapper.map(entity, EmployeeDTO.class);
 
     }
 
@@ -69,14 +76,18 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (id == null) {
             throw new IllegalArgumentException("ID is not specified");
         }
-        return Adapters.EmployeeEntityToDto(employeeDAO.getEmployeeById(id));
+        Employee employeeById = employeeDAO.getEmployeeById(id);
+        if(employeeById == null){
+            return null;
+        }
+        return mapper.map(employeeById, EmployeeDTO.class);
     }
 
     public List<EmployeeDTO> getAllEmployees() {
         List<EmployeeDTO> employee = new ArrayList<EmployeeDTO>();
         List<Employee> allEmployee = employeeDAO.getAllEmployee();
         for (Employee el : allEmployee) {
-            employee.add(Adapters.EmployeeEntityToDto(el));
+            employee.add(mapper.map(el, EmployeeDTO.class));
         }
         return employee;
     }
@@ -86,10 +97,10 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new IllegalArgumentException("CompanyLevel is not specified");
         }
         List<EmployeeDTO> employee = new ArrayList<EmployeeDTO>();
-        CompanyLevel cl = Adapters.CompanyLevelDtoToEntity(companyLevel);
+        CompanyLevel cl = mapper.map(companyLevel, CompanyLevel.class);
         List<Employee> clEmployees = employeeDAO.getAllEmployeeWithHigherLevel(cl);
         for (Employee e : clEmployees) {
-            employee.add(Adapters.EmployeeEntityToDto(e));
+            employee.add(mapper.map(e, EmployeeDTO.class));
         }
 
         return employee;

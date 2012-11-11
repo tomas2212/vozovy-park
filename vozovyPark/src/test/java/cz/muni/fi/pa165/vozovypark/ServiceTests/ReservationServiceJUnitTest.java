@@ -9,32 +9,40 @@ import cz.muni.fi.pa165.vozovypark.DTO.ReservationDTO;
 import cz.muni.fi.pa165.vozovypark.entities.Car;
 import cz.muni.fi.pa165.vozovypark.entities.Employee;
 import cz.muni.fi.pa165.vozovypark.entities.Reservation;
+import cz.muni.fi.pa165.vozovypark.service.ReservationService;
 import cz.muni.fi.pa165.vozovypark.service.ReservationServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.*;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import static org.mockito.Mockito.*;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
  * @author Tomas
  */
-@RunWith(MockitoJUnitRunner.class)
-public class ReservationServiceJUnitTest {
+public class ReservationServiceJUnitTest extends AbstractServiceTest {
 
-    @Mock
+    @Autowired
     private ReservationDAO reservationDao;
-    @Mock
+    
+    @Autowired
     private CarDAO carDao;
-    @Mock
-    private EmployeeDAO employeeDao;
-    @InjectMocks
-    private ReservationServiceImpl reservationService;
+     
+    @Autowired
+    private ReservationService reservationService;
+    
+    @Before
+    public void setUp(){
+        reset(reservationDao);
+        reset(carDao);
+    }
 
     @Test
     public void testCreateReservation() {

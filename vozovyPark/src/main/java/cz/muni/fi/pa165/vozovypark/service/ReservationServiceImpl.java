@@ -12,10 +12,11 @@ import cz.muni.fi.pa165.vozovypark.DTO.ReservationDTO;
 import cz.muni.fi.pa165.vozovypark.entities.Car;
 import cz.muni.fi.pa165.vozovypark.entities.Employee;
 import cz.muni.fi.pa165.vozovypark.entities.Reservation;
-import cz.muni.fi.pa165.vozovypark.service.utils.Adapters;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.dozer.Mapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,9 +31,15 @@ public class ReservationServiceImpl implements ReservationService{
 
     private ReservationDAO reservationDao;
     private CarDAO carDao;
+    
+    private Mapper mapper;
 
     public void setCarDao(CarDAO carDao) {
         this.carDao = carDao;
+    }
+    
+    public void setMapper(Mapper mapper){
+        this.mapper = mapper;
     }
 
     public void setReservationDao(ReservationDAO reservationDao) {
@@ -50,10 +57,10 @@ public class ReservationServiceImpl implements ReservationService{
         if (reservation.getCar() == null) {
             throw new IllegalArgumentException("Car in reservation is not specified");
         }
-        Reservation res = Adapters.ReservationDtoToEntity(reservation);
+        Reservation res = mapper.map(reservation, Reservation.class);
         reservationDao.insert(res);
         
-        return Adapters.ReservationEntityToDto(res);
+        return mapper.map(res, ReservationDTO.class);
     }
 
     public ReservationDTO updateReservation(ReservationDTO reservation) {
@@ -69,17 +76,21 @@ public class ReservationServiceImpl implements ReservationService{
         if (reservation.getCar() == null) {
             throw new IllegalArgumentException("Car in reservation is not specified");
         }
-        Reservation res = Adapters.ReservationDtoToEntity(reservation);
+        Reservation res = mapper.map(reservation, Reservation.class);
         reservationDao.update(res);
         
-        return Adapters.ReservationEntityToDto(res);
+        return mapper.map(res, ReservationDTO.class);
     }
 
     public ReservationDTO getReservationById(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("ID is not specified");
         }
-        return Adapters.ReservationEntityToDto(reservationDao.getReservationById(id));
+        Reservation reservationById = reservationDao.getReservationById(id);
+        if(reservationById == null){
+            return null;
+        }
+        return mapper.map(reservationById, ReservationDTO.class);
     }
 
     public List<ReservationDTO> getReservationsByEmployee(EmployeeDTO employee) {
@@ -87,8 +98,8 @@ public class ReservationServiceImpl implements ReservationService{
             throw new IllegalArgumentException("ID is not specified");
         }
         List<ReservationDTO> reservations = new ArrayList<ReservationDTO>();
-        for (Reservation res : reservationDao.getReservationByEmployee(Adapters.EmployeeDtoToEntity(employee))){
-            reservations.add(Adapters.ReservationEntityToDto(res));
+        for (Reservation res : reservationDao.getReservationByEmployee(mapper.map(employee, Employee.class))){
+            reservations.add(mapper.map(res, ReservationDTO.class));
         }
         return reservations;
     }
@@ -98,8 +109,8 @@ public class ReservationServiceImpl implements ReservationService{
             throw new IllegalArgumentException("Car is not specified");
         }
         List<ReservationDTO> reservations = new ArrayList<ReservationDTO>();
-        for (Reservation res : reservationDao.getReservationByCar(Adapters.CarDtoToEntity(car))){
-            reservations.add(Adapters.ReservationEntityToDto(res));
+        for (Reservation res : reservationDao.getReservationByCar(mapper.map(car, Car.class))){
+            reservations.add(mapper.map(res, ReservationDTO.class));
         }
         return reservations;
     }
@@ -112,8 +123,8 @@ public class ReservationServiceImpl implements ReservationService{
             throw new IllegalArgumentException("Employee is not specified");
         }
         List<ReservationDTO> reservations = new ArrayList<ReservationDTO>();
-        for (Reservation res : reservationDao.getReservationByCarAndEmployee(Adapters.CarDtoToEntity(car), Adapters.EmployeeDtoToEntity(employee))){
-            reservations.add(Adapters.ReservationEntityToDto(res));
+        for (Reservation res : reservationDao.getReservationByCarAndEmployee(mapper.map(car, Car.class), mapper.map(employee, Employee.class))){
+            reservations.add(mapper.map(res, ReservationDTO.class));
         }
         return reservations;
     }
@@ -122,7 +133,7 @@ public class ReservationServiceImpl implements ReservationService{
         
         List<ReservationDTO> reservations = new ArrayList<ReservationDTO>();
         for (Reservation res : reservationDao.getReservationsToConfirm()){
-            reservations.add(Adapters.ReservationEntityToDto(res));
+            reservations.add(mapper.map(res, ReservationDTO.class));
         }
         return reservations;
     }
@@ -142,7 +153,7 @@ public class ReservationServiceImpl implements ReservationService{
         carDao.update(car);
         
         reservationDao.update(res);
-        return Adapters.ReservationEntityToDto(res);
+        return mapper.map(res, ReservationDTO.class);
     }
 
     public ReservationDTO returnCar(Long reservationId) {
@@ -160,7 +171,7 @@ public class ReservationServiceImpl implements ReservationService{
         carDao.update(car);
         
         reservationDao.update(res);
-        return Adapters.ReservationEntityToDto(res);
+        return mapper.map(res, ReservationDTO.class);
     }
 
     public void removeReservation(Long id) {
@@ -179,7 +190,7 @@ public class ReservationServiceImpl implements ReservationService{
         
         List<ReservationDTO> reservations = new ArrayList<ReservationDTO>();
         for (Reservation res : reservationDao.getAllReservations()){
-            reservations.add(Adapters.ReservationEntityToDto(res));
+            reservations.add(mapper.map(res, ReservationDTO.class));
         }
         return reservations;
     }
@@ -194,6 +205,6 @@ public class ReservationServiceImpl implements ReservationService{
         }
         reservation.setConfirmed(true);
         reservationDao.update(reservation);
-        return Adapters.ReservationEntityToDto(reservation);
+        return mapper.map(reservation, ReservationDTO.class);
     }
 }
