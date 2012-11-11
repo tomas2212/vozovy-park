@@ -22,6 +22,9 @@ public class CompanyLevelDAOImpl implements CompanyLevelDAO {
     @PersistenceContext
     protected EntityManager entityManager;
     
+    public void setEntityManager(EntityManager em){
+        entityManager = em;
+    }
    
     public void insert(CompanyLevel companyLevel) {
         if(companyLevel == null){
