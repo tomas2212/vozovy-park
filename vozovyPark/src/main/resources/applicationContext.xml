@@ -25,6 +25,8 @@
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
     
+    <bean id="mapper" class="org.dozer.DozerBeanMapper" /> 
+    
     <bean id="employeeDao" class="cz.muni.fi.pa165.vozovypark.DAO.EmployeeDAOImpl" />
     <bean id="companyLevelDao" class="cz.muni.fi.pa165.vozovypark.DAO.CompanyLevelDAOImpl" />
     <bean id="carDao" class="cz.muni.fi.pa165.vozovypark.DAO.CarDAOImpl" />
@@ -32,10 +34,23 @@
     
     <bean id="CompanyLevelService" class="cz.muni.fi.pa165.vozovypark.service.CompanyServiceImpl" >
         <property name="companyLevelDao" ref="companyLevelDao"/>
+        <property name="mapper" ref="mapper" />
     </bean>
     
     <bean id="EmployeeService" class="cz.muni.fi.pa165.vozovypark.service.EmployeeServiceImpl" >
         <property name="employeeDAO" ref="employeeDao"/>
+        <property name="mapper" ref="mapper" />
+    </bean>
+    
+    <bean id="CarService" class="cz.muni.fi.pa165.vozovypark.service.CarServiceImpl" >  
+        <property name="carDao" ref="carDao" />
+        <property name="mapper" ref="mapper" />
+    </bean>
+    
+    <bean id="ReservationService" class="cz.muni.fi.pa165.vozovypark.service.ReservationServiceImpl" >  
+        <property name="reservationDao" ref="reservationDao" />
+        <property name="carDao" ref="carDao" />
+        <property name="mapper" ref="mapper" />
     </bean>
     
     
