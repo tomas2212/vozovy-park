@@ -5,29 +5,37 @@ import cz.muni.fi.pa165.vozovypark.DTO.CompanyLevelDTO;
 import cz.muni.fi.pa165.vozovypark.DTO.EmployeeDTO;
 import cz.muni.fi.pa165.vozovypark.entities.CompanyLevel;
 import cz.muni.fi.pa165.vozovypark.entities.Employee;
+import cz.muni.fi.pa165.vozovypark.service.EmployeeService;
 import cz.muni.fi.pa165.vozovypark.service.EmployeeServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import static org.mockito.Mockito.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
  * @author Andrej Bauer
  */
-@RunWith(MockitoJUnitRunner.class)
-public class EmployeeServiceTest {
 
-    @Mock
+public class EmployeeServiceTest extends AbstractServiceTest {
+
+    @Autowired
     private EmployeeDAO employeeDao;
-    @InjectMocks
-    private EmployeeServiceImpl employeeService;
+    @Autowired
+    private EmployeeService employeeService;
+    
+    @Before
+    public void setUp(){
+        reset(employeeDao);
+    }
 
     @Test
     public void testCreateEmployee() {

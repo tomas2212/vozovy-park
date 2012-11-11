@@ -8,6 +8,7 @@ import cz.muni.fi.pa165.vozovypark.DAO.CompanyLevelDAO;
 import cz.muni.fi.pa165.vozovypark.DTO.CompanyLevelDTO;
 import cz.muni.fi.pa165.vozovypark.DTO.EmployeeDTO;
 import cz.muni.fi.pa165.vozovypark.entities.CompanyLevel;
+import cz.muni.fi.pa165.vozovypark.service.CompanyLevelService;
 import cz.muni.fi.pa165.vozovypark.service.CompanyServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,19 +19,29 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
+import org.junit.Before;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  *
  * @author Lukas Maticky
  */
 
-@RunWith(MockitoJUnitRunner.class)
-public class CompanyServiceTest {
+public class CompanyServiceTest extends AbstractServiceTest{
     
-     @Mock
+    
+    @Autowired
     private CompanyLevelDAO companyLevelDao;
-    @InjectMocks
-    private CompanyServiceImpl companyLevelService;
+   
+    @Autowired
+    private CompanyLevelService companyLevelService;
+    
+    @Before
+    public void setUp(){
+        reset(companyLevelDao);
+    }
 
     @Test
     public void testCreateCompanyLevel() {

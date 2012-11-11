@@ -9,28 +9,32 @@ import cz.muni.fi.pa165.vozovypark.DTO.CarDTO;
 import cz.muni.fi.pa165.vozovypark.DTO.CompanyLevelDTO;
 import cz.muni.fi.pa165.vozovypark.entities.Car;
 import cz.muni.fi.pa165.vozovypark.entities.CompanyLevel;
+import cz.muni.fi.pa165.vozovypark.service.CarService;
 import cz.muni.fi.pa165.vozovypark.service.CarServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.junit.Before;
 import static org.mockito.Mockito.*;
+import org.springframework.beans.factory.annotation.Autowired;
 /**
  *
  * @author Eduard Krak
  */
-@RunWith(MockitoJUnitRunner.class)
-public class CarServiceTest {
+
+public class CarServiceTest extends AbstractServiceTest {
     
-    @Mock
+    @Autowired
     private CarDAO carDao;
-    @InjectMocks
-    private CarServiceImpl carService;
+    
+    @Autowired
+    private CarService carService;
+    
+    @Before
+    public void setUp(){
+        reset(carDao);
+    }
     
     @Test
     public void testCreateCar() {
