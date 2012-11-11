@@ -4,10 +4,9 @@
  */
 package cz.muni.fi.pa165.ejb.tests;
 
-import cz.muni.fi.pa165.ejb.DTO.CarDTO;
+
 import cz.muni.fi.pa165.ejb.DTO.EmployeeDTO;
 import cz.muni.fi.pa165.ejb.dao.EmployeeDAO;
-import cz.muni.fi.pa165.ejb.entities.Car;
 import cz.muni.fi.pa165.ejb.entities.Employee;
 import cz.muni.fi.pa165.ejb.sevices.EmployeeService;
 import cz.muni.fi.pa165.ejb.sevices.EmployeeServiceImpl;
