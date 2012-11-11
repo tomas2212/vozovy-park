@@ -9,5 +9,7 @@
     </head>
     <body>
         <h1>Hello World!</h1>
+        <a href="/vozovyParkEJB-web/Car" title="Car">Car</a>
+                   
     </body>
 </html>
