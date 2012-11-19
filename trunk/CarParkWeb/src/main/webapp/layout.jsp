@@ -42,7 +42,7 @@
                     <h2>${title}</h2>
                     <s:layout-component name="content"/>
                 </div>
-                <div class="footer">(C) 2012</div>
+                <div class="footer">©    2012</div>
             </div>
         </body>
     </html>
