@@ -42,7 +42,7 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage{
    
     
     public Menu getMainMenu() {
-        mainMenu.setActiveItemByUrl("/reservations");
+        mainMenu.setActiveItemByUrl("/company");
         return mainMenu;
     }
 
