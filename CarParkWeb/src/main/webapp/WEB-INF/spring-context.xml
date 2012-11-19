@@ -52,11 +52,40 @@ default-autowire="byName" >
                 <bean class="cz.muni.fi.pa165.vozovypark.web.menu.MenuItem">
                     <property name="active" value="false"/>
                     <property name="name" value="reservationsSubMenu.accept" />
-                    <property name="url" value="/reservations/accpet" />
+                    <property name="url" value="/reservations/accept" />
                 </bean>
             </list>
         </property>
     </bean>
+    
+    <bean name="companySubMenu" class="cz.muni.fi.pa165.vozovypark.web.menu.Menu">
+        <property name="menuItems">
+            <list value-type="cz.muni.fi.pa165.vozovypark.web.menu.MenuItem">
+                <bean class="cz.muni.fi.pa165.vozovypark.web.menu.MenuItem">
+                    <property name="active" value="false"/>
+                    <property name="name" value="companyAdmin.employees" />
+                    <property name="url" value="/company" />
+                </bean>                
+                <bean class="cz.muni.fi.pa165.vozovypark.web.menu.MenuItem">
+                    <property name="active" value="false"/>
+                    <property name="name" value="companyAdmin.addEmployee" />
+                    <property name="url" value="/company/addEmployee" />
+                </bean> 
+                <bean class="cz.muni.fi.pa165.vozovypark.web.menu.MenuItem">
+                    <property name="active" value="false"/>
+                    <property name="name" value="companyAdmin.companyLevels" />
+                    <property name="url" value="/company/CompanyLevels" />
+                </bean>
+                <bean class="cz.muni.fi.pa165.vozovypark.web.menu.MenuItem">
+                    <property name="active" value="false"/>
+                    <property name="name" value="companyAdmin.addCompanyLevel" />
+                    <property name="url" value="/company/CompanyLevels/add" />
+                </bean> 
+            </list>
+        </property>
+    </bean>
+    
+    
     
 
 
