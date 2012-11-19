@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+"
+default-autowire="byName" >
+
+    <context:component-scan base-package="cz.muni.fi.pa165.vozovypark.web"/>
+    <context:annotation-config/>
+    <tx:annotation-driven/>
+    
+    <bean name="mainMenu" class="cz.muni.fi.pa165.vozovypark.web.menu.Menu">
+        <property name="menuItems">
+            <list value-type="cz.muni.fi.pa165.vozovypark.web.menu.MenuItem">
+                <bean class="cz.muni.fi.pa165.vozovypark.web.menu.MenuItem">
+                    <property name="active" value="false"/>
+                    <property name="name" value="mainMenu.reservations" />
+                    <property name="url" value="/reservations" />
+                </bean>                
+                <bean class="cz.muni.fi.pa165.vozovypark.web.menu.MenuItem">
+                    <property name="active" value="false"/>
+                    <property name="name" value="mainMenu.carParkAdmin" />
+                    <property name="url" value="/carPark" />
+                </bean>
+                <bean class="cz.muni.fi.pa165.vozovypark.web.menu.MenuItem">
+                    <property name="active" value="false"/>
+                    <property name="name" value="mainMenu.companyAdmin" />
+                    <property name="url" value="/company" />
+                </bean>
+            </list>
+        </property>
+    </bean>
+    
+    <bean name="reservationsSubMenu" class="cz.muni.fi.pa165.vozovypark.web.menu.Menu">
+        <property name="menuItems">
+            <list value-type="cz.muni.fi.pa165.vozovypark.web.menu.MenuItem">
+                <bean class="cz.muni.fi.pa165.vozovypark.web.menu.MenuItem">
+                    <property name="active" value="false"/>
+                    <property name="name" value="reservationsSubMenu.myReservations" />
+                    <property name="url" value="/reservations" />
+                </bean>                
+                <bean class="cz.muni.fi.pa165.vozovypark.web.menu.MenuItem">
+                    <property name="active" value="false"/>
+                    <property name="name" value="reservationsSubMenu.newReservation" />
+                    <property name="url" value="/reservations/newReservation" />
+                </bean>
+                <bean class="cz.muni.fi.pa165.vozovypark.web.menu.MenuItem">
+                    <property name="active" value="false"/>
+                    <property name="name" value="reservationsSubMenu.accept" />
+                    <property name="url" value="/reservations/accpet" />
+                </bean>
+            </list>
+        </property>
+    </bean>
+    
+
+
+
+</beans>
