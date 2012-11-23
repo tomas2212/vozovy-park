@@ -16,13 +16,12 @@ import net.sourceforge.stripes.integration.spring.SpringBean;
  * @author andrej
  */
 @UrlBinding("/company")
-public class CompanyAdminActionBean implements ActionBean, LayoutPage{
-    
+public class CompanyAdminActionBean implements ActionBean, LayoutPage {
+
     private ActionBeanContext context;
-    @SpringBean(value="mainMenu")
+    @SpringBean(value = "mainMenu")
     private Menu mainMenu;
-    
-    @SpringBean(value="companySubMenu")
+    @SpringBean(value = "companySubMenu")
     private Menu subMenu;
 
     @Override
@@ -35,8 +34,6 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage{
         return context;
     }
 
-   
-    
     public Menu getMainMenu() {
         mainMenu.setActiveItemByUrl("/company");
         return mainMenu;
@@ -56,18 +53,25 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage{
     public void setSubMenu(Menu subMenu) {
         this.subMenu = subMenu;
     }
-    
-    
-    
+
     @DefaultHandler
-    public Resolution employees() {     
+    public Resolution employees() {
         this.subMenu.setActiveItemByName("companyAdmin.employees");
         return new ForwardResolution("/companyAdmin/employees.jsp");
     }
-    
-    public Resolution addEmployee(){
+
+    public Resolution addEmployee() {
         this.subMenu.setActiveItemByName("companyAdmin.addEmployee");
         return new ForwardResolution("/companyAdmin/employees.jsp");
     }
-    
+
+    public Resolution companyLevels() {
+        this.subMenu.setActiveItemByName("companyAdmin.companyLevels");
+        return new ForwardResolution("/companyAdmin/companyLevels.jsp");
+    }
+
+    public Resolution addCompanyLevels() {
+        this.subMenu.setActiveItemByName("companyAdmin.addCompanyLevel");
+        return new ForwardResolution("/companyAdmin/companyLevels.jsp");
+    }
 }
