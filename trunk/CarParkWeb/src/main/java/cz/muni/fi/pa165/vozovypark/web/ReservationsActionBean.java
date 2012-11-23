@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.vozovypark.web;
 
 import cz.muni.fi.pa165.vozovypark.web.menu.Menu;
@@ -39,8 +35,7 @@ public class ReservationsActionBean implements ActionBean, LayoutPage{
         return context;
     }
 
-   
-    
+      
     public Menu getMainMenu() {
         mainMenu.setActiveItemByUrl("/reservations");
         return mainMenu;
@@ -61,8 +56,7 @@ public class ReservationsActionBean implements ActionBean, LayoutPage{
         this.subMenu = subMenu;
     }
     
-    
-    
+        
     @DefaultHandler
     public Resolution myReservations() {     
         this.subMenu.setActiveItemByName("reservationsSubMenu.myReservations");
