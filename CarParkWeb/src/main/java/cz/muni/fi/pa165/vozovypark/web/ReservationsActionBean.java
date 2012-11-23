@@ -19,6 +19,7 @@ import net.sourceforge.stripes.integration.spring.SpringBean;
 public class ReservationsActionBean implements ActionBean, LayoutPage{
     
     private ActionBeanContext context;
+    
     @SpringBean(value="mainMenu")
     private Menu mainMenu;
     
@@ -34,8 +35,7 @@ public class ReservationsActionBean implements ActionBean, LayoutPage{
     public ActionBeanContext getContext() {
         return context;
     }
-
-      
+  
     public Menu getMainMenu() {
         mainMenu.setActiveItemByUrl("/reservations");
         return mainMenu;
