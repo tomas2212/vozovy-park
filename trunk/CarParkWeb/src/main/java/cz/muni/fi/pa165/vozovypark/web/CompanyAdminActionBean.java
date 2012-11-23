@@ -19,8 +19,10 @@ import net.sourceforge.stripes.integration.spring.SpringBean;
 public class CompanyAdminActionBean implements ActionBean, LayoutPage {
 
     private ActionBeanContext context;
+    
     @SpringBean(value = "mainMenu")
     private Menu mainMenu;
+    
     @SpringBean(value = "companySubMenu")
     private Menu subMenu;
 
