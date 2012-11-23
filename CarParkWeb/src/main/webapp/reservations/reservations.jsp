@@ -6,8 +6,7 @@
 
 <f:message key="reservationsSubMenu.myReservations" var="title" />
 <s:layout-render name="/layout.jsp" title="${title}" 
-                 mainMenu="${actionBean.mainMenu}" subMenu="${actionBean.subMenu}"
-                 >
+                 mainMenu="${actionBean.mainMenu}" subMenu="${actionBean.subMenu}">
     
     <s:layout-component name="content">
       
