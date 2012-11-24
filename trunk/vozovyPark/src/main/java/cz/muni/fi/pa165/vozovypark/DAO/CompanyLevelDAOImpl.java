@@ -70,12 +70,12 @@ public class CompanyLevelDAOImpl implements CompanyLevelDAO {
     }
     
     public Integer getMaxLevelValue() {
-        TypedQuery<Integer> q = entityManager.createQuery("SELECT max(c.levelValue) FROM CompanyLevel c", Integer.class);
+        TypedQuery<Integer> q = entityManager.createQuery("SELECT max(c.levelValue) as max FROM CompanyLevel c", Integer.class);
         return q.getSingleResult();
     }
 
     public Integer getMinLevelValue() {
-        TypedQuery<Integer> q = entityManager.createQuery("SELECT min(c.levelValue) FROM CompanyLevel c", Integer.class);
+        TypedQuery<Integer> q = entityManager.createQuery("SELECT min(c.levelValue) as min FROM CompanyLevel c", Integer.class);
         return q.getSingleResult();
     }
 }
