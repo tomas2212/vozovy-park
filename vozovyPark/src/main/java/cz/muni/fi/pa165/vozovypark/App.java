@@ -40,8 +40,7 @@ public class App
          manager.getTransaction().commit();
          
          
-         Car car = new Car();
-         car.setSpz("ZA980CD"); 
+        
 /*         
          manager.getTransaction().begin();         
          CarDAOImpl cdao = new CarDAOImpl(manager);
