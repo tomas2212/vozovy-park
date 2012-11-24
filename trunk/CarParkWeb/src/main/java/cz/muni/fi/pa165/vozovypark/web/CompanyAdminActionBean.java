@@ -72,8 +72,8 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
         return new ForwardResolution("/companyAdmin/companyLevels.jsp");
     }
 
-    public Resolution addCompanyLevels() {
+    public Resolution addCompanyLevel() {
         this.subMenu.setActiveItemByName("companyAdmin.addCompanyLevel");
-        return new ForwardResolution("/companyAdmin/companyLevels.jsp");
+        return new ForwardResolution("/companyAdmin/addCompanyLevel.jsp");
     }
 }
