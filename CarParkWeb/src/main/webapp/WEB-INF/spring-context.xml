@@ -86,6 +86,34 @@ default-autowire="byName" >
     </bean>
     
     
+    <bean name="carsSubMenu" class="cz.muni.fi.pa165.vozovypark.web.menu.Menu">
+        <property name="menuItems">
+            <list value-type="cz.muni.fi.pa165.vozovypark.web.menu.MenuItem">
+                <bean class="cz.muni.fi.pa165.vozovypark.web.menu.MenuItem">
+                    <property name="active" value="false"/>
+                    <property name="name" value="carPark.release" />
+                    <property name="url" value="/carPark" />
+                </bean>                
+                <bean class="cz.muni.fi.pa165.vozovypark.web.menu.MenuItem">
+                    <property name="active" value="false"/>
+                    <property name="name" value="carPark.recive" />
+                    <property name="url" value="/carPark/recive" />
+                </bean> 
+                <bean class="cz.muni.fi.pa165.vozovypark.web.menu.MenuItem">
+                    <property name="active" value="false"/>
+                    <property name="name" value="carPark.cars" />
+                    <property name="url" value="/carpark/cars" />
+                </bean>
+                <bean class="cz.muni.fi.pa165.vozovypark.web.menu.MenuItem">
+                    <property name="active" value="false"/>
+                    <property name="name" value="carPark.addCar" />
+                    <property name="url" value="/carPark/addCar" />
+                </bean> 
+            </list>
+        </property>
+    </bean>
+    
+    
     
 
 
