@@ -23,7 +23,7 @@ import javax.persistence.Temporal;
     @NamedQuery(name = Reservation.FIND_BY_EMPLOYEE, query = "SELECT p from Reservation p where p.employee=:employee"),
     @NamedQuery(name = Reservation.FIND_BY_CAR, query = "SELECT p from Reservation p where p.car=:car"),
     @NamedQuery(name = Reservation.FIND_BY_CAR_AND_EMPLOYEE, query = "SELECT p from Reservation p where p.car=:car and p.employee =:employee"),
-    @NamedQuery(name = Reservation.FIND_TO_CONFIRM, query = "SELECT p from Reservation p where p.confirmed is false")
+    @NamedQuery(name = Reservation.FIND_TO_CONFIRM, query = "SELECT p from Reservation p where p.confirmed = false")
 })
 public class Reservation implements Serializable {
     
