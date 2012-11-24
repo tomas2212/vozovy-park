@@ -33,7 +33,7 @@
     <bean id="carDao" class="cz.muni.fi.pa165.vozovypark.DAO.CarDAOImpl" />
     <bean id="reservationDao" class="cz.muni.fi.pa165.vozovypark.DAO.ReservationDAOImpl" />
     
-    <bean id="CompanyLevelService" class="cz.muni.fi.pa165.vozovypark.service.CompanyServiceImpl" >
+    <bean id="CompanyLevelService" name="CompanyLevelService" class="cz.muni.fi.pa165.vozovypark.service.CompanyServiceImpl" >
         <property name="companyLevelDao" ref="companyLevelDao"/>
         <property name="mapper" ref="mapper" />
     </bean>
@@ -43,7 +43,7 @@
         <property name="mapper" ref="mapper" />
     </bean>
     
-    <bean id="CarService" class="cz.muni.fi.pa165.vozovypark.service.CarServiceImpl" >  
+    <bean id="CarService" name="CarService" class="cz.muni.fi.pa165.vozovypark.service.CarServiceImpl" >  
         <property name="carDao" ref="carDao" />
         <property name="mapper" ref="mapper" />
     </bean>
