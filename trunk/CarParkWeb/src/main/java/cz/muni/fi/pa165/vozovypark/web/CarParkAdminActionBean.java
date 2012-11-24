@@ -70,12 +70,17 @@ public class CarParkAdminActionBean implements ActionBean, LayoutPage {
     @DefaultHandler
     public Resolution release() {
         this.subMenu.setActiveItemByName("carPark.release");
-        CarDTO car = new CarDTO();
-        car.setBrand("sdf");
-        CompanyLevelDTO createCompanyLevel = cs.createCompanyLevel("fofo");
-        //carService.createCar(car);
-        List<CarDTO> allCars = carService.getAllCars();
+        
         return new ForwardResolution("/carAdmin/release.jsp");
+    }
+    
+    public Resolution cars(){
+        this.subMenu.setActiveItemByName("carPark.cars");
+        return new ForwardResolution("/carAdmin/cars.jsp");
+    }
+    
+    public List<CarDTO> getAllCars(){
+        return carService.getAllCars();
     }
 
    
