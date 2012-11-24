@@ -74,12 +74,12 @@ default-autowire="byName" >
                 <bean class="cz.muni.fi.pa165.vozovypark.web.menu.MenuItem">
                     <property name="active" value="false"/>
                     <property name="name" value="companyAdmin.companyLevels" />
-                    <property name="url" value="/company/CompanyLevels" />
+                    <property name="url" value="/company/companyLevels" />
                 </bean>
                 <bean class="cz.muni.fi.pa165.vozovypark.web.menu.MenuItem">
                     <property name="active" value="false"/>
                     <property name="name" value="companyAdmin.addCompanyLevel" />
-                    <property name="url" value="/company/CompanyLevels/add" />
+                    <property name="url" value="/company/addCompanyLevel" />
                 </bean> 
             </list>
         </property>

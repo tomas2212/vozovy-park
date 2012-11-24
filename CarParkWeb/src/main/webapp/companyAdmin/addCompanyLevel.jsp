@@ -4,7 +4,7 @@
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
-<f:message key="companyAdmin.addCompanyLevel" var="title" />
+<f:message key="companySubMenu.addCompanyLevel" var="title" />
 <s:layout-render name="/layout.jsp" title="${title}" 
                  mainMenu="${actionBean.mainMenu}" subMenu="${actionBean.subMenu}">
     
