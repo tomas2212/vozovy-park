@@ -13,7 +13,7 @@ default-autowire="byName" >
     <context:component-scan base-package="cz.muni.fi.pa165.vozovypark.web"/>
     <context:annotation-config/>
     <tx:annotation-driven/>
-    
+    <import resource="classpath*:applicationContext.xml" />
     <bean name="mainMenu" class="cz.muni.fi.pa165.vozovypark.web.menu.Menu">
         <property name="menuItems">
             <list value-type="cz.muni.fi.pa165.vozovypark.web.menu.MenuItem">
