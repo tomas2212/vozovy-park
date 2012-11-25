@@ -9,6 +9,17 @@
                  mainMenu="${actionBean.mainMenu}" subMenu="${actionBean.subMenu}">
     
     <s:layout-component name="content">
-        fofo
+        <table>
+            <thead>
+                <tr>
+                    <td>
+                        Car
+                    </td>
+                    <td>
+                        Employee
+                    </td>
+                </tr>
+            </thead>
+        </table>
     </s:layout-component>
 </s:layout-render>
