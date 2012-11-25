@@ -21,6 +21,8 @@ public class ReservationDTO {
     private EmployeeDTO employee;
    
     private CarDTO car;
+    
+    private boolean confirmed = false;
 
     public CarDTO getCar() {
         return car;
@@ -78,6 +80,16 @@ public class ReservationDTO {
         this.startDate = startDate;
     }
 
+    public boolean isConfirmed() {
+        return confirmed;
+    }
+
+    public void setConfirmed(boolean confirmed) {
+        this.confirmed = confirmed;
+    }
+
+    
+    
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {

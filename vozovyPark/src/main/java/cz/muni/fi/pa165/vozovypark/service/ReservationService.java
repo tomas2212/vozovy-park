@@ -62,6 +62,12 @@ public interface ReservationService {
     List<ReservationDTO> getReservationsToConfirm();
     
     /**
+     * Returns accepted 
+     * @return Accepted reservations
+     */
+    List<ReservationDTO> getAcceptedReservations();
+    
+    /**
      * Rent the car to employee and save current date to reservation
      * @param reservationId Reservation to start
      * @return Reservation - informations about rent

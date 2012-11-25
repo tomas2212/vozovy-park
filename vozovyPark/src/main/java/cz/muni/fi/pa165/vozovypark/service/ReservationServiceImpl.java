@@ -137,6 +137,15 @@ public class ReservationServiceImpl implements ReservationService{
         }
         return reservations;
     }
+    
+    public List<ReservationDTO> getAcceptedReservations() {
+        
+        List<ReservationDTO> reservations = new ArrayList<ReservationDTO>();
+        for (Reservation res : reservationDao.getAcceptedReservations()){
+            reservations.add(mapper.map(res, ReservationDTO.class));
+        }
+        return reservations;
+    }
 
     public ReservationDTO rentCar(Long reservationId) {
         if (reservationId == null) {
