@@ -36,6 +36,7 @@ public class CarServiceImpl implements CarService {
         if (car == null) {
             throw new IllegalArgumentException("Car is not specified");
         }
+        car.setAvailable(Boolean.TRUE);
         carDao.insert(mapper.map(car, Car.class));
         return car;
     }
