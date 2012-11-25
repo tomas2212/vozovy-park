@@ -131,7 +131,10 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
 
     public Resolution deleteCl() {
         log.debug("delete({})", cld.getId());
-        cls.removeCompanyLevel(cld.getId());
+        String ids = context.getRequest().getParameter("companyLevel.id");
+        if (ids != null) {
+            cls.removeCompanyLevel(Long.parseLong(ids));
+        }
         return new RedirectResolution(this.getClass(), "companyLevels");
     }
 }
