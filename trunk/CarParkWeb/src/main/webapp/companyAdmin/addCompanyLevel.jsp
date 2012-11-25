@@ -10,6 +10,7 @@
   
     <s:layout-component name="content">
         <s:form beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" >
+            <s:hidden name="companyLevel.id"/>
             <fieldset><legend>New Company Level</legend>
                 <br/>
                 <tr>
