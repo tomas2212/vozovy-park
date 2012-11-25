@@ -17,7 +17,7 @@
                     <td><c:out value="${car.model}" />
                     <td><c:out value="${car.brand}" />
                     <td><c:out value="${car.spz}" />
-                   </tr>
+                </tr>
             </c:forEach>  
         </table>
     </s:layout-component>

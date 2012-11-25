@@ -82,7 +82,5 @@ public class CarParkAdminActionBean implements ActionBean, LayoutPage {
     public List<CarDTO> getAllCars(){
         return carService.getAllCars();
     }
-
-   
     
 }
