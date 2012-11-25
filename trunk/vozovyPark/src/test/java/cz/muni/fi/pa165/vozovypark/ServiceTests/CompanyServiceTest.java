@@ -155,7 +155,7 @@ public class CompanyServiceTest extends AbstractServiceTest{
         allDTO.add(companyLevel3dto);
         
         when(companyLevelDao.getAllCompanyLevels()).thenReturn(allEntities);
-        List<CompanyLevelDTO> returnedCompanyLevels = companyLevelService.getAllCompanyLeves();
+        List<CompanyLevelDTO> returnedCompanyLevels = companyLevelService.getAllCompanyLevels();
         assertEquals(allDTO.size(), returnedCompanyLevels.size());
         for(int i = 0; i < returnedCompanyLevels.size(); i++){
             assertEquals(allDTO.get(i), returnedCompanyLevels.get(i));
