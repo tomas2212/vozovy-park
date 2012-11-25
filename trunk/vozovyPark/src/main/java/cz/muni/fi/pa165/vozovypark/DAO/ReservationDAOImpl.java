@@ -116,4 +116,9 @@ public class ReservationDAOImpl implements ReservationDAO {
        TypedQuery<Reservation> q = entityManager.createNamedQuery(Reservation.FIND_TO_CONFIRM, Reservation.class);
        return q.getResultList();
    }
+   
+   public List<Reservation> getAcceptedReservations() {
+       TypedQuery<Reservation> q = entityManager.createNamedQuery(Reservation.FIND_ACCEPTED, Reservation.class);
+       return q.getResultList();
+   }
 }

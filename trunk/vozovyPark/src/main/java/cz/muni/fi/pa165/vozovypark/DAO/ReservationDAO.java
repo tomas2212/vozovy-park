@@ -72,4 +72,10 @@ public interface ReservationDAO {
      * @return Reservations that are not confirmed
      */
     public List<Reservation> getReservationsToConfirm();
+    
+    /**
+     * Returns all accepted reservations
+     * @return Reservations that are accepted
+     */
+    public List<Reservation> getAcceptedReservations();
 }

@@ -1,15 +1,29 @@
 package cz.muni.fi.pa165.vozovypark.web;
 
+import cz.muni.fi.pa165.vozovypark.DTO.CarDTO;
+import cz.muni.fi.pa165.vozovypark.DTO.EmployeeDTO;
+import cz.muni.fi.pa165.vozovypark.DTO.ReservationDTO;
+import cz.muni.fi.pa165.vozovypark.entities.Reservation;
+import cz.muni.fi.pa165.vozovypark.service.CarService;
+import cz.muni.fi.pa165.vozovypark.service.EmployeeService;
+import cz.muni.fi.pa165.vozovypark.service.ReservationService;
 import cz.muni.fi.pa165.vozovypark.web.menu.Menu;
 import cz.muni.fi.pa165.vozovypark.web.menu.MenuItem;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
+import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
+import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.UrlBinding;
+import net.sourceforge.stripes.controller.LifecycleStage;
 import net.sourceforge.stripes.integration.spring.SpringBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -19,6 +33,15 @@ import net.sourceforge.stripes.integration.spring.SpringBean;
 public class ReservationsActionBean implements ActionBean, LayoutPage{
     
     private ActionBeanContext context;
+    final static Logger log = LoggerFactory.getLogger(ReservationsActionBean.class);
+    @SpringBean(value = "ReservationService")
+    private ReservationService rs;
+    
+    @SpringBean(value = "EmployeeService")
+    private EmployeeService employeeService;
+    
+    @SpringBean(value = "CarService")
+    private CarService carService;
     
     @SpringBean(value="mainMenu")
     private Menu mainMenu;
@@ -66,6 +89,64 @@ public class ReservationsActionBean implements ActionBean, LayoutPage{
     public Resolution newReservation(){
         this.subMenu.setActiveItemByUrl("/reservations/newReservation");
         return new ForwardResolution("/reservations/newReservation.jsp");
+    }
+    
+    public List<ReservationDTO> getReservations() {
+        //return rs.getAllReservations();
+        return rs.getAllReservations();
+    }
+    
+    public List<CarDTO> getCars() {
+        return carService.getAllCars();
+    }
+    
+    public List<EmployeeDTO> getEmployees() {
+        return employeeService.getAllEmployees();
+    }
+    
+    ReservationDTO resDTO;
+
+    public ReservationDTO getResDTO() {
+        return resDTO;
+    }
+
+    public void setResDTO(ReservationDTO resDTO) {
+        this.resDTO = resDTO;
+    }
+    
+      public Resolution addReservation() {
+        rs.createReservation(resDTO);
+        return new RedirectResolution("reservations/reservations.jsp");
+    }
+
+    @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "save"})
+    public void loadResFromDatabase() {
+        String ids = context.getRequest().getParameter("reservation.id");
+        if (ids == null) {
+            return;
+        }
+        resDTO = rs.getReservationById(Long.parseLong(ids));
+    }
+    
+     public Resolution storno() {
+        return new ForwardResolution("reservations/reservations.jsp");
+    }
+
+    public Resolution editRes() {
+        log.debug("edit() companyLevel={}", resDTO);
+        return new ForwardResolution("reservations.jsp");
+    }
+
+    public Resolution saveRes() {
+        log.debug("save() book={}", resDTO);
+        rs.updateReservation(resDTO);
+        return new RedirectResolution(this.getClass(), "reservations");
+    }
+
+    public Resolution deleteRes() {
+        log.debug("delete({})", resDTO.getId());
+        rs.removeReservation(resDTO.getId());
+        return new RedirectResolution(this.getClass(), "reservations");
     }
     
 }
