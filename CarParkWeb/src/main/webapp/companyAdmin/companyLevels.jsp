@@ -10,18 +10,26 @@
 
     <s:layout-component name="content">
         <s:useActionBean beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" var="actionBean"/>  
+        <br/>
         <table>
             <tr>
-                <th>id</th>
-                <th>name</th>
-                <th>level-value</th>
+                <th>ID</th>
                 <th></th>
+                <th>Name</th>
+                <th></th>
+                <th>Level-value</th>
             </tr>
             <c:forEach items="${actionBean.allCompanyLevels}" var="acl">
                 <tr>
-                    <th>${acl.id}</th>
+                    <td>${acl.id}</td>
+                    <td></td>
                     <td><c:out value="${acl.name}" />
+                    <td></td>
                     <td><c:out value="${acl.levelValue}" />
+                    <td></td>
+                    <td><s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" event="edit"><s:param name="companyLevel.id" value="${companyLevel.id}"/>edit</s:link> </td>
+                    <td></td>
+                    <td><s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" event="delete"><s:param name="companyLevel.id" value="${companyLevel.id}"/>delete</s:link> </td>
                 </tr>
             </c:forEach>            
         </table>
