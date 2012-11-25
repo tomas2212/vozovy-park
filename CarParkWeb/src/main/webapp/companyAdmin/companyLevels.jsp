@@ -9,12 +9,19 @@
                  mainMenu="${actionBean.mainMenu}" subMenu="${actionBean.subMenu}">
 
     <s:layout-component name="content">
-        <table>
+        <s:useActionBean beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" var="actionBean"/>  
+        <table class="basic">
+            <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>level-value</th>
+                <th></th>
+            </tr>
             <c:forEach items="${actionBean.allCompanyLevels}" var="acl">
                 <tr>
-                    <td>${acl.id}</td>
-
+                    <th>${acl.id}</th>
                     <td><c:out value="${acl.name}" />
+                    <td><c:out value="${acl.levelValue}" />
                 </tr>
             </c:forEach> 
         </table>

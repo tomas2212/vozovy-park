@@ -1,10 +1,10 @@
 package cz.muni.fi.pa165.vozovypark.web;
 
 import cz.muni.fi.pa165.vozovypark.DTO.CompanyLevelDTO;
+import cz.muni.fi.pa165.vozovypark.entities.CompanyLevel;
 import cz.muni.fi.pa165.vozovypark.service.CarService;
 import cz.muni.fi.pa165.vozovypark.service.CompanyLevelService;
 import cz.muni.fi.pa165.vozovypark.web.menu.Menu;
-import cz.muni.fi.pa165.vozovypark.web.menu.MenuItem;
 import java.util.List;
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
@@ -16,7 +16,7 @@ import net.sourceforge.stripes.integration.spring.SpringBean;
 
 /**
  *
- * @author andrej
+ * @author tomas
  */
 @UrlBinding("/company")
 public class CompanyAdminActionBean implements ActionBean, LayoutPage {
@@ -85,5 +85,20 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
 
     public List<CompanyLevelDTO> getAllCompanyLevels() {
         return cls.getAllCompanyLevels();
+    }
+    
+    private CompanyLevel cl;
+
+    public CompanyLevel getCompanyLevel() {
+        return cl;
+    }
+
+    public void setCompanyLevel(CompanyLevel cl) {
+        this.cl = cl;
+    }
+
+    public Resolution addCl() {
+        cls.createCompanyLevel(cl.getName());
+        return new ForwardResolution("/companyAdmin/companyLevels.jsp");
     }
 }
