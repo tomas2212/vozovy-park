@@ -1,8 +1,10 @@
 package cz.muni.fi.pa165.vozovypark.web;
 
 import cz.muni.fi.pa165.vozovypark.DTO.CompanyLevelDTO;
+import cz.muni.fi.pa165.vozovypark.DTO.EmployeeDTO;
 import cz.muni.fi.pa165.vozovypark.service.CarService;
 import cz.muni.fi.pa165.vozovypark.service.CompanyLevelService;
+import cz.muni.fi.pa165.vozovypark.service.EmployeeService;
 import cz.muni.fi.pa165.vozovypark.web.menu.Menu;
 import java.util.List;
 import net.sourceforge.stripes.action.ActionBean;
@@ -36,6 +38,9 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
     @SpringBean(value = "CompanyLevelService")
     private CompanyLevelService cls;
     private CompanyLevelDTO cld;
+    @SpringBean(value = "EmployeeService")
+    private EmployeeService employeeService;
+    private EmployeeDTO employeeDTO;
 
     @Override
     public void setContext(ActionBeanContext abc) {
@@ -76,9 +81,15 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
 
     public Resolution addEmployee() {
         this.subMenu.setActiveItemByName("/companyAdmin.addEmployee");
-        return new ForwardResolution("/companyAdmin/employees.jsp");
+        return new ForwardResolution("/companyAdmin/addEmployee.jsp");
+    }
+    
+    public Resolution editEmployee(){
+        this.subMenu.setActiveItemByUrl("/carPark/addemployee");
+        return new ForwardResolution("/carAdmin/editEmployee.jsp");
     }
 
+    
     public Resolution companyLevels() {
         this.subMenu.setActiveItemByName("/companyAdmin.companyLevels");
         return new ForwardResolution("/companyAdmin/companyLevels.jsp");
@@ -136,5 +147,52 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
             cls.removeCompanyLevel(Long.parseLong(ids));
         }
         return new RedirectResolution(this.getClass(), "companyLevels");
+    }
+
+    public List<EmployeeDTO> getAllEmployees() {
+        return employeeService.getAllEmployees();
+    }
+
+    public EmployeeDTO getEmployee() {
+        return employeeDTO;
+    }
+
+    public void setEmployee(EmployeeDTO employeeDTO) {
+        this.employeeDTO = employeeDTO;
+    }
+
+    public Resolution addE() {
+        employeeService.createEmployee(employeeDTO);
+        return new RedirectResolution("/companyAdmin/employees.jsp");
+    }
+
+    @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "save"})
+    public void loadEFromDatabase() {
+        String ids = context.getRequest().getParameter("employee.id");
+        if (ids == null) {
+            return;
+        }
+        employeeDTO = employeeService.getEmployeeById(Long.parseLong(ids));
+    }
+
+    public Resolution stornoE() {
+        return new ForwardResolution("company/employees.jsp");
+    }
+
+    public Resolution editE() {
+        log.debug("edit() employee={}", employeeDTO);
+        return new ForwardResolution("/editEmployee.jsp");
+    }
+
+    public Resolution saveE() {
+        log.debug("save() book={}", employeeDTO);
+        employeeService.updateEmployee(employeeDTO);
+        return new RedirectResolution(this.getClass(), "employees");
+    }
+
+    public Resolution deleteE() {
+        log.debug("delete({})", employeeDTO.getId());
+        employeeService.removeEmployee(employeeDTO.getId());
+        return new RedirectResolution(this.getClass(), "employees");
     }
 }
