@@ -35,6 +35,7 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
     private CarService carService;
     @SpringBean(value = "CompanyLevelService")
     private CompanyLevelService cls;
+    private CompanyLevelDTO cld;
 
     @Override
     public void setContext(ActionBeanContext abc) {
@@ -69,29 +70,28 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
 
     @DefaultHandler
     public Resolution employees() {
-        this.subMenu.setActiveItemByName("companyAdmin.employees");
+        this.subMenu.setActiveItemByName("/companyAdmin.employees");
         return new ForwardResolution("/companyAdmin/employees.jsp");
     }
 
     public Resolution addEmployee() {
-        this.subMenu.setActiveItemByName("companyAdmin.addEmployee");
+        this.subMenu.setActiveItemByName("/companyAdmin.addEmployee");
         return new ForwardResolution("/companyAdmin/employees.jsp");
     }
 
     public Resolution companyLevels() {
-        this.subMenu.setActiveItemByName("companyAdmin.companyLevels");
+        this.subMenu.setActiveItemByName("/companyAdmin.companyLevels");
         return new ForwardResolution("/companyAdmin/companyLevels.jsp");
     }
 
     public Resolution addCompanyLevel() {
-        this.subMenu.setActiveItemByName("companyAdmin.addCompanyLevel");
+        this.subMenu.setActiveItemByName("/companyAdmin.addCompanyLevel");
         return new ForwardResolution("/companyAdmin/addCompanyLevel.jsp");
     }
 
     public List<CompanyLevelDTO> getAllCompanyLevels() {
         return cls.getAllCompanyLevels();
     }
-    private CompanyLevelDTO cld;
 
     public CompanyLevelDTO getCompanyLevel() {
         return cld;
@@ -103,10 +103,10 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
 
     public Resolution addCl() {
         cls.createCompanyLevel(cld.getName());
-        return new RedirectResolution("/companyAdmin/companyLevels.jsp");
+        return new RedirectResolution("company");
     }
 
-    @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "save"})
+    @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "delete"})
     public void loadClFromDatabase() {
         String ids = context.getRequest().getParameter("companyLevel.id");
         if (ids == null) {
@@ -124,8 +124,7 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
         return new ForwardResolution("company/companyLevel/edit.jsp");
     }
 
-    public Resolution saveCl() {
-        log.debug("save() book={}", cld);
+    public Resolution updateCl() {
         cls.updateCompanyLevel(cld);
         return new RedirectResolution(this.getClass(), "companyLevels");
     }
