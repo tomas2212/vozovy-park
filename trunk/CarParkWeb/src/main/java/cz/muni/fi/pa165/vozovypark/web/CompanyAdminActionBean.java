@@ -1,5 +1,8 @@
 package cz.muni.fi.pa165.vozovypark.web;
 
+import cz.muni.fi.pa165.vozovypark.DTO.CompanyLevelDTO;
+import cz.muni.fi.pa165.vozovypark.service.CarService;
+import cz.muni.fi.pa165.vozovypark.service.CompanyLevelService;
 import cz.muni.fi.pa165.vozovypark.web.menu.Menu;
 import cz.muni.fi.pa165.vozovypark.web.menu.MenuItem;
 import java.util.List;
@@ -19,12 +22,14 @@ import net.sourceforge.stripes.integration.spring.SpringBean;
 public class CompanyAdminActionBean implements ActionBean, LayoutPage {
 
     private ActionBeanContext context;
-    
     @SpringBean(value = "mainMenu")
     private Menu mainMenu;
-    
     @SpringBean(value = "companySubMenu")
     private Menu subMenu;
+    @SpringBean(value = "CarService")
+    private CarService carService;
+    @SpringBean(value = "CompanyLevelService")
+    private CompanyLevelService cls;
 
     @Override
     public void setContext(ActionBeanContext abc) {
@@ -36,6 +41,7 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
         return context;
     }
 
+    @Override
     public Menu getMainMenu() {
         mainMenu.setActiveItemByUrl("/company");
         return mainMenu;
@@ -75,5 +81,9 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
     public Resolution addCompanyLevel() {
         this.subMenu.setActiveItemByName("companyAdmin.addCompanyLevel");
         return new ForwardResolution("/companyAdmin/addCompanyLevel.jsp");
+    }
+
+    public List<CompanyLevelDTO> getAllCompanyLevels() {
+        return cls.getAllCompanyLevels();
     }
 }
