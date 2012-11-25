@@ -16,7 +16,7 @@
                     <th><s:label for="b1" name="company.level.name"/></th>
                     <td><s:text id="b1" name="company.level.name"/></td>
                 </tr>
-                <s:submit name="add">Create</s:submit>
+                <s:submit name="addCl">Create</s:submit>
             </fieldset>
         </s:form>
     </s:layout-component>
