@@ -134,6 +134,11 @@ thead td{
     
 }
 
+td a {
+    color: black;
+    text-decoration: underline;
+}
+
 .available{
     text-align: center;
 }

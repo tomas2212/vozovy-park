@@ -91,6 +91,12 @@ public class CarParkAdminActionBean implements ActionBean, LayoutPage {
         return new ForwardResolution("/carAdmin/release.jsp");
     }
     
+    public Resolution recive() {
+        this.subMenu.setActiveItemByName("carPark.recive");
+        
+        return new ForwardResolution("/carAdmin/recive.jsp");
+    }
+    
     public Resolution cars(){
         
         this.subMenu.setActiveItemByName("carPark.cars");
@@ -134,6 +140,16 @@ public class CarParkAdminActionBean implements ActionBean, LayoutPage {
         return new RedirectResolution(this.getClass(), "cars");
     }
     
+    public Resolution deleteCar(){
+        
+         String ids = context.getRequest().getParameter("car.id");  
+         if(ids != null){
+            
+            carService.removeCar(Long.parseLong(ids));
+         }
+         return new RedirectResolution(this.getClass(), "cars");
+    }
+    
     public List<CarDTO> getAllCars(){
         return carService.getAllCars();
     }
@@ -155,11 +171,23 @@ public class CarParkAdminActionBean implements ActionBean, LayoutPage {
         List<ReservationDTO> acceptedReservations = rs.getAcceptedReservations();
         Date now = new Date();
         for(ReservationDTO res : acceptedReservations){
-            if(!res.getCar().getAvailable() && res.getDateTo().after(now)){
+            if(res.getCar().getAvailable() && res.getDateTo().after(now)){
                 result.add(res);
             }
         }
-        return null;
+        return result;
+    }
+    
+    public List<ReservationDTO> getCarsToRecive(){
+        List<ReservationDTO> result = new ArrayList<ReservationDTO>();
+        List<ReservationDTO> acceptedReservations = rs.getAcceptedReservations();
+        
+        for(ReservationDTO res : acceptedReservations){
+            if(!res.getCar().getAvailable()){
+                result.add(res);
+            }
+        }
+        return result;
     }
 
     public CarDTO getCar() {
