@@ -15,6 +15,8 @@ import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.UrlBinding;
 import net.sourceforge.stripes.controller.LifecycleStage;
 import net.sourceforge.stripes.integration.spring.SpringBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -23,6 +25,7 @@ import net.sourceforge.stripes.integration.spring.SpringBean;
 @UrlBinding("/company")
 public class CompanyAdminActionBean implements ActionBean, LayoutPage {
 
+    final static Logger log = LoggerFactory.getLogger(CompanyAdminActionBean.class);
     private ActionBeanContext context;
     @SpringBean(value = "mainMenu")
     private Menu mainMenu;
@@ -88,7 +91,6 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
     public List<CompanyLevelDTO> getAllCompanyLevels() {
         return cls.getAllCompanyLevels();
     }
-    
     private CompanyLevelDTO cld;
 
     public CompanyLevelDTO getCompanyLevel() {
@@ -116,5 +118,21 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
     public Resolution storno() {
         return new ForwardResolution("company/companyLevels.jsp");
     }
-    
+
+    public Resolution editCl() {
+        log.debug("edit() companyLevel={}", cld);
+        return new ForwardResolution("/companyLevels.jsp");
+    }
+
+    public Resolution saveCl() {
+        log.debug("save() book={}", cld);
+        cls.updateCompanyLevel(cld);
+        return new RedirectResolution(this.getClass(), "companyLevels");
+    }
+
+    public Resolution deleteCl() {
+        log.debug("delete({})", cld.getId());
+        cls.removeCompanyLevel(cld.getId());
+        return new RedirectResolution(this.getClass(), "companyLevels");
+    }
 }
