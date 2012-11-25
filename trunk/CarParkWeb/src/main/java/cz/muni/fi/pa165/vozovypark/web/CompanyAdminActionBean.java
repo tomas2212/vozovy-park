@@ -121,7 +121,7 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
 
     public Resolution editCl() {
         log.debug("edit() companyLevel={}", cld);
-        return new ForwardResolution("/companyLevels.jsp");
+        return new ForwardResolution("company/companyLevel/edit.jsp");
     }
 
     public Resolution saveCl() {
