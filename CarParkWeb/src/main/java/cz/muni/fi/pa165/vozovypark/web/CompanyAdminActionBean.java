@@ -1,17 +1,19 @@
 package cz.muni.fi.pa165.vozovypark.web;
 
 import cz.muni.fi.pa165.vozovypark.DTO.CompanyLevelDTO;
-import cz.muni.fi.pa165.vozovypark.entities.CompanyLevel;
 import cz.muni.fi.pa165.vozovypark.service.CarService;
 import cz.muni.fi.pa165.vozovypark.service.CompanyLevelService;
 import cz.muni.fi.pa165.vozovypark.web.menu.Menu;
 import java.util.List;
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
+import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
+import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.UrlBinding;
+import net.sourceforge.stripes.controller.LifecycleStage;
 import net.sourceforge.stripes.integration.spring.SpringBean;
 
 /**
@@ -87,18 +89,32 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
         return cls.getAllCompanyLevels();
     }
     
-    private CompanyLevel cl;
+    private CompanyLevelDTO cld;
 
-    public CompanyLevel getCompanyLevel() {
-        return cl;
+    public CompanyLevelDTO getCompanyLevel() {
+        return cld;
     }
 
-    public void setCompanyLevel(CompanyLevel cl) {
-        this.cl = cl;
+    public void setCompanyLevel(CompanyLevelDTO cld) {
+        this.cld = cld;
     }
 
     public Resolution addCl() {
-        cls.createCompanyLevel(cl.getName());
-        return new ForwardResolution("/companyAdmin/companyLevels.jsp");
+        cls.createCompanyLevel(cld.getName());
+        return new RedirectResolution("/companyAdmin/companyLevels.jsp");
     }
+
+    @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "save"})
+    public void loadClFromDatabase() {
+        String ids = context.getRequest().getParameter("companyLevel.id");
+        if (ids == null) {
+            return;
+        }
+        cld = cls.getCompanyLevelById(Long.parseLong(ids));
+    }
+
+    public Resolution storno() {
+        return new ForwardResolution("company/companyLevels.jsp");
+    }
+    
 }

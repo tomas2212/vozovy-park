@@ -10,7 +10,7 @@
 
     <s:layout-component name="content">
         <s:useActionBean beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" var="actionBean"/>  
-        <table class="basic">
+        <table>
             <tr>
                 <th>id</th>
                 <th>name</th>
@@ -23,7 +23,7 @@
                     <td><c:out value="${acl.name}" />
                     <td><c:out value="${acl.levelValue}" />
                 </tr>
-            </c:forEach> 
+            </c:forEach>            
         </table>
     </s:layout-component>
 </s:layout-render>
