@@ -91,10 +91,32 @@ public class CarParkAdminActionBean implements ActionBean, LayoutPage {
         return new ForwardResolution("/carAdmin/release.jsp");
     }
     
+    public Resolution releaseCar(){
+        String cls = context.getRequest().getParameter("carId");
+        if(cls !=null){
+            CarDTO carDTO = carService.getCarById(Long.parseLong(cls));
+            carDTO.setAvailable(false);
+            carService.updateCar(car);
+        }
+        
+        return new RedirectResolution(this.getClass(), "release");
+    }
+    
     public Resolution recive() {
         this.subMenu.setActiveItemByName("carPark.recive");
         
         return new ForwardResolution("/carAdmin/recive.jsp");
+    }
+    
+    public Resolution reciveCar(){
+        String cls = context.getRequest().getParameter("carId");
+        if(cls !=null){
+            CarDTO carDTO = carService.getCarById(Long.parseLong(cls));
+            carDTO.setAvailable(false);
+            carService.updateCar(car);
+        }
+        
+        return new RedirectResolution(this.getClass(), "recive");
     }
     
     public Resolution cars(){
