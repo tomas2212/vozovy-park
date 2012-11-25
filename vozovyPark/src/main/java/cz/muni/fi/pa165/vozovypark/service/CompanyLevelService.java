@@ -50,7 +50,7 @@ public interface CompanyLevelService {
      * Get all company levels
      * @return list of company levels
      */
-    List<CompanyLevelDTO> getAllCompanyLeves();
+    List<CompanyLevelDTO> getAllCompanyLevels();
     
     /**
      * Remove company level 

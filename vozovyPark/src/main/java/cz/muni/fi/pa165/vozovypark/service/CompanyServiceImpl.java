@@ -109,7 +109,7 @@ public class CompanyServiceImpl implements CompanyLevelService {
         return mapper.map(companyLevelById, CompanyLevelDTO.class);
     }
 
-    public List<CompanyLevelDTO> getAllCompanyLeves() {
+    public List<CompanyLevelDTO> getAllCompanyLevels() {
         List<CompanyLevelDTO> companyLevels = new ArrayList<CompanyLevelDTO>();
         List<CompanyLevel> allCompanyLevels = companyLevelDao.getAllCompanyLevels();
         for(CompanyLevel cl : allCompanyLevels){
