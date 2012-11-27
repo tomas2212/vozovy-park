@@ -96,8 +96,8 @@ default-autowire="byName" >
                 </bean>                
                 <bean class="cz.muni.fi.pa165.vozovypark.web.menu.MenuItem">
                     <property name="active" value="false"/>
-                    <property name="name" value="carPark.recive" />
-                    <property name="url" value="/carPark/recive" />
+                    <property name="name" value="carPark.receive" />
+                    <property name="url" value="/carPark/receive" />
                 </bean> 
                 <bean class="cz.muni.fi.pa165.vozovypark.web.menu.MenuItem">
                     <property name="active" value="false"/>

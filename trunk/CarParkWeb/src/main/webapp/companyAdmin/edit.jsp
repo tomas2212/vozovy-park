@@ -15,12 +15,12 @@
             <fieldset><legend>Change attributes</legend>
                 <table>
                     <tr>
-                        <th><s:label for="b2" name="companyLevel.name"/></th>
-                        <td><s:text id="b2" name="companyLevel.name"/></td>
-                        <br/>
-                        <th><s:label for="b2" name="companyLevel.levelValue"/></th>
+                        <td><s:label for="b2" name="companyLevel.name"/></td>
+                        <td><s:text id="b2" name="companyLevel.name"/></td>   
+                    </tr>
+                    <tr>
+                        <td><s:label for="b2" name="companyLevel.levelValue"/></td>
                         <td><s:text id="b2" name="companyLevel.levelValue"/></td>
-
                     </tr>
                 </table>
                 <s:submit name="updateCl">Save</s:submit>

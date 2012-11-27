@@ -4,7 +4,7 @@
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
-<f:message key="carPark.recive" var="title" />
+<f:message key="carPark.receive" var="title" />
 <s:layout-render name="/layout.jsp" title="${title}" 
                  mainMenu="${actionBean.mainMenu}" subMenu="${actionBean.subMenu}">
     
@@ -32,7 +32,7 @@
                  <td>
                    <c:out value="${reservation.employee.name}" />
                 </td>
-                <td><s:link event="recive"><s:label name="recive"/></s:link></td>
+                <td><s:link event="receive"><s:label name="receive"/></s:link></td>
             </tr>
             </c:forEach>
         </table>
