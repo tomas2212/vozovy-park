@@ -9,40 +9,56 @@
                  mainMenu="${actionBean.mainMenu}" subMenu="${actionBean.subMenu}">
 
     <s:layout-component name="content">
-        
         <table>
-             <thead>
-                    <tr>
-                        <td>Model</td>
-                        <td>Brand</td>
-                        <td>SPZ</td>
-                        <td>Creation Year</td>
-                        <td>CompanyLevel</td>
-                        <td>Available</td>
-                        <td>Delete</td>
-                    </tr>
-                </thead>
+            <thead>
+                <tr>
+                    <td>Model</td>
+                    <td>Brand</td>
+                    <td>SPZ</td>
+                    <td>Creation Year</td>
+                    <td>CompanyLevel</td>
+                    <td>Available</td>
+                    <td>Delete</td>
+                </tr>
+            </thead>
             <c:forEach items="${actionBean.allCars}" var="car">
-              <tr>
-                    
+                <tr>
+
                     <td>
                         <s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CarParkAdminActionBean" event="editCar">
-                    <s:param name="car.id" value="${car.id}" />
-                        <c:out value="${car.model}" />
+                            <s:param name="car.id" value="${car.id}" />
+                            <c:out value="${car.model}" />
                         </s:link>
                     </td>
-                    <td> <c:out value="${car.brand}" /></td>
-                    <td> <c:out value="${car.spz}" /></td>
-                    <td> <s:format formatPattern="dd.MM.YYYY" value="${car.creationYear}" /></td>
-                    <td> <c:out value="${car.companyLevel.name}" /></td>
+                    <td> 
+                        <s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CarParkAdminActionBean" event="editCar">
+                            <s:param name="car.id" value="${car.id}" />
+                            <c:out value="${car.brand}" />
+                        </s:link>
+
+                    </td>
+                    <td> 
+                        <s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CarParkAdminActionBean" event="editCar">
+                            <s:param name="car.id" value="${car.id}" />
+                            <c:out value="${car.spz}" />
+                        </s:link>
+                    </td>
+                    <td>        
+                        <s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CarParkAdminActionBean" event="editCar">
+                            <s:param name="car.id" value="${car.id}" />
+                            <s:format formatPattern="dd.MM.YYYY" value="${car.creationYear}" />                            
+                        </s:link>     
+                    </td>
+                    <td> 
+                        <c:out value="${car.companyLevel.name}" />
+                    </td>
                     <td class="available"><img align="center" src="${pageContext.request.contextPath}${(car.available)?'/images/available.png' :  '/images/unavailable.png'}"  /></td>
                     <td> <s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CarParkAdminActionBean" event="deleteCar">
-                             <s:param name="car.id" value="${car.id}" />
+                            <s:param name="car.id" value="${car.id}" />
                             <img align="center" src="${pageContext.request.contextPath}/images/delete.png"  />
                         </s:link>
                     </td>
                 </tr>
-                 
             </c:forEach>  
         </table>
     </s:layout-component>
