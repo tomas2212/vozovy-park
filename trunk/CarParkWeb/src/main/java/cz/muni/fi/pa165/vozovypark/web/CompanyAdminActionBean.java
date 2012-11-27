@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author tomas
  */
-@UrlBinding("/company")
+@UrlBinding("/company/{$event}/")
 public class CompanyAdminActionBean implements ActionBean, LayoutPage {
 
     final static Logger log = LoggerFactory.getLogger(CompanyAdminActionBean.class);
@@ -114,10 +114,10 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
 
     public Resolution addCl() {
         cls.createCompanyLevel(cld.getName());
-        return new RedirectResolution("company");
+        return new RedirectResolution(this.getClass(),"companyLevels");
     }
 
-    @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "delete"})
+    @Before(stages = LifecycleStage.BindingAndValidation, on = {"editCl"})
     public void loadClFromDatabase() {
         String ids = context.getRequest().getParameter("companyLevel.id");
         if (ids == null) {
@@ -126,13 +126,13 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
         cld = cls.getCompanyLevelById(Long.parseLong(ids));
     }
 
-    public Resolution storno() {
-        return new ForwardResolution("company/companyLevels.jsp");
+    public Resolution stornoCl() {
+        return new ForwardResolution("/companyAdmin/companyLevels.jsp");
     }
 
     public Resolution editCl() {
-        log.debug("edit() companyLevel={}", cld);
-        return new ForwardResolution("company/companyLevel/edit.jsp");
+        this.subMenu.setActiveItemByUrl("/companyAdmin/addCompanyLevel");
+        return new ForwardResolution("/companyAdmin/edit.jsp");
     }
 
     public Resolution updateCl() {
@@ -141,7 +141,6 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
     }
 
     public Resolution deleteCl() {
-        log.debug("delete({})", cld.getId());
         String ids = context.getRequest().getParameter("companyLevel.id");
         if (ids != null) {
             cls.removeCompanyLevel(Long.parseLong(ids));
@@ -180,18 +179,15 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
     }
 
     public Resolution editE() {
-        log.debug("edit() employee={}", employeeDTO);
         return new ForwardResolution("/editEmployee.jsp");
     }
 
     public Resolution saveE() {
-        log.debug("save() book={}", employeeDTO);
         employeeService.updateEmployee(employeeDTO);
         return new RedirectResolution(this.getClass(), "employees");
     }
 
     public Resolution deleteE() {
-        log.debug("delete({})", employeeDTO.getId());
         employeeService.removeEmployee(employeeDTO.getId());
         return new RedirectResolution(this.getClass(), "employees");
     }

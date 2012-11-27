@@ -12,10 +12,10 @@
         <s:form beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" >
             <s:hidden name="companyLevel.id"/>
             <fieldset><legend>New Company Level</legend>
-                <br/>
+                <br/>       
                 <tr>
                     <th><s:label for="b1" name="company.level.name"/></th>
-                    <td><s:text id="b1" name="company.level.name"/></td>
+                    <td><s:text id="b1" name="companyLevel.name"/></td>
                 </tr>
                 <s:submit name="addCl">Create</s:submit>
             </fieldset>

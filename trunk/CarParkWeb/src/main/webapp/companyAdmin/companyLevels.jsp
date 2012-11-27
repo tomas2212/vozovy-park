@@ -12,24 +12,22 @@
         <s:useActionBean beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" var="actionBean"/>  
         <br/>
         <table>
+            <thead>
             <tr>
-                <th>ID</th>
-                <th></th>
-                <th>Name</th>
-                <th></th>
-                <th>Level-value</th>
+                <td>ID</td>            
+                <td>Name</td>         
+                <td>Level-value</td>
+                <td>edit</td>
+                <td>delete</td>
             </tr>
+            </thead>
             <c:forEach items="${actionBean.allCompanyLevels}" var="acl">
                 <tr>
                     <td>${acl.id}</td>
-                    <td></td>
                     <td><c:out value="${acl.name}" />
-                    <td></td>
                     <td><c:out value="${acl.levelValue}" />
-                    <td></td>
-                    <td><s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" event="edit"><s:param name="companyLevel.id" value="${companyLevel.id}"/>edit</s:link> </td>
-                    <td></td>
-                    <td><s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" event="delete"><s:param name="companyLevel.id" value="${companyLevel.id}"/>delete</s:link> </td>
+                    <td><s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" event="editCl"><s:param name="companyLevel.id" value="${acl.id}"/>edit</s:link> </td>
+                    <td><s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" event="deleteCl"><s:param name="companyLevel.id" value="${acl.id}"/>delete</s:link> </td>
                 </tr>
             </c:forEach>            
         </table>
