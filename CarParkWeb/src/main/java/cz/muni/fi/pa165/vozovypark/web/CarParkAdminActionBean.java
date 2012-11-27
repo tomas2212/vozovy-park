@@ -8,7 +8,6 @@ import cz.muni.fi.pa165.vozovypark.service.CompanyLevelService;
 import cz.muni.fi.pa165.vozovypark.service.EmployeeService;
 import cz.muni.fi.pa165.vozovypark.service.ReservationService;
 import cz.muni.fi.pa165.vozovypark.web.menu.Menu;
-import cz.muni.fi.pa165.vozovypark.web.menu.MenuItem;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,7 +21,6 @@ import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.UrlBinding;
 import net.sourceforge.stripes.controller.LifecycleStage;
 import net.sourceforge.stripes.integration.spring.SpringBean;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -33,27 +31,20 @@ public class CarParkAdminActionBean implements ActionBean, LayoutPage {
 
     private ActionBeanContext context;
     private boolean editing;
-    
     @SpringBean(value = "mainMenu")
     private Menu mainMenu;
-    
     @SpringBean(value = "carParkSubMenu")
     private Menu subMenu;
-    
-    @SpringBean(value= "CarService")
+    @SpringBean(value = "CarService")
     private CarService carService;
-    
-    @SpringBean(value= "CompanyLevelService")
+    @SpringBean(value = "CompanyLevelService")
     private CompanyLevelService cs;
-    
     @SpringBean(value = "ReservationService")
     private ReservationService rs;
-    
     @SpringBean(value = "EmployeeService")
     private EmployeeService employeeService;
-    
     private CarDTO car;
-    
+
     @Override
     public void setContext(ActionBeanContext abc) {
         context = abc;
@@ -64,6 +55,7 @@ public class CarParkAdminActionBean implements ActionBean, LayoutPage {
         return context;
     }
 
+    @Override
     public Menu getMainMenu() {
         mainMenu.setActiveItemByUrl("/carPark");
         return mainMenu;
@@ -87,125 +79,126 @@ public class CarParkAdminActionBean implements ActionBean, LayoutPage {
     @DefaultHandler
     public Resolution release() {
         this.subMenu.setActiveItemByName("carPark.release");
-        
+
         return new ForwardResolution("/carAdmin/release.jsp");
     }
-    
-    public Resolution releaseCar(){
+
+    public Resolution releaseCar() {
         String cls = context.getRequest().getParameter("carId");
-        if(cls !=null){
+        if (cls != null) {
             CarDTO carDTO = carService.getCarById(Long.parseLong(cls));
             carDTO.setAvailable(false);
             carService.updateCar(car);
         }
-        
+
         return new RedirectResolution(this.getClass(), "release");
     }
-    
+
     public Resolution recive() {
         this.subMenu.setActiveItemByName("carPark.recive");
-        
+
         return new ForwardResolution("/carAdmin/recive.jsp");
     }
-    
-    public Resolution reciveCar(){
+
+    public Resolution reciveCar() {
         String cls = context.getRequest().getParameter("carId");
-        if(cls !=null){
+        if (cls != null) {
             CarDTO carDTO = carService.getCarById(Long.parseLong(cls));
             carDTO.setAvailable(false);
             carService.updateCar(car);
         }
-        
+
         return new RedirectResolution(this.getClass(), "recive");
     }
-    
-    public Resolution cars(){
-        
+
+    public Resolution cars() {
+
         this.subMenu.setActiveItemByName("carPark.cars");
         return new ForwardResolution("/carAdmin/cars.jsp");
     }
-    
-    public Resolution addCar(){
+
+    public Resolution addCar() {
         this.subMenu.setActiveItemByUrl("/carPark/addCar");
         return new ForwardResolution("/carAdmin/addCar.jsp");
     }
-    
-    public Resolution editCar(){
+
+    public Resolution editCar() {
         this.subMenu.setActiveItemByUrl("/carPark/addCar");
         return new ForwardResolution("/carAdmin/editCar.jsp");
     }
-    
-    public Resolution storno(){
+
+    public Resolution storno() {
         return new ForwardResolution("/carAdmin/cars.jsp");
     }
-   
-    
-    public Resolution create(){
+
+    public Resolution create() {
         String cls = context.getRequest().getParameter("car.companyLevel");
-        if(cls !=null){
+        if (cls != null) {
             CompanyLevelDTO cl = cs.getCompanyLevelById(Long.parseLong(cls));
             car.setCompanyLevel(cl);
         }
-        
+
         carService.createCar(car);
         return new RedirectResolution(this.getClass(), "cars");
     }
-    
-    public Resolution update(){
+
+    public Resolution update() {
         String cls = context.getRequest().getParameter("car.companyLevel");
-        if(cls !=null){
+        if (cls != null) {
             CompanyLevelDTO cl = cs.getCompanyLevelById(Long.parseLong(cls));
             car.setCompanyLevel(cl);
         }
         carService.updateCar(car);
-        
+
         return new RedirectResolution(this.getClass(), "cars");
     }
-    
-    public Resolution deleteCar(){
-        
-         String ids = context.getRequest().getParameter("car.id");  
-         if(ids != null){
-            
+
+    public Resolution deleteCar() {
+
+        String ids = context.getRequest().getParameter("car.id");
+        if (ids != null) {
+
             carService.removeCar(Long.parseLong(ids));
-         }
-         return new RedirectResolution(this.getClass(), "cars");
+        }
+        return new RedirectResolution(this.getClass(), "cars");
     }
-    
-    public List<CarDTO> getAllCars(){
+
+    public List<CarDTO> getAllCars() {
         return carService.getAllCars();
     }
-    
+
     @Before(stages = LifecycleStage.BindingAndValidation, on = {"editCar"})
     public void loadCarFromDatabase() {
-        String ids = context.getRequest().getParameter("car.id");       
-        if (ids == null) return;
-        
+        String ids = context.getRequest().getParameter("car.id");
+        if (ids == null) {
+            return;
+        }
+
         car = carService.getCarById(Long.parseLong(ids));
     }
-    
-    public List<CompanyLevelDTO> getAllCompanyLevels(){
+
+    public List<CompanyLevelDTO> getAllCompanyLevels() {
         return cs.getAllCompanyLevels();
     }
-    
-    public List<ReservationDTO> getCarsToRelease(){
+
+    public List<ReservationDTO> getCarsToRelease() {
         List<ReservationDTO> result = new ArrayList<ReservationDTO>();
         List<ReservationDTO> acceptedReservations = rs.getAcceptedReservations();
         Date now = new Date();
-        for(ReservationDTO res : acceptedReservations){
-            if(res.getCar().getAvailable() && res.getDateTo().after(now)){
+        for (ReservationDTO res : acceptedReservations) {
+            if (res.getCar().getAvailable() && res.getDateTo().after(now)) {
                 result.add(res);
             }
         }
         return result;
     }
-    
-    public List<ReservationDTO> getCarsToRecive(){
+
+    public List<ReservationDTO> getCarsToRecive() {
         List<ReservationDTO> result = new ArrayList<ReservationDTO>();
         List<ReservationDTO> acceptedReservations = rs.getAcceptedReservations();
-        
-        for(ReservationDTO res : acceptedReservations){
-            if(!res.getCar().getAvailable()){
+
+        for (ReservationDTO res : acceptedReservations) {
+            if (!res.getCar().getAvailable()) {
                 result.add(res);
             }
         }
@@ -219,7 +212,4 @@ public class CarParkAdminActionBean implements ActionBean, LayoutPage {
     public void setCar(CarDTO car) {
         this.car = car;
     }
-    
-    
-    
 }

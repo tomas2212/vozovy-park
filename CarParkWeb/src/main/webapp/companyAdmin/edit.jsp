@@ -17,11 +17,15 @@
                     <tr>
                         <th><s:label for="b2" name="companyLevel.name"/></th>
                         <td><s:text id="b2" name="companyLevel.name"/></td>
+                        <br/>
+                        <th><s:label for="b2" name="companyLevel.levelValue"/></th>
+                        <td><s:text id="b2" name="companyLevel.levelValue"/></td>
+
                     </tr>
                 </table>
-                <s:submit name="save">Save</s:submit>
-                <s:submit name="storno">Cancel</s:submit>
-            </fieldset>
+                <s:submit name="updateCl">Save</s:submit>
+                <s:submit name="stornoCl">Cancel</s:submit>
+                </fieldset>
         </s:form>
     </s:layout-component>
 </s:layout-render>
