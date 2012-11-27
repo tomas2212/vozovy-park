@@ -12,8 +12,8 @@
         <table>
             <thead>
                 <tr>
-                    <td>Model</td>
-                    <td>Brand</td>
+                    <td><s:label name="carPark.model" /></td>
+                    <td><s:label name="carPark.brand" /></td>
                     <td>SPZ</td>
                     <td>Creation Year</td>
                     <td>CompanyLevel</td>
