@@ -94,13 +94,13 @@ public class CarParkAdminActionBean implements ActionBean, LayoutPage {
         return new RedirectResolution(this.getClass(), "release");
     }
 
-    public Resolution recive() {
-        this.subMenu.setActiveItemByName("carPark.recive");
+    public Resolution receive() {
+        this.subMenu.setActiveItemByName("carPark.receive");
 
-        return new ForwardResolution("/carAdmin/recive.jsp");
+        return new ForwardResolution("/carAdmin/receive.jsp");
     }
 
-    public Resolution reciveCar() {
+    public Resolution receiveCar() {
         String cls = context.getRequest().getParameter("carId");
         if (cls != null) {
             CarDTO carDTO = carService.getCarById(Long.parseLong(cls));
@@ -108,7 +108,7 @@ public class CarParkAdminActionBean implements ActionBean, LayoutPage {
             carService.updateCar(car);
         }
 
-        return new RedirectResolution(this.getClass(), "recive");
+        return new RedirectResolution(this.getClass(), "receive");
     }
 
     public Resolution cars() {
@@ -193,7 +193,7 @@ public class CarParkAdminActionBean implements ActionBean, LayoutPage {
         return result;
     }
 
-    public List<ReservationDTO> getCarsToRecive() {
+    public List<ReservationDTO> getCarsToReceive() {
         List<ReservationDTO> result = new ArrayList<ReservationDTO>();
         List<ReservationDTO> acceptedReservations = rs.getAcceptedReservations();
 
