@@ -7,8 +7,8 @@
   <packaging>pom</packaging>
   <name>CarPark</name>
     <modules>
-        <module>../carPark/vozovyPark</module>
-        <module>../CarParkWeb</module>
-        <module>../CarParkAPI</module>
+        <module>vozovyPark</module>
+        <module>CarParkWeb</module>
+        <module>CarParkAPI</module>
     </modules>
 </project>
