@@ -10,5 +10,4 @@
 		<property name="username" value="pa165" />
 		<property name="password" value="pa165" />
 	</bean>
- 
 </beans>
