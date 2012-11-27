@@ -12,30 +12,32 @@
           <s:useActionBean beanclass="cz.muni.fi.pa165.vozovypark.web.ReservationsActionBean" var="actionBean"/>  
         <br/>
         <table>
+            <thead>
             <tr>
-                <th>ID</th>
-                <th>From</th>
-                <th>To</th>
-                <th>Start</th>
-                <th>End</th>
-                <th>Confirmed</th>
-                <th>Employee</th>
-                <th>Car</th>
-                <th></th>
-                <th></th>
+                <td>ID</td>
+                <td>From</td>
+                <td>To</td>
+                <td>Start</td>
+                <td>End</td>
+                <td>Confirmed</td>
+                <td>Employee</td>
+                <td>Car</td>
+                <td></td>
+                <td></td>
             </tr>
+            </thead>
             <c:forEach items="${actionBean.reservations}" var="res">
                 <tr>
                     <td>${res.id}</td>
-                    <td><c:out value="${res.dateFrom}" /></td>
-                    <td><c:out value="${res.dateTo}" /></td>
-                    <td><c:out value="${res.startDate}" /></td>
-                    <td><c:out value="${res.returnDate}" /></td>
-                    <td><c:out value="${res.confirmed}" /></td>
-                    <td></td>
-                    <td></td>
-                    <td><s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" event="edit"><s:param name="companyLevel.id" value="${companyLevel.id}"/>edit</s:link> </td>
-                    <td><s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" event="delete"><s:param name="companyLevel.id" value="${companyLevel.id}"/>delete</s:link> </td>
+                    <td><s:format formatPattern="dd.MM.YYYY" value="${res.dateFrom}" /></td>
+                    <td><s:format formatPattern="dd.MM.YYYY" value="${res.dateTo}" /></td>
+                    <td><s:format formatPattern="dd.MM.YYYY" value="${res.startDate}" /></td>
+                    <td><s:format formatPattern="dd.MM.YYYY" value="${res.returnDate}" /></td>
+                    <td class="confirmed"><img align="center" src="${pageContext.request.contextPath}${(res.confirmed)?'/images/available.png' :  '/images/unavailable.png'}"  /></td>
+                    <td><c:out value="${res.car.spz}" /></td>
+                    <td><c:out value="${res.employee.name}" /></td>
+                    <td><s:link beanclass="cz.muni.fi.pa165.vozovypark.web.ReservationsActionBean" event="edit"><s:param name="resDTO.id" value="${res.id}"/>edit</s:link> </td>
+                    <td><s:link beanclass="cz.muni.fi.pa165.vozovypark.web.ReservationsActionBean" event="delete"><s:param name="resDTO.id" value="${res.id}"/>delete</s:link> </td>
               
                 </tr>
             </c:forEach>            

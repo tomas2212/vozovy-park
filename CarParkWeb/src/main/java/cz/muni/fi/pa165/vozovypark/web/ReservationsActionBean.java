@@ -96,6 +96,11 @@ public class ReservationsActionBean implements ActionBean, LayoutPage{
         return rs.getAllReservations();
     }
     
+    public List<ReservationDTO> getUncomfirmedReservations() {
+        //return rs.getAllReservations();
+        return rs.getReservationsToConfirm();
+    }
+    
     public List<CarDTO> getCars() {
         return carService.getAllCars();
     }
@@ -113,15 +118,10 @@ public class ReservationsActionBean implements ActionBean, LayoutPage{
     public void setResDTO(ReservationDTO resDTO) {
         this.resDTO = resDTO;
     }
-    
-      public Resolution addReservation() {
-        rs.createReservation(resDTO);
-        return new RedirectResolution("reservations/reservations.jsp");
-    }
 
-    @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "save"})
+    @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit"})
     public void loadResFromDatabase() {
-        String ids = context.getRequest().getParameter("reservation.id");
+        String ids = context.getRequest().getParameter("resDTO.id");
         if (ids == null) {
             return;
         }
@@ -131,21 +131,45 @@ public class ReservationsActionBean implements ActionBean, LayoutPage{
      public Resolution storno() {
         return new ForwardResolution("reservations/reservations.jsp");
     }
+     
+     public Resolution create() {
+         String carId = context.getRequest().getParameter("resDTO.car");
+         String employeeId = context.getRequest().getParameter("resDTO.employee");
+         if(carId != null) {
+             CarDTO carDTO = carService.getCarById(Long.parseLong(carId));
+             resDTO.setCar(carDTO);
+         }
+         
+         if(employeeId !=null) {
+             EmployeeDTO employeeDTO = employeeService.getEmployeeById(Long.parseLong(employeeId));
+             resDTO.setEmployee(employeeDTO);
+         }
+         
+         rs.createReservation(resDTO);
+         return new RedirectResolution(this.getClass(), "reservations");
+     }
 
-    public Resolution editRes() {
-        log.debug("edit() companyLevel={}", resDTO);
+    public Resolution edit() {
+        log.debug("edit() reservation={}", resDTO);
         return new ForwardResolution("reservations.jsp");
     }
 
-    public Resolution saveRes() {
-        log.debug("save() book={}", resDTO);
+    public Resolution save() {
+        log.debug("save() reservation={}", resDTO);
         rs.updateReservation(resDTO);
         return new RedirectResolution(this.getClass(), "reservations");
     }
 
-    public Resolution deleteRes() {
+    public Resolution delete() {
         log.debug("delete({})", resDTO.getId());
         rs.removeReservation(resDTO.getId());
+        return new RedirectResolution(this.getClass(), "reservations");
+    }
+    
+    public Resolution confirm() {
+        log.debug("confirm() reservation={}", resDTO);
+        resDTO.setConfirmed(true);
+        rs.updateReservation(resDTO);
         return new RedirectResolution(this.getClass(), "reservations");
     }
     
