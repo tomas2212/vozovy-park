@@ -40,7 +40,7 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
     private CompanyLevelDTO cld;
     @SpringBean(value = "EmployeeService")
     private EmployeeService employeeService;
-    private EmployeeDTO employeeDTO;
+    private EmployeeDTO employee;
 
     @Override
     public void setContext(ActionBeanContext abc) {
@@ -83,13 +83,16 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
         this.subMenu.setActiveItemByName("/companyAdmin.addEmployee");
         return new ForwardResolution("/companyAdmin/addEmployee.jsp");
     }
-    
-    public Resolution editEmployee(){
-        this.subMenu.setActiveItemByUrl("/carPark/addemployee");
-        return new ForwardResolution("/carAdmin/editEmployee.jsp");
+
+    public Resolution editEmployee() {
+        this.subMenu.setActiveItemByUrl("/carPark/addEmployee");
+        return new ForwardResolution("/companyAdmin/editEmployee.jsp");
     }
 
-    
+    public Resolution storno() {
+        return new ForwardResolution("companyAdmin/employees.jsp");
+    }
+
     public Resolution companyLevels() {
         this.subMenu.setActiveItemByName("/companyAdmin.companyLevels");
         return new ForwardResolution("/companyAdmin/companyLevels.jsp");
@@ -114,7 +117,7 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
 
     public Resolution addCl() {
         cls.createCompanyLevel(cld.getName());
-        return new RedirectResolution(this.getClass(),"companyLevels");
+        return new RedirectResolution(this.getClass(), "companyLevels");
     }
 
     @Before(stages = LifecycleStage.BindingAndValidation, on = {"editCl"})
@@ -153,42 +156,71 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
     }
 
     public EmployeeDTO getEmployee() {
-        return employeeDTO;
+        return employee;
     }
 
-    public void setEmployee(EmployeeDTO employeeDTO) {
-        this.employeeDTO = employeeDTO;
+    public void setEmployee(EmployeeDTO employee) {
+        this.employee = employee;
     }
 
-    public Resolution addE() {
-        employeeService.createEmployee(employeeDTO);
-        return new RedirectResolution("/companyAdmin/employees.jsp");
+    public Resolution createEmployee() {
+        String cs = context.getRequest().getParameter("employee.companyLevel");
+        if (cs != null) {
+            CompanyLevelDTO cl = cls.getCompanyLevelById(Long.parseLong(cs));
+            employee.setCompanyLevel(cl);
+        }
+
+        employeeService.createEmployee(employee);
+        return new RedirectResolution(this.getClass(), "employees");
     }
 
-    @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "save"})
+    public Resolution updateEmployee() {
+        String cs = context.getRequest().getParameter("employee.companyLevel");
+        if (cs != null) {
+            CompanyLevelDTO cl = cls.getCompanyLevelById(Long.parseLong(cs));
+            employee.setCompanyLevel(cl);
+        }
+        employeeService.updateEmployee(employee);
+        return new RedirectResolution(this.getClass(), "cars");
+    }
+
+    public Resolution deleteEmployee() {
+
+        String ids = context.getRequest().getParameter("employee.id");
+        if (ids != null) {
+
+            employeeService.removeEmployee(Long.parseLong(ids));
+        }
+        return new RedirectResolution(this.getClass(), "employees");
+    }
+
+    @Before(stages = LifecycleStage.BindingAndValidation, on = {"editEmployee"})
     public void loadEFromDatabase() {
         String ids = context.getRequest().getParameter("employee.id");
         if (ids == null) {
             return;
         }
-        employeeDTO = employeeService.getEmployeeById(Long.parseLong(ids));
-    }
-
-    public Resolution stornoE() {
-        return new ForwardResolution("company/employees.jsp");
-    }
-
-    public Resolution editE() {
-        return new ForwardResolution("/editEmployee.jsp");
-    }
-
-    public Resolution saveE() {
-        employeeService.updateEmployee(employeeDTO);
-        return new RedirectResolution(this.getClass(), "employees");
-    }
-
-    public Resolution deleteE() {
-        employeeService.removeEmployee(employeeDTO.getId());
-        return new RedirectResolution(this.getClass(), "employees");
+        employee = employeeService.getEmployeeById(Long.parseLong(ids));
     }
 }
+
+
+
+//    public Resolution stornoE() {
+//        return new ForwardResolution("company/employees.jsp");
+//    }
+//
+//    public Resolution editE() {
+//        return new ForwardResolution("/editEmployee.jsp");
+//    }
+//
+//    public Resolution saveE() {
+//        employeeService.updateEmployee(employee);
+//        return new RedirectResolution(this.getClass(), "employees");
+//    }
+//
+//    public Resolution deleteE() {
+//        employeeService.removeEmployee(employee.getId());
+//        return new RedirectResolution(this.getClass(), "employees");
+//    }
+

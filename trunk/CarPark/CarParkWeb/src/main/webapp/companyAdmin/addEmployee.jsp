@@ -12,11 +12,11 @@
 
         <s:form beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean">
             <s:hidden name="employee.id"/>
-            <fieldset><legend>Změna údajů</legend>
+            
                 <%@include file="form.jsp"%>
-                <s:submit name="create">Uložit</s:submit>
-                <s:submit name="storno">Storno</s:submit>
-                </fieldset>
+                <s:submit name="create">Create</s:submit>
+                <s:submit name="storno">Cancel</s:submit>
+               
         </s:form>
     </s:layout-component>
 </s:layout-render>

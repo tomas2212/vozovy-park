@@ -16,24 +16,48 @@
                         <td>Position</td>
                         <td>Approve</td>
                         <td>Address</td>
+                        <td>CompanyLevel</td>
                         
                     </tr>
                 </thead>
-            <c:forEach items="${actionBean.allEmployees}" var="employee">
-              <tr>
-                    
+           <c:forEach items="${actionBean.allEmployees}" var="car">
+                <tr>
+
                     <td>
                         <s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" event="editEmployee">
-                    <s:param name="employee.id" value="${employee.id}" />
-                        <c:out value="${employee.name}" />
+                            <s:param name="employee.id" value="${employee.id}" />
+                            <c:out value="${employee.name}" />
                         </s:link>
                     </td>
-                    <td> <c:out value="${employee.position}" /></td>
-                    <td> <c:out value="${employee.approve}" /></td>
-                    <td> <c:out value="${employee.address}" /></td>
-                    
+                    <td> 
+                        <s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" event="editEmployee">
+                            <s:param name="employee.id" value="${employee.id}" />
+                            <c:out value="${employee.position}" />
+                        </s:link>
+
+                    </td>
+                    <td> 
+                        <s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" event="editEmployee">
+                            <s:param name="employee.id" value="${employee.id}" />
+                            <c:out value="${employee.approve}" />
+                        </s:link>
+                    </td>
+                    <td>        
+                        <s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" event="editEmployee">
+                            <s:param name="employee.id" value="${employee.id}" />
+                             <c:out value="${employee.address}" />                            
+                        </s:link>     
+                    </td>
+                    <td> 
+                        <c:out value="${employee.companyLevel.name}" />
+                    </td>
+                    <td class="available"><img align="center" src="${pageContext.request.contextPath}${(employee.approves)?'/images/available.png' :  '/images/unavailable.png'}"  /></td>
+                    <td> <s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" event="deleteEmployee">
+                            <s:param name="employee.id" value="${employee.id}" />
+                            <img align="center" src="${pageContext.request.contextPath}/images/delete.png"  />
+                        </s:link>
+                    </td>
                 </tr>
-                 
             </c:forEach>  
         </table>
     </s:layout-component>
