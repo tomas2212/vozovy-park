@@ -39,12 +39,14 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
     private CarService carService;
     @SpringBean(value = "CompanyLevelService")
     private CompanyLevelService cls;
+    @ValidateNestedProperties(value = {
+        @Validate(on = {"createButtonCl", "saveButtonCl"}, field = "name", required = true)
+    })
     private CompanyLevelDTO cld;
     @SpringBean(value = "EmployeeService")
     private EmployeeService employeeService;
-    @ValidateNestedProperties(value = {
-        @Validate(on = {"createButtonEmployee", "saveButtonEmployee"}, field = "name", required = true),
-    })
+    @ValidateNestedProperties(
+    @Validate(on = {"createButtonEmployee", "saveButtonEmployee"}, field = "name", required = true))
     private EmployeeDTO employee;
 
     @Override
