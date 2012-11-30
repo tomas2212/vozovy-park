@@ -17,6 +17,8 @@ import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.UrlBinding;
 import net.sourceforge.stripes.controller.LifecycleStage;
 import net.sourceforge.stripes.integration.spring.SpringBean;
+import net.sourceforge.stripes.validation.Validate;
+import net.sourceforge.stripes.validation.ValidateNestedProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,6 +42,9 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
     private CompanyLevelDTO cld;
     @SpringBean(value = "EmployeeService")
     private EmployeeService employeeService;
+    @ValidateNestedProperties(value = {
+        @Validate(on = {"createButtonEmployee", "saveButtonEmployee"}, field = "name", required = true),
+    })
     private EmployeeDTO employee;
 
     @Override
@@ -84,13 +89,22 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
         return new ForwardResolution("/companyAdmin/addEmployee.jsp");
     }
 
+    public Resolution editCl() {
+        this.subMenu.setActiveItemByUrl("/companyAdmin/addCompanyLevel");
+        return new ForwardResolution("/companyAdmin/edit.jsp");
+    }
+
     public Resolution editEmployee() {
         this.subMenu.setActiveItemByUrl("/carPark/addEmployee");
         return new ForwardResolution("/companyAdmin/editEmployee.jsp");
     }
 
-    public Resolution storno() {
-        return new ForwardResolution("companyAdmin/employees.jsp");
+    public Resolution cancelButtonCl() {
+        return new ForwardResolution("/companyAdmin/companyLevels.jsp");
+    }
+
+    public Resolution cancelButtonEmployee() {
+        return new ForwardResolution("/companyAdmin/employees.jsp");
     }
 
     public Resolution companyLevels() {
@@ -115,11 +129,6 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
         this.cld = cld;
     }
 
-    public Resolution createButtonCl() {
-        cls.createCompanyLevel(cld.getName());
-        return new RedirectResolution(this.getClass(), "companyLevels");
-    }
-
     @Before(stages = LifecycleStage.BindingAndValidation, on = {"editCl"})
     public void loadClFromDatabase() {
         String ids = context.getRequest().getParameter("companyLevel.id");
@@ -127,28 +136,6 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
             return;
         }
         cld = cls.getCompanyLevelById(Long.parseLong(ids));
-    }
-
-    public Resolution cancelButtonCl() {
-        return new ForwardResolution("/companyAdmin/companyLevels.jsp");
-    }
-
-    public Resolution editCl() {
-        this.subMenu.setActiveItemByUrl("/companyAdmin/addCompanyLevel");
-        return new ForwardResolution("/companyAdmin/edit.jsp");
-    }
-
-    public Resolution saveButtonCl() {
-        cls.updateCompanyLevel(cld);
-        return new RedirectResolution(this.getClass(), "companyLevels");
-    }
-
-    public Resolution deleteCl() {
-        String ids = context.getRequest().getParameter("companyLevel.id");
-        if (ids != null) {
-            cls.removeCompanyLevel(Long.parseLong(ids));
-        }
-        return new RedirectResolution(this.getClass(), "companyLevels");
     }
 
     public List<EmployeeDTO> getAllEmployees() {
@@ -163,7 +150,12 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
         this.employee = employee;
     }
 
-    public Resolution createEmployee() {
+    public Resolution createButtonCl() {
+        cls.createCompanyLevel(cld.getName());
+        return new RedirectResolution(this.getClass(), "companyLevels");
+    }
+
+    public Resolution createButtonEmployee() {
         String cs = context.getRequest().getParameter("employee.companyLevel");
         if (cs != null) {
             CompanyLevelDTO cl = cls.getCompanyLevelById(Long.parseLong(cs));
@@ -174,21 +166,33 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
         return new RedirectResolution(this.getClass(), "employees");
     }
 
-    public Resolution updateEmployee() {
+    public Resolution saveButtonCl() {
+        cls.updateCompanyLevel(cld);
+        return new RedirectResolution(this.getClass(), "companyLevels");
+    }
+
+    public Resolution saveButtonEmployee() {
         String cs = context.getRequest().getParameter("employee.companyLevel");
         if (cs != null) {
             CompanyLevelDTO cl = cls.getCompanyLevelById(Long.parseLong(cs));
             employee.setCompanyLevel(cl);
         }
         employeeService.updateEmployee(employee);
-        return new RedirectResolution(this.getClass(), "cars");
+        return new RedirectResolution(this.getClass(), "employees");
+    }
+
+    public Resolution deleteCl() {
+        String ids = context.getRequest().getParameter("companyLevel.id");
+        if (ids != null) {
+            cls.removeCompanyLevel(Long.parseLong(ids));
+        }
+        return new RedirectResolution(this.getClass(), "companyLevels");
     }
 
     public Resolution deleteEmployee() {
 
         String ids = context.getRequest().getParameter("employee.id");
         if (ids != null) {
-
             employeeService.removeEmployee(Long.parseLong(ids));
         }
         return new RedirectResolution(this.getClass(), "employees");
@@ -203,24 +207,3 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
         employee = employeeService.getEmployeeById(Long.parseLong(ids));
     }
 }
-
-
-
-//    public Resolution stornoE() {
-//        return new ForwardResolution("company/employees.jsp");
-//    }
-//
-//    public Resolution editE() {
-//        return new ForwardResolution("/editEmployee.jsp");
-//    }
-//
-//    public Resolution saveE() {
-//        employeeService.updateEmployee(employee);
-//        return new RedirectResolution(this.getClass(), "employees");
-//    }
-//
-//    public Resolution deleteE() {
-//        employeeService.removeEmployee(employee.getId());
-//        return new RedirectResolution(this.getClass(), "employees");
-//    }
-

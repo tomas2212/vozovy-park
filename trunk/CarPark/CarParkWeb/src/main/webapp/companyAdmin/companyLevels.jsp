@@ -17,8 +17,8 @@
                 <td>ID</td>            
                 <td>Name</td>         
                 <td>Level-value</td>
-                <td>edit</td>
-                <td><s:label name="delete" /></td>
+                <td><s:label name="companyAdmin.edit" /></td>
+                <td><s:label name="companyAdmin.delete" /></td>
             </tr>
             </thead>
             <c:forEach items="${actionBean.allCompanyLevels}" var="acl">
