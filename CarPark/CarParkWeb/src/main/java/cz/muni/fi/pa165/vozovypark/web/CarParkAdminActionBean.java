@@ -21,6 +21,8 @@ import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.UrlBinding;
 import net.sourceforge.stripes.controller.LifecycleStage;
 import net.sourceforge.stripes.integration.spring.SpringBean;
+import net.sourceforge.stripes.validation.Validate;
+import net.sourceforge.stripes.validation.ValidateNestedProperties;
 
 /**
  *
@@ -43,7 +45,16 @@ public class CarParkAdminActionBean implements ActionBean, LayoutPage {
     private ReservationService rs;
     @SpringBean(value = "EmployeeService")
     private EmployeeService employeeService;
+    @ValidateNestedProperties(value = {
+        @Validate(on = {"create", "update"}, field = "model", required = true),
+        @Validate(on = {"create", "update"}, field = "creationYear", required = true),
+        @Validate(on = {"create", "update"}, field = "brand", required = true),
+        @Validate(on = {"create", "update"}, field = "spz", required = true),
+        @Validate(on = {"create", "update"}, field = "companyLevel", required = true)
+    })
     private CarDTO car;
+    
+    
 
     @Override
     public void setContext(ActionBeanContext abc) {
@@ -84,11 +95,11 @@ public class CarParkAdminActionBean implements ActionBean, LayoutPage {
     }
 
     public Resolution releaseCar() {
-        String cls = context.getRequest().getParameter("carId");
-        if (cls != null) {
-            CarDTO carDTO = carService.getCarById(Long.parseLong(cls));
-            carDTO.setAvailable(false);
-            carService.updateCar(car);
+        String rss = context.getRequest().getParameter("resId");
+        if (rss != null) {
+            rs.rentCar(Long.parseLong(rss));
+            
+            
         }
 
         return new RedirectResolution(this.getClass(), "release");
@@ -101,11 +112,10 @@ public class CarParkAdminActionBean implements ActionBean, LayoutPage {
     }
 
     public Resolution receiveCar() {
-        String cls = context.getRequest().getParameter("carId");
-        if (cls != null) {
-            CarDTO carDTO = carService.getCarById(Long.parseLong(cls));
-            carDTO.setAvailable(false);
-            carService.updateCar(car);
+        String rss = context.getRequest().getParameter("resId");
+        if (rss != null) {
+         
+            rs.returnCar(Long.parseLong(rss));
         }
 
         return new RedirectResolution(this.getClass(), "receive");
@@ -123,11 +133,12 @@ public class CarParkAdminActionBean implements ActionBean, LayoutPage {
     }
 
     public Resolution editCar() {
-        this.subMenu.setActiveItemByUrl("/carPark/addCar");
+        this.subMenu.setActiveItemByUrl(null);
         return new ForwardResolution("/carAdmin/editCar.jsp");
     }
 
-    public Resolution storno() {
+    public Resolution cancel() {
+        
         return new ForwardResolution("/carAdmin/cars.jsp");
     }
 
@@ -186,7 +197,7 @@ public class CarParkAdminActionBean implements ActionBean, LayoutPage {
         List<ReservationDTO> acceptedReservations = rs.getAcceptedReservations();
         Date now = new Date();
         for (ReservationDTO res : acceptedReservations) {
-            if (res.getCar().getAvailable() && res.getDateTo().after(now)) {
+            if (res.getCar().getAvailable() && res.getDateTo().after(now) && res.getStartDate() == null) {
                 result.add(res);
             }
         }
@@ -198,7 +209,7 @@ public class CarParkAdminActionBean implements ActionBean, LayoutPage {
         List<ReservationDTO> acceptedReservations = rs.getAcceptedReservations();
 
         for (ReservationDTO res : acceptedReservations) {
-            if (!res.getCar().getAvailable()) {
+            if (res.getReturnDate() == null) {
                 result.add(res);
             }
         }

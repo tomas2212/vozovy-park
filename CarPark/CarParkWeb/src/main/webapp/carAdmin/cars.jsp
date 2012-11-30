@@ -12,13 +12,13 @@
         <table>
             <thead>
                 <tr>
-                    <td><s:label name="carPark.model" /></td>
-                    <td><s:label name="carPark.brand" /></td>
-                    <td>SPZ</td>
-                    <td>Creation Year</td>
-                    <td>CompanyLevel</td>
-                    <td>Available</td>
-                    <td>Delete</td>
+                    <td><s:label name="car.model" /></td>
+                    <td><s:label name="car.brand" /></td>
+                    <td><s:label name="car.spz" /></td>
+                    <td><s:label name="car.creationYear" /></td>
+                    <td><s:label name="car.companyLevel" /></td>
+                    <td><s:label name="car.available" /></td>
+                    <td><s:label name="car.delete" /></td>
                 </tr>
             </thead>
             <c:forEach items="${actionBean.allCars}" var="car">

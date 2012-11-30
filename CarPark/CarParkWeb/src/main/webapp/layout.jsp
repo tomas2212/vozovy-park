@@ -8,6 +8,10 @@
         <head>
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
             <title>${title}</title>
+            <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
+            <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
+            
+            <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" />
             <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/style.css" />
         </head>
         <body>
@@ -29,12 +33,12 @@
                 </div>
                 <div class="subMenu">
                     <ul>
-                    <c:forEach items="${subMenu.menuItems}" var="subMenuItem">
-                        <li>
-                            <s:link href="${subMenuItem.url}" class="${(subMenuItem.active)? 'active': ''}">
-                               <f:message key="${subMenuItem.name}"/>
-                            </s:link></li>
-                    </c:forEach>
+                        <c:forEach items="${subMenu.menuItems}" var="subMenuItem">
+                            <li>
+                                <s:link href="${subMenuItem.url}" class="${(subMenuItem.active)? 'active': ''}">
+                                    <f:message key="${subMenuItem.name}"/>
+                                </s:link></li>
+                            </c:forEach>
                     </ul>
 
                 </div>
