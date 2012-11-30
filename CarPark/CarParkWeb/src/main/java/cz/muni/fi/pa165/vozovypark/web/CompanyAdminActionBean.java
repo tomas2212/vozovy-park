@@ -115,7 +115,7 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
         this.cld = cld;
     }
 
-    public Resolution addCl() {
+    public Resolution createButtonCl() {
         cls.createCompanyLevel(cld.getName());
         return new RedirectResolution(this.getClass(), "companyLevels");
     }
@@ -129,7 +129,7 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
         cld = cls.getCompanyLevelById(Long.parseLong(ids));
     }
 
-    public Resolution stornoCl() {
+    public Resolution cancelButtonCl() {
         return new ForwardResolution("/companyAdmin/companyLevels.jsp");
     }
 
@@ -138,7 +138,7 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
         return new ForwardResolution("/companyAdmin/edit.jsp");
     }
 
-    public Resolution updateCl() {
+    public Resolution saveButtonCl() {
         cls.updateCompanyLevel(cld);
         return new RedirectResolution(this.getClass(), "companyLevels");
     }
