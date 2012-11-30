@@ -26,8 +26,8 @@
                     <td>${acl.id}</td>
                     <td><c:out value="${acl.name}" />
                     <td><c:out value="${acl.levelValue}" />
-                    <td><s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" event="editCl"><s:param name="companyLevel.id" value="${acl.id}"/>edit</s:link> </td>
-                    <td><s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" event="deleteCl"><s:param name="companyLevel.id" value="${acl.id}"/><s:label name="delete" /></s:link> </td>
+                    <td><s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" event="editCl"><s:param name="companyLevel.id" value="${acl.id}"/><s:label name="companyAdmin.edit" /></s:link> </td>
+                    <td><s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" event="deleteCl"><s:param name="companyLevel.id" value="${acl.id}"/><s:label name="companyAdmin.delete" /></s:link></td>
                 </tr>
             </c:forEach>            
         </table>

@@ -23,8 +23,8 @@
                         <td><s:text id="b2" name="companyLevel.levelValue"/></td>
                     </tr>
                 </table>
-                <s:submit name="updateCl">Save</s:submit>
-                <s:submit name="stornoCl">Cancel</s:submit>
+                <s:submit name="saveButtonCl"/>
+                <s:submit name="cancelButtonCl"/>
                 </fieldset>
         </s:form>
     </s:layout-component>
