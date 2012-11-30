@@ -13,17 +13,17 @@
             <thead>
                 <tr>
                     <td>
-                        <s:label name="car" />
+                        <s:label name="carPark.car" />
                     </td>
                     <td>
-                        <s:label name="employee" />
+                        <s:label name="carPark.employee" />
                     </td>
                     <td>
-                       <s:label name="release" />
+                       <s:label name="carPark.receive" />
                     </td>
                 </tr>
             </thead>
-            <c:forEach items="${actionBean.carsToRelease}" var="reservation">
+            <c:forEach items="${actionBean.carsToReceive}" var="reservation">
             <tr>
                 
                 <td>
@@ -32,7 +32,10 @@
                  <td>
                    <c:out value="${reservation.employee.name}" />
                 </td>
-                <td><s:link event="receive"><s:label name="receive"/></s:link></td>
+              <td><s:link event="receiveCar" beanclass="cz.muni.fi.pa165.vozovypark.web.CarParkAdminActionBean">
+                        <s:param name="resId" value="${reservation.id}" />
+                        <s:label name="carPark.receive"/>
+                  </s:link></td>
             </tr>
             </c:forEach>
         </table>

@@ -4,7 +4,7 @@
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
-<f:message key="addCar" var="title" />
+<f:message key="carPark.addCar" var="title" />
 <s:layout-render name="/layout.jsp" title="${title}" 
                  mainMenu="${actionBean.mainMenu}" subMenu="${actionBean.subMenu}">
 
@@ -14,8 +14,7 @@
             <s:hidden name="car.id"/>
           
                 <%@include file="form.jsp"%>
-                <s:submit name="create">Create</s:submit>
-                <s:submit name="storno">Cancel</s:submit>
+                <s:submit name="create"><f:message key="carPark.addCar"/></s:submit>
                 
         </s:form>
     </s:layout-component>

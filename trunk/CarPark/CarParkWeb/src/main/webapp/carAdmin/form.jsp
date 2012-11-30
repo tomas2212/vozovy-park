@@ -1,4 +1,10 @@
 <%@ taglib prefix="s" uri="http://stripes.sourceforge.net/stripes.tld" %>
+<script>
+    $(function() {
+         $( "#carYear" ).spinner({min:1900, max:3000});
+    });
+</script>
+       
 <s:errors/>
 <table>
     <tr>
@@ -15,9 +21,9 @@
     </tr>
     <tr>
         <th><s:label for="carYear" name="car.creationYear"/></th>
-        <td><s:text id="carYear" name="car.creationYear"/></td>
+        <td><s:text id="carYear" name="car.creationYear" formatType="date" formatPattern="yyyy" /></td>
     </tr>
-    <<tr>
+    <tr>
         <th><s:label for="carCL" name="car.companyLevel"/></th>
         <td><s:select id="carCL" name="car.companyLevel">
                 <s:options-collection value="id" label="name" collection="${actionBean.allCompanyLevels}" />
