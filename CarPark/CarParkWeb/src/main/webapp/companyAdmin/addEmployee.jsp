@@ -9,14 +9,12 @@
                  mainMenu="${actionBean.mainMenu}" subMenu="${actionBean.subMenu}">
 
     <s:layout-component name="content">
-
         <s:form beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean">
             <s:hidden name="employee.id"/>
-            
+            <fieldset><legend>New Employee</legend>
                 <%@include file="form.jsp"%>
-                <s:submit name="create">Create</s:submit>
-                <s:submit name="storno">Cancel</s:submit>
-               
+                <s:submit name="createButtonEmployee"/>
+            </fieldset>             
         </s:form>
     </s:layout-component>
 </s:layout-render>

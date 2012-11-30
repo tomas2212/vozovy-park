@@ -10,10 +10,8 @@
         <td><s:text id="employeePosition" name="employee.position" /></td>
     </tr>
     <tr>
-
         <th><s:label for="employeeApprov" name="employee.approved"/></th>
         <td><s:checkbox name="employee.approved" /></td>
-
     </tr>
     <tr>
         <th><s:label for="employeeAddress" name="employee.address"/></th>
@@ -26,6 +24,4 @@
             </s:select>
         </td>
     </tr>
-
-</table>
 </table>
