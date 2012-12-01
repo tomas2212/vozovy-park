@@ -140,7 +140,7 @@ public class ReservationsActionBean implements ActionBean, LayoutPage{
         this.resDTO = resDTO;
     }
 
-    @Before(stages = LifecycleStage.BindingAndValidation, on = {"update", "confirm"})
+    @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "confirm"})
     public void loadResFromDatabase() {
         String ids = context.getRequest().getParameter("resDTO.id");
         if (ids == null) {
