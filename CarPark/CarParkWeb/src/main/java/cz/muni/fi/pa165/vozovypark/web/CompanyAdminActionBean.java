@@ -40,7 +40,8 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
     @SpringBean(value = "CompanyLevelService")
     private CompanyLevelService cls;
     @ValidateNestedProperties(value = {
-        @Validate(on = {"createButtonCl", "saveButtonCl"}, field = "name", required = true)
+        @Validate(on = {"createButtonCl", "saveButtonCl"}, field = "name", required = true),
+        @Validate(on = {"createButtonCl", "saveButtonCl"}, field = "levelValue", required = true, minvalue = 0)
     })
     private CompanyLevelDTO cld;
     @SpringBean(value = "EmployeeService")
