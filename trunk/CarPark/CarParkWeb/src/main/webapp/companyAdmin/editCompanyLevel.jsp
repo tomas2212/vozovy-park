@@ -11,6 +11,7 @@
         <s:useActionBean beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" var="actionBean"/>
         <s:form beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean">
             <s:hidden name="companyLevel.id"/>
+            <s:errors/>
             <fieldset><legend><s:label name="companyAdmin.changeAttributes" /></legend>
                 <table>
                     <tr>

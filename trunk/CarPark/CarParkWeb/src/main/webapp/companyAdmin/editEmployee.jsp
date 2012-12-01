@@ -10,7 +10,7 @@
     <s:layout-component name="content">
         <s:useActionBean beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" var="actionBean"/>  
         <s:form beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean">
-            <s:hidden name="employee.id"/>    
+            <s:hidden name="employee.id"/>
             <fieldset><legend><s:label name="companyAdmin.changeAttributes" /></legend>
                 <%@include file="form.jsp"%>
                 <s:submit name="saveButtonEmployee"/>
