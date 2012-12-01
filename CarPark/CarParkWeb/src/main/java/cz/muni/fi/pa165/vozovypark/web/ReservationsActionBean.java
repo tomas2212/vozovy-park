@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author andrej
  */
-@UrlBinding("/reservations")
+@UrlBinding("/reservations/{$event}")
 public class ReservationsActionBean implements ActionBean, LayoutPage{
     
     private ActionBeanContext context;
@@ -91,14 +91,24 @@ public class ReservationsActionBean implements ActionBean, LayoutPage{
         return new ForwardResolution("/reservations/newReservation.jsp");
     }
     
+    public Resolution acceptReservations(){
+        this.subMenu.setActiveItemByUrl("/reservations/acceptReservations");
+        return new ForwardResolution("/reservations/acceptReservations.jsp");
+    }
+    
     public List<ReservationDTO> getReservations() {
         //return rs.getAllReservations();
         return rs.getAllReservations();
     }
     
-    public List<ReservationDTO> getUncomfirmedReservations() {
+    public List<ReservationDTO> getUnconfirmedReservations() {
         //return rs.getAllReservations();
         return rs.getReservationsToConfirm();
+    }
+    
+    public List<ReservationDTO> getAcceptedReservations() {
+        //return rs.getAllReservations();
+        return rs.getAcceptedReservations();
     }
     
     public List<CarDTO> getCars() {
@@ -119,7 +129,7 @@ public class ReservationsActionBean implements ActionBean, LayoutPage{
         this.resDTO = resDTO;
     }
 
-    @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit"})
+    @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "confirm"})
     public void loadResFromDatabase() {
         String ids = context.getRequest().getParameter("resDTO.id");
         if (ids == null) {
@@ -151,7 +161,7 @@ public class ReservationsActionBean implements ActionBean, LayoutPage{
 
     public Resolution edit() {
         log.debug("edit() reservation={}", resDTO);
-        return new ForwardResolution("reservations.jsp");
+        return new ForwardResolution("/reservations/editReservation.jsp");
     }
 
     public Resolution save() {
