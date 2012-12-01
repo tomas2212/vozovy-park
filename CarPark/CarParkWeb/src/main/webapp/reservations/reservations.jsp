@@ -37,8 +37,8 @@
                     <td class="confirmed"><img align="center" src="${pageContext.request.contextPath}${(res.confirmed)?'/images/available.png' :  '/images/unavailable.png'}"  /></td>
                     <td><c:out value="${res.car.spz}" /></td>
                     <td><c:out value="${res.employee.name}" /></td>
-                    <td><s:link beanclass="cz.muni.fi.pa165.vozovypark.web.ReservationsActionBean" event="edit"><s:param name="resDTO.id" value="${res.id}"/>edit</s:link> </td>
-                    <td><s:link beanclass="cz.muni.fi.pa165.vozovypark.web.ReservationsActionBean" event="delete"><s:param name="resDTO.id" value="${res.id}"/>delete</s:link> </td>
+                    <td><s:link beanclass="cz.muni.fi.pa165.vozovypark.web.ReservationsActionBean" event="edit"><s:param name="resDTO.id" value="${res.id}"/><f:message key="reservation.edit"/></s:link> </td>
+                    <td><s:link beanclass="cz.muni.fi.pa165.vozovypark.web.ReservationsActionBean" event="delete"><s:param name="resDTO.id" value="${res.id}"/><f:message key="reservation.delete"/></s:link> </td>
               
                 </tr>
             </c:forEach>            
