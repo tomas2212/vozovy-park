@@ -22,6 +22,8 @@ import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.UrlBinding;
 import net.sourceforge.stripes.controller.LifecycleStage;
 import net.sourceforge.stripes.integration.spring.SpringBean;
+import net.sourceforge.stripes.validation.Validate;
+import net.sourceforge.stripes.validation.ValidateNestedProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,6 +47,14 @@ public class ReservationsActionBean implements ActionBean, LayoutPage{
     
     @SpringBean(value="mainMenu")
     private Menu mainMenu;
+    
+    /**
+    @ValidateNestedProperties(value = {
+        @Validate(on = {"create", "update"}, field = "dateFrom", required = true),
+        @Validate(on = {"create", "update"}, field = "dateTo", required = true),
+        @Validate(on = {"create", "update"}, field = "car", required = true),
+        @Validate(on = {"create", "update"}, field = "employee", required = true),
+    }) */
     
     @SpringBean(value="reservationsSubMenu")
     private Menu subMenu;
@@ -130,7 +140,7 @@ public class ReservationsActionBean implements ActionBean, LayoutPage{
         this.resDTO = resDTO;
     }
 
-    @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "confirm"})
+    @Before(stages = LifecycleStage.BindingAndValidation, on = {"update", "confirm"})
     public void loadResFromDatabase() {
         String ids = context.getRequest().getParameter("resDTO.id");
         if (ids == null) {
@@ -139,7 +149,7 @@ public class ReservationsActionBean implements ActionBean, LayoutPage{
         resDTO = rs.getReservationById(Long.parseLong(ids));
     }
     
-     public Resolution stornoFofo() {
+     public Resolution storno() {
         return new ForwardResolution("reservations/reservations.jsp");
     }
      
@@ -157,7 +167,7 @@ public class ReservationsActionBean implements ActionBean, LayoutPage{
          }
          
          rs.createReservation(resDTO);
-         return new RedirectResolution(this.getClass(), "reservations");
+         return new RedirectResolution(this.getClass(), "myReservations");
      }
 
     public Resolution edit() {
@@ -165,23 +175,24 @@ public class ReservationsActionBean implements ActionBean, LayoutPage{
         return new ForwardResolution("/reservations/editReservation.jsp");
     }
 
-    public Resolution save() {
+    public Resolution update() {
        // log.debug("save() reservation={}", resDTO);
+        resDTO.setConfirmed(false);
         rs.updateReservation(resDTO);
-        return new RedirectResolution(this.getClass(), "reservations");
+        return new RedirectResolution(this.getClass(), "myReservations");
     }
 
     public Resolution delete() {
        // log.debug("delete({})", resDTO.getId());
         rs.removeReservation(resDTO.getId());
-        return new RedirectResolution(this.getClass(), "reservations");
+        return new RedirectResolution(this.getClass(), "myReservations");
     }
     
     public Resolution confirm() {
       //  log.debug("confirm() reservation={}", resDTO);
         resDTO.setConfirmed(true);
         rs.updateReservation(resDTO);
-        return new RedirectResolution(this.getClass(), "reservations");
+        return new RedirectResolution(this.getClass(), "myReservations");
     }
     
 }
