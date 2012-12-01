@@ -13,8 +13,8 @@
         <s:form beanclass="cz.muni.fi.pa165.vozovypark.web.ReservationsActionBean">
                 <s:hidden name="resDTO.id"/>
                 <%@include file="form.jsp"%>
-                <s:submit name="create">Create</s:submit>
-                <s:submit name="storno">Cancel</s:submit>
+                <s:submit name="create"><f:message key="reservation.add"/></s:submit>
+                <s:submit name="storno"><f:message key="reservation.cancel"/></s:submit>
         </s:form>
     </s:layout-component>
 </s:layout-render>

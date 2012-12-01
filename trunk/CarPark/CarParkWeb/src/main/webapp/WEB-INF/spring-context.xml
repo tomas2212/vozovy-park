@@ -52,7 +52,7 @@ default-autowire="byName" >
                 <bean class="cz.muni.fi.pa165.vozovypark.web.menu.MenuItem">
                     <property name="active" value="false"/>
                     <property name="name" value="reservationsSubMenu.accept" />
-                    <property name="url" value="/reservations/accept" />
+                    <property name="url" value="/reservations/acceptReservations" />
                 </bean>
             </list>
         </property>
