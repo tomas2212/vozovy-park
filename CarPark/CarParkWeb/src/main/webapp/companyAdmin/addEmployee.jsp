@@ -11,7 +11,7 @@
     <s:layout-component name="content">
         <s:form beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean">
             <s:hidden name="employee.id"/>
-            <fieldset><legend>New Employee</legend>
+              
                 <%@include file="form.jsp"%>
                 <s:submit name="createButtonEmployee"/>
             </fieldset>             
