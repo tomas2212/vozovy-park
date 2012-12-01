@@ -7,9 +7,9 @@ package cz.muni.fi.pa165.vozovypark.DTO;
 public class CompanyLevelDTO {
     
     private Long id;
-    private Integer levelValue;
     private String name;
-
+    private Integer levelValue;
+    
     public Long getId() {
         return id;
     }
@@ -55,7 +55,4 @@ public class CompanyLevelDTO {
         hash = 67 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
     }
-    
-    
-    
 }
