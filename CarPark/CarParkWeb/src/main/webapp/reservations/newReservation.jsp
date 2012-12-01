@@ -10,7 +10,7 @@
                  mainMenu="${actionBean.mainMenu}" subMenu="${actionBean.subMenu}">
     
    <s:layout-component name="content">
-        <s:form beanclass="cz.muni.fi.pa165.vozovypark.web.ReservationsActionBean">
+        <s:form beanclass="cz.muni.fi.pa165.vozovypark.web.ReservationsActionBean" >
                 <s:hidden name="resDTO.id"/>
                 <%@include file="form.jsp"%>
                 <s:submit name="create"><f:message key="reservation.add"/></s:submit>
