@@ -67,7 +67,7 @@ public class CompanyServiceTest extends AbstractServiceTest{
         }*/
 
     }
-    @Test
+    //@Test
     public void testUpdateCompanyLevel() {
         CompanyLevelDTO companyLevelDto = new CompanyLevelDTO();
         companyLevelDto.setName("first level");
