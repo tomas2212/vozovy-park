@@ -46,8 +46,9 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
     private CompanyLevelDTO cld;
     @SpringBean(value = "EmployeeService")
     private EmployeeService employeeService;
-    @ValidateNestedProperties(
-    @Validate(on = {"createButtonEmployee", "saveButtonEmployee"}, field = "name", required = true))
+    @ValidateNestedProperties(value = {
+        @Validate(on = {"createButtonEmployee", "saveButtonEmployee"}, field = "name", required = true)   
+    })
     private EmployeeDTO employee;
 
     @Override
@@ -94,7 +95,7 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
 
     public Resolution editCl() {
         this.subMenu.setActiveItemByUrl("/companyAdmin/addCompanyLevel");
-        return new ForwardResolution("/companyAdmin/edit.jsp");
+        return new ForwardResolution("/companyAdmin/editCompanyLevel.jsp");
     }
 
     public Resolution editEmployee() {
@@ -164,7 +165,6 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
             CompanyLevelDTO cl = cls.getCompanyLevelById(Long.parseLong(cs));
             employee.setCompanyLevel(cl);
         }
-
         employeeService.createEmployee(employee);
         return new RedirectResolution(this.getClass(), "employees");
     }
