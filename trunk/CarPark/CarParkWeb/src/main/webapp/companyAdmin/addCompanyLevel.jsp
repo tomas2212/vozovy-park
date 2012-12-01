@@ -11,14 +11,14 @@
     <s:layout-component name="content">
         <s:form beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" >
             <s:hidden name="companyLevel.id"/>
-            <fieldset><legend>New Company Level</legend>   
-                <br/>
+                <s:errors/>
+                <table>
                     <tr>
                         <th><s:label for="companyLevelName" name="name"/></th>
                         <td><s:text id="companyLevelName" name="companyLevel.name"/></td>                  
-                    </tr>    
+                    </tr>    </table>
                     <s:submit name="createButtonCl" />           
-            </fieldset>              
+                    
         </s:form>
     </s:layout-component>
 </s:layout-render>

@@ -46,7 +46,7 @@
                     <td>        
                         <s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CarParkAdminActionBean" event="editCar">
                             <s:param name="car.id" value="${car.id}" />
-                            <s:format formatPattern="dd.MM.YYYY" value="${car.creationYear}" />                            
+                            <s:format formatPattern="yyyy" value="${car.creationYear}" />                            
                         </s:link>     
                     </td>
                     <td> 

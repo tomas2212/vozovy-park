@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 @UrlBinding("/company/{$event}/")
 public class CompanyAdminActionBean implements ActionBean, LayoutPage {
 
-    final static Logger log = LoggerFactory.getLogger(CompanyAdminActionBean.class);
+    // final static Logger log = LoggerFactory.getLogger(CompanyAdminActionBean.class);
     private ActionBeanContext context;
     @SpringBean(value = "mainMenu")
     private Menu mainMenu;
@@ -41,9 +41,9 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
     private CompanyLevelService cls;
     @ValidateNestedProperties(value = {
         @Validate(on = {"createButtonCl", "saveButtonCl"}, field = "name", required = true),
-        @Validate(on = {"createButtonCl", "saveButtonCl"}, field = "levelValue", required = true, minvalue = 0)
+        @Validate(on = {"saveButtonCl"}, field = "levelValue", required = true)
     })
-    private CompanyLevelDTO cld;
+    private CompanyLevelDTO companyLevel;
     @SpringBean(value = "EmployeeService")
     private EmployeeService employeeService;
     @ValidateNestedProperties(value = {
@@ -84,12 +84,12 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
 
     @DefaultHandler
     public Resolution employees() {
-        this.subMenu.setActiveItemByName("/companyAdmin.employees");
+        this.subMenu.setActiveItemByName("companyAdmin.employees");
         return new ForwardResolution("/companyAdmin/employees.jsp");
     }
 
     public Resolution addEmployee() {
-        this.subMenu.setActiveItemByName("/companyAdmin.addEmployee");
+        this.subMenu.setActiveItemByName("companyAdmin.addEmployee");
         return new ForwardResolution("/companyAdmin/addEmployee.jsp");
     }
 
@@ -112,12 +112,12 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
     }
 
     public Resolution companyLevels() {
-        this.subMenu.setActiveItemByName("/companyAdmin.companyLevels");
+        this.subMenu.setActiveItemByName("companyAdmin.companyLevels");
         return new ForwardResolution("/companyAdmin/companyLevels.jsp");
     }
 
     public Resolution addCompanyLevel() {
-        this.subMenu.setActiveItemByName("/companyAdmin.addCompanyLevel");
+        this.subMenu.setActiveItemByName("companyAdmin.addCompanyLevel");
         return new ForwardResolution("/companyAdmin/addCompanyLevel.jsp");
     }
 
@@ -126,11 +126,11 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
     }
 
     public CompanyLevelDTO getCompanyLevel() {
-        return cld;
+        return companyLevel;
     }
 
-    public void setCompanyLevel(CompanyLevelDTO cld) {
-        this.cld = cld;
+    public void setCompanyLevel(CompanyLevelDTO companyLevel) {
+        this.companyLevel = companyLevel;
     }
 
     @Before(stages = LifecycleStage.BindingAndValidation, on = {"editCl"})
@@ -139,7 +139,7 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
         if (ids == null) {
             return;
         }
-        cld = cls.getCompanyLevelById(Long.parseLong(ids));
+        companyLevel = cls.getCompanyLevelById(Long.parseLong(ids));
     }
 
     public List<EmployeeDTO> getAllEmployees() {
@@ -155,7 +155,7 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
     }
 
     public Resolution createButtonCl() {
-        cls.createCompanyLevel(cld.getName());
+        cls.createCompanyLevel(companyLevel.getName());
         return new RedirectResolution(this.getClass(), "companyLevels");
     }
 
@@ -170,7 +170,7 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
     }
 
     public Resolution saveButtonCl() {
-        cls.updateCompanyLevel(cld);
+        cls.updateCompanyLevel(companyLevel);
         return new RedirectResolution(this.getClass(), "companyLevels");
     }
 

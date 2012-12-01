@@ -1,8 +1,15 @@
 <%@ taglib prefix="s" uri="http://stripes.sourceforge.net/stripes.tld" %>
 <script>
+    
+    
+     var dateFormat = "M d yy";
+    if(navigator.language == "sk"){
+        dateFormat = "dd.mm.yy";
+    }
     $(function() {
-         $( "#carYear" ).spinner({min:1900, max:3000});
+        $("#carYear").datepicker({dateFormat: dateFormat});
     });
+    
 </script>
        
 <s:errors/>
