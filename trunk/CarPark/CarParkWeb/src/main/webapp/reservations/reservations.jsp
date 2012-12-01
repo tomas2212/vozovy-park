@@ -30,10 +30,10 @@
             <c:forEach items="${actionBean.acceptedReservations}" var="res">
                 <tr>
                     <td>${res.id}</td>
-                    <td><s:format formatPattern="dd.MM.YYYY" value="${res.dateFrom}" /></td>
-                    <td><s:format formatPattern="dd.MM.YYYY" value="${res.dateTo}" /></td>
-                    <td><s:format formatPattern="dd.MM.YYYY" value="${res.startDate}" /></td>
-                    <td><s:format formatPattern="dd.MM.YYYY" value="${res.returnDate}" /></td>
+                    <td><s:format formatPattern="dd.MM.yyyy" value="${res.dateFrom}" /></td>
+                    <td><s:format formatPattern="dd.MM.yyyy" value="${res.dateTo}" /></td>
+                    <td><s:format formatPattern="dd.MM.yyyy" value="${res.startDate}" /></td>
+                    <td><s:format formatPattern="dd.MM.yyyy" value="${res.returnDate}" /></td>
                     <td class="confirmed"><img align="center" src="${pageContext.request.contextPath}${(res.confirmed)?'/images/available.png' :  '/images/unavailable.png'}"  /></td>
                     <td><c:out value="${res.car.spz}" /></td>
                     <td><c:out value="${res.employee.name}" /></td>
@@ -63,10 +63,10 @@
             <c:forEach items="${actionBean.unconfirmedReservations}" var="res">
                 <tr>
                     <td>${res.id}</td>
-                    <td><s:format formatPattern="dd.MM.YYYY" value="${res.dateFrom}" /></td>
-                    <td><s:format formatPattern="dd.MM.YYYY" value="${res.dateTo}" /></td>
-                    <td><s:format formatPattern="dd.MM.YYYY" value="${res.startDate}" /></td>
-                    <td><s:format formatPattern="dd.MM.YYYY" value="${res.returnDate}" /></td>
+                    <td><s:format formatPattern="dd.MM.yyyy" value="${res.dateFrom}" /></td>
+                    <td><s:format formatPattern="dd.MM.yyyy" value="${res.dateTo}" /></td>
+                    <td><s:format formatPattern="dd.MM.yyyy" value="${res.startDate}" /></td>
+                    <td><s:format formatPattern="dd.MM.yyyy" value="${res.returnDate}" /></td>
                     <td class="confirmed"><img align="center" src="${pageContext.request.contextPath}${(res.confirmed)?'/images/available.png' :  '/images/unavailable.png'}"  /></td>
                     <td><c:out value="${res.car.spz}" /></td>
                     <td><c:out value="${res.employee.name}" /></td>

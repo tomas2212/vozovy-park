@@ -20,7 +20,7 @@ default-autowire="byName" >
                 <bean class="cz.muni.fi.pa165.vozovypark.web.menu.MenuItem">
                     <property name="active" value="false"/>
                     <property name="name" value="mainMenu.reservations" />
-                    <property name="url" value="/reservations" />
+                    <property name="url" value="/reservation" />
                 </bean>                
                 <bean class="cz.muni.fi.pa165.vozovypark.web.menu.MenuItem">
                     <property name="active" value="false"/>
@@ -42,17 +42,17 @@ default-autowire="byName" >
                 <bean class="cz.muni.fi.pa165.vozovypark.web.menu.MenuItem">
                     <property name="active" value="false"/>
                     <property name="name" value="reservationsSubMenu.myReservations" />
-                    <property name="url" value="/reservations" />
+                    <property name="url" value="/reservation" />
                 </bean>                
                 <bean class="cz.muni.fi.pa165.vozovypark.web.menu.MenuItem">
                     <property name="active" value="false"/>
                     <property name="name" value="reservationsSubMenu.newReservation" />
-                    <property name="url" value="/reservations/newReservation" />
+                    <property name="url" value="/reservation/newReservation" />
                 </bean>
                 <bean class="cz.muni.fi.pa165.vozovypark.web.menu.MenuItem">
                     <property name="active" value="false"/>
                     <property name="name" value="reservationsSubMenu.accept" />
-                    <property name="url" value="/reservations/acceptReservations" />
+                    <property name="url" value="/reservation/acceptReservations" />
                 </bean>
             </list>
         </property>

@@ -29,11 +29,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author andrej
  */
-@UrlBinding("/reservations/{$event}")
+@UrlBinding("/reservation/{$event}")
 public class ReservationsActionBean implements ActionBean, LayoutPage{
     
     private ActionBeanContext context;
-    final static Logger log = LoggerFactory.getLogger(ReservationsActionBean.class);
+   // final static Logger log = LoggerFactory.getLogger(ReservationsActionBean.class);
     @SpringBean(value = "ReservationService")
     private ReservationService rs;
     
@@ -80,12 +80,13 @@ public class ReservationsActionBean implements ActionBean, LayoutPage{
     }
     
         
-    @DefaultHandler
+   @DefaultHandler
     public Resolution myReservations() {     
         this.subMenu.setActiveItemByName("reservationsSubMenu.myReservations");
         return new ForwardResolution("/reservations/reservations.jsp");
     }
     
+     
     public Resolution newReservation(){
         this.subMenu.setActiveItemByUrl("/reservations/newReservation");
         return new ForwardResolution("/reservations/newReservation.jsp");
@@ -138,7 +139,7 @@ public class ReservationsActionBean implements ActionBean, LayoutPage{
         resDTO = rs.getReservationById(Long.parseLong(ids));
     }
     
-     public Resolution storno() {
+     public Resolution stornoFofo() {
         return new ForwardResolution("reservations/reservations.jsp");
     }
      
@@ -160,24 +161,24 @@ public class ReservationsActionBean implements ActionBean, LayoutPage{
      }
 
     public Resolution edit() {
-        log.debug("edit() reservation={}", resDTO);
+       // log.debug("edit() reservation={}", resDTO);
         return new ForwardResolution("/reservations/editReservation.jsp");
     }
 
     public Resolution save() {
-        log.debug("save() reservation={}", resDTO);
+       // log.debug("save() reservation={}", resDTO);
         rs.updateReservation(resDTO);
         return new RedirectResolution(this.getClass(), "reservations");
     }
 
     public Resolution delete() {
-        log.debug("delete({})", resDTO.getId());
+       // log.debug("delete({})", resDTO.getId());
         rs.removeReservation(resDTO.getId());
         return new RedirectResolution(this.getClass(), "reservations");
     }
     
     public Resolution confirm() {
-        log.debug("confirm() reservation={}", resDTO);
+      //  log.debug("confirm() reservation={}", resDTO);
         resDTO.setConfirmed(true);
         rs.updateReservation(resDTO);
         return new RedirectResolution(this.getClass(), "reservations");
