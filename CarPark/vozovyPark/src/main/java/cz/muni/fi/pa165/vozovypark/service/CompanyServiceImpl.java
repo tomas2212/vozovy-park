@@ -37,7 +37,7 @@ public class CompanyServiceImpl implements CompanyLevelService {
             throw new IllegalArgumentException("CompanyLevel name is not specified");
         }
         Integer levelValue = 0;
-     if(companyLevelDao.getMaxLevelValue() != null){
+       if(companyLevelDao.getMaxLevelValue() != null){
             levelValue = companyLevelDao.getMaxLevelValue() + 1;
         }
         CompanyLevel companyLevel = new CompanyLevel();
@@ -55,6 +55,7 @@ public class CompanyServiceImpl implements CompanyLevelService {
         if(companyLevel.getId() == null){
             throw new IllegalArgumentException("CompanyLevel ID is not specified");
         }
+        setCompanyLevelToPosition(companyLevel.getId(), companyLevel.getLevelValue());
         CompanyLevel entity = mapper.map(companyLevel, CompanyLevel.class);
         companyLevelDao.update(entity);
         return mapper.map(entity, CompanyLevelDTO.class);
