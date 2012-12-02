@@ -15,11 +15,11 @@
             <fieldset><legend><s:label name="companyAdmin.changeAttributes" /></legend>
                 <table>
                     <tr>
-                        <th><s:label for="b2" name="name"/></th>
+                        <th><s:label for="b2" name="companyAdmin.name"/></th>
                         <td><s:text id="b2" name="companyLevel.name"/></td>   
                     </tr>
                     <tr>
-                        <th><s:label for="b2" name="levelValue"/></th>
+                        <th><s:label for="b2" name="companyAdmin.levelValue"/></th>
                         <td><s:text id="b2" name="companyLevel.levelValue"/></td>
                     </tr>
                 </table>             

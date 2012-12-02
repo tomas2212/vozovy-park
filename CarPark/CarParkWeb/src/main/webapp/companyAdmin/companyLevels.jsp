@@ -15,8 +15,8 @@
             <thead>
             <tr>
                 <td>ID</td>            
-                <td>Name</td>         
-                <td>Level-value</td>
+                <td><s:label name="companyAdmin.name" /></td>         
+                <td><s:label name="companyAdmin.levelValue" /></td>
                 <td><s:label name="companyAdmin.edit" /></td>
                 <td><s:label name="companyAdmin.delete" /></td>
             </tr>
