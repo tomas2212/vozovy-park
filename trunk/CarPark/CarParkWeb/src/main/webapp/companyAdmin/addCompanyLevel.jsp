@@ -13,7 +13,7 @@
             <s:errors/>
             <table>
                 <tr>
-                    <th><s:label for="companyLevelName" name="name"/></th>
+                    <th><s:label for="companyLevelName" name="companyAdmin.name"/></th>
                     <td><s:text id="companyLevelName" name="companyLevel.name"/></td>                  
                 </tr>    </table>
                 <s:submit name="createButtonCl" />                           
