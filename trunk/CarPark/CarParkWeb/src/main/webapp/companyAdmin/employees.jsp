@@ -15,11 +15,11 @@
             <thead>
                 <tr>
                     <td>ID</td>
-                    <td>Name</td>
-                    <td>Position</td>
-                    <td>Approve</td>
-                    <td>Address</td>
-                    <td>Company Level</td>
+                    <td><s:label name="companyAdmin.name" /></td>
+                    <td><s:label name="companyAdmin.position" /></td>
+                    <td><s:label name="companyAdmin.approve" /></td>
+                    <td><s:label name="companyAdmin.address" /></td>
+                    <td><s:label name="companyAdmin.companyLevel" /></td>
                     <td><s:label name="companyAdmin.edit" /></td>
                     <td><s:label name="companyAdmin.delete" /></td>
                 </tr>
