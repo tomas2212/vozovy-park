@@ -11,8 +11,11 @@ import cz.muni.fi.pa165.vozovypark.DTO.CarDTO;
 import cz.muni.fi.pa165.vozovypark.DTO.CompanyLevelDTO;
 import cz.muni.fi.pa165.vozovypark.service.CompanyLevelService;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -33,19 +36,19 @@ import org.springframework.beans.factory.annotation.Configurable;
 @WebServlet(urlPatterns = "/api/*")
 public class ApiServlet extends HttpServlet {
 
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String path = req.getPathInfo();
         System.out.println(path);
         if (path.startsWith("/companyLevels")) {
             getCompanyLevels(req, resp);
-
         }
 
         if (path.startsWith("/cars")) {
             getCars(req, resp);
         }
-
     }
 
     @Override
@@ -53,12 +56,10 @@ public class ApiServlet extends HttpServlet {
         String path = req.getPathInfo();
         if (path.startsWith("/companyLevels")) {
             deleteCompanyLevels(req, resp);
-
         }
 
         if (path.startsWith("/cars")) {
             deleteCars(req, resp);
-
         }
     }
 
@@ -67,7 +68,6 @@ public class ApiServlet extends HttpServlet {
         String path = request.getPathInfo();
         if (path.startsWith("/companyLevels")) {
             createCompanyLevel(request, response);
-
         }
     }
 
@@ -92,7 +92,9 @@ public class ApiServlet extends HttpServlet {
                 CompanyLevelDTO dto = companyLevelCollectionToMap(getCls()).get(id);
                 //tiez docasny kod end
                 if (dto != null) {
+
                     // sem vlozit kod na deleTE
+
                     OperationStatus os = new OperationStatus();
                     //os.setCausedBy("");
                     os.setOperation("delete");
@@ -107,9 +109,7 @@ public class ApiServlet extends HttpServlet {
                     mapper.writeValue(resp.getOutputStream(), os);
                 }
             }
-
         }
-
     }
 
     protected void deleteCars(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -133,7 +133,9 @@ public class ApiServlet extends HttpServlet {
                 CarDTO dto = carCollectionToMap(getCars()).get(id);
                 //tiez docasny kod end
                 if (dto != null) {
+
                     // sem vlozit kod na deleTE
+
                     OperationStatus os = new OperationStatus();
                     //os.setCausedBy("");
                     os.setOperation("delete");
@@ -148,9 +150,7 @@ public class ApiServlet extends HttpServlet {
                     mapper.writeValue(resp.getOutputStream(), os);
                 }
             }
-
         }
-
     }
 
     protected void getCompanyLevels(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -174,9 +174,7 @@ public class ApiServlet extends HttpServlet {
                     resp.setStatus(404);
                 }
             }
-
         }
-
     }
 
     protected void getCars(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -200,9 +198,7 @@ public class ApiServlet extends HttpServlet {
                     resp.setStatus(404);
                 }
             }
-
         }
-
     }
 
     private Map<Long, CompanyLevelDTO> companyLevelCollectionToMap(Collection<CompanyLevelDTO> companyLevels) {
@@ -235,7 +231,6 @@ public class ApiServlet extends HttpServlet {
         result.add(cl);
 
         return result;
-
     }
 
     private Collection<CarDTO> getCars() {
@@ -250,8 +245,8 @@ public class ApiServlet extends HttpServlet {
         car2.setModel("Skoda");
         car2.setSpz("BR975AM");
         result.add(car2);
-        return result;
 
+        return result;
     }
 
     private void createCompanyLevel(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -261,7 +256,7 @@ public class ApiServlet extends HttpServlet {
         os.setCausedBy("Input not valid");
         os.setStatus("failed");
         JsonNode jsonNode = mapper.readValue(request.getInputStream(), JsonNode.class);
-        if (jsonNode !=null && !jsonNode.isMissingNode()) {
+        if (jsonNode != null && !jsonNode.isMissingNode()) {
             CompanyLevelDTO clDTO = new CompanyLevelDTO();
 
             if (jsonNode.get("name") != null && jsonNode.hasNonNull("name")) {
@@ -272,7 +267,41 @@ public class ApiServlet extends HttpServlet {
                 response.setStatus(201);
                 mapper.writeValue(response.getOutputStream(), clDTO);
             } else {
+                response.setStatus(500);
+                mapper.writeValue(response.getOutputStream(), os);
+            }
+        }
+        response.setStatus(500);
+        mapper.writeValue(response.getOutputStream(), os);
+    }
 
+    private void createCar(HttpServletRequest request, HttpServletResponse response) throws IOException, ParseException {
+        ObjectMapper mapper = new ObjectMapper();
+        OperationStatus os = new OperationStatus();
+        os.setOperation("create");
+        os.setCausedBy("Input not valid");
+        os.setStatus("failed");
+        JsonNode jsonNode = mapper.readValue(request.getInputStream(), JsonNode.class);
+        if (jsonNode != null && !jsonNode.isMissingNode()) {
+            CarDTO carDTO = new CarDTO();
+
+            if (jsonNode.get("spz") != null && jsonNode.hasNonNull("spz")
+                    && jsonNode.get("brand") != null && jsonNode.hasNonNull("brand")
+                    && jsonNode.get("model") != null && jsonNode.hasNonNull("model")
+                    && jsonNode.get("creationYear") != null && jsonNode.hasNonNull("creationYear")
+                    && jsonNode.get("available") != null && jsonNode.hasNonNull("available")) {
+                carDTO.setSpz(jsonNode.get("spz").asText());
+                carDTO.setBrand(jsonNode.get("brand").asText());
+                Date date = sdf.parse(jsonNode.get("creationYear").asText());
+                carDTO.setCreationYear(date);
+                carDTO.setAvailable(jsonNode.get("available").asBoolean());
+
+
+                //TODO Vlozit kod pre create
+
+                response.setStatus(201);
+                mapper.writeValue(response.getOutputStream(), carDTO);
+            } else {
                 response.setStatus(500);
                 mapper.writeValue(response.getOutputStream(), os);
             }
