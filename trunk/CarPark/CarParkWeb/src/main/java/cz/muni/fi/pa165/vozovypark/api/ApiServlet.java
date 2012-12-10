@@ -4,7 +4,9 @@
  */
 package cz.muni.fi.pa165.vozovypark.api;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonAnyFormatVisitor;
 import cz.muni.fi.pa165.vozovypark.DTO.CarDTO;
 import cz.muni.fi.pa165.vozovypark.DTO.CompanyLevelDTO;
 import cz.muni.fi.pa165.vozovypark.service.CompanyLevelService;
@@ -12,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
@@ -39,10 +42,10 @@ public class ApiServlet extends HttpServlet {
 
         }
 
-        if(path.startsWith("/cars")) {
-            getCars(req,resp);
+        if (path.startsWith("/cars")) {
+            getCars(req, resp);
         }
-        
+
     }
 
     @Override
@@ -52,9 +55,18 @@ public class ApiServlet extends HttpServlet {
             deleteCompanyLevels(req, resp);
 
         }
-        
+
         if (path.startsWith("/cars")) {
             deleteCars(req, resp);
+
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String path = request.getPathInfo();
+        if (path.startsWith("/companyLevels")) {
+            createCompanyLevel(request, response);
 
         }
     }
@@ -99,7 +111,7 @@ public class ApiServlet extends HttpServlet {
         }
 
     }
-    
+
     protected void deleteCars(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("application/json");
         ObjectMapper mapper = new ObjectMapper();
@@ -166,54 +178,50 @@ public class ApiServlet extends HttpServlet {
         }
 
     }
-    
-    protected void getCars(HttpServletRequest req, HttpServletResponse resp) throws IOException{
+
+    protected void getCars(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("application/json");
         ObjectMapper mapper = new ObjectMapper();
         String path = req.getPathInfo();
-        if(path.equals("/cars") || path.equals("/cars/")){
-           mapper.writeValue(resp.getOutputStream(), carCollectionToMap(getCars()));
-            
-        }
-        else{
+        if (path.equals("/cars") || path.equals("/cars/")) {
+            mapper.writeValue(resp.getOutputStream(), carCollectionToMap(getCars()));
+
+        } else {
             String pathArray[];
             pathArray = req.getPathInfo().split("/");
-            if(pathArray[1] != null){
+            if (pathArray[1] != null) {
                 Long id = Long.parseLong(pathArray[2]);
                 //tiez docasnu kod begin
                 CarDTO dto = carCollectionToMap(getCars()).get(id);
                 //tiez docasny kod end
-                if(dto != null){
+                if (dto != null) {
                     mapper.writeValue(resp.getOutputStream(), dto);
-                }
-                else{
+                } else {
                     resp.setStatus(404);
                 }
             }
-            
+
         }
-        
+
     }
-    
-    private Map<Long, CompanyLevelDTO> companyLevelCollectionToMap(Collection<CompanyLevelDTO> companyLevels){
+
+    private Map<Long, CompanyLevelDTO> companyLevelCollectionToMap(Collection<CompanyLevelDTO> companyLevels) {
         Map<Long, CompanyLevelDTO> map = new HashMap<Long, CompanyLevelDTO>();
         for (CompanyLevelDTO dto : companyLevels) {
             map.put(dto.getId(), dto);
         }
         return map;
     }
-    
-    private Map<Long, CarDTO> carCollectionToMap(Collection<CarDTO> cars){
+
+    private Map<Long, CarDTO> carCollectionToMap(Collection<CarDTO> cars) {
         Map<Long, CarDTO> map = new HashMap<Long, CarDTO>();
-        for(CarDTO dto: cars){
+        for (CarDTO dto : cars) {
             map.put(dto.getId(), dto);
         }
         return map;
     }
-    
-    
-    
-    private Collection<CompanyLevelDTO> getCls(){
+
+    private Collection<CompanyLevelDTO> getCls() {
         List<CompanyLevelDTO> result = new ArrayList<CompanyLevelDTO>();
         CompanyLevelDTO cl = new CompanyLevelDTO();
         cl.setId(new Long(1));
@@ -229,8 +237,8 @@ public class ApiServlet extends HttpServlet {
         return result;
 
     }
-    
-    private Collection<CarDTO> getCars(){
+
+    private Collection<CarDTO> getCars() {
         List<CarDTO> result = new ArrayList<CarDTO>();
         CarDTO car1 = new CarDTO();
         car1.setId(new Long(1));
@@ -243,9 +251,33 @@ public class ApiServlet extends HttpServlet {
         car2.setSpz("BR975AM");
         result.add(car2);
         return result;
-        
+
     }
-    
-    
-    
+
+    private void createCompanyLevel(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        OperationStatus os = new OperationStatus();
+        os.setOperation("create");
+        os.setCausedBy("Input not valid");
+        os.setStatus("failed");
+        JsonNode jsonNode = mapper.readValue(request.getInputStream(), JsonNode.class);
+        if (jsonNode !=null && !jsonNode.isMissingNode()) {
+            CompanyLevelDTO clDTO = new CompanyLevelDTO();
+
+            if (jsonNode.get("name") != null && jsonNode.hasNonNull("name")) {
+                clDTO.setName(jsonNode.get("name").asText());
+
+                //TODO Vlozit kod pre create
+
+                response.setStatus(201);
+                mapper.writeValue(response.getOutputStream(), clDTO);
+            } else {
+
+                response.setStatus(500);
+                mapper.writeValue(response.getOutputStream(), os);
+            }
+        }
+        response.setStatus(500);
+        mapper.writeValue(response.getOutputStream(), os);
+    }
 }
