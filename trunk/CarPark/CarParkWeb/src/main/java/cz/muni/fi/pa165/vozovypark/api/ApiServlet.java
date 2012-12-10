@@ -26,75 +26,105 @@ import org.springframework.beans.factory.annotation.Configurable;
  *
  * @author andrej
  */
-
 @WebServlet(urlPatterns = "/api/*")
-public class ApiServlet  extends HttpServlet{
-   
+public class ApiServlet extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String path = req.getPathInfo();
         System.out.println(path);
-        if(path.startsWith("/companyLevels")){
+        if (path.startsWith("/companyLevels")) {
             getCompanyLevels(req, resp);
-            
+
         }
-        
+
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String path = req.getPathInfo();
-        if(path.startsWith("/companyLevels")){
+        if (path.startsWith("/companyLevels")) {
             deleteCompanyLevels(req, resp);
-            
+
         }
     }
-    
-    protected void deleteCompanyLevels(HttpServletRequest req, HttpServletResponse resp){
-        
-    }
-   
-        
-    
-    protected void getCompanyLevels(HttpServletRequest req, HttpServletResponse resp) throws IOException{
+
+    protected void deleteCompanyLevels(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("application/json");
         ObjectMapper mapper = new ObjectMapper();
         String path = req.getPathInfo();
-        if(path.equals("/companyLevels") || path.equals("/companyLevels/")){
-           mapper.writeValue(resp.getOutputStream(), companyLevelCollectionToMap(getCls()));
-            
-        }
-        else{
+        if (path.equals("/companyLevels") || path.equals("/companyLevels/")) {
+            OperationStatus os = new OperationStatus();
+            os.setCausedBy("Deleting all companyLevels is not supported");
+            os.setOperation("delete");
+            os.setStatus("failed");
+            resp.setStatus(403);
+            mapper.writeValue(resp.getOutputStream(), os);
+
+        } else {
             String pathArray[];
             pathArray = req.getPathInfo().split("/");
-            if(pathArray[1] != null){
+            if (pathArray[1] != null) {
                 Long id = Long.parseLong(pathArray[2]);
                 //tiez docasnu kod begin
                 CompanyLevelDTO dto = companyLevelCollectionToMap(getCls()).get(id);
                 //tiez docasny kod end
-                if(dto != null){
-                    mapper.writeValue(resp.getOutputStream(), dto);
+                if (dto != null) {
+                    // sem vlozit kod na deleTE
+                    OperationStatus os = new OperationStatus();
+                    //os.setCausedBy("");
+                    os.setOperation("delete");
+                    os.setStatus("successful");
+                    mapper.writeValue(resp.getOutputStream(), os);
+                } else {
+                    OperationStatus os = new OperationStatus();
+                    os.setCausedBy("CompanyLevel not found");
+                    os.setOperation("delete");
+                    os.setStatus("failed");
+                    resp.setStatus(404);
+                    mapper.writeValue(resp.getOutputStream(), os);
                 }
-                else{
+            }
+
+        }
+
+    }
+
+    protected void getCompanyLevels(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.setContentType("application/json");
+        ObjectMapper mapper = new ObjectMapper();
+        String path = req.getPathInfo();
+        if (path.equals("/companyLevels") || path.equals("/companyLevels/")) {
+            mapper.writeValue(resp.getOutputStream(), companyLevelCollectionToMap(getCls()));
+
+        } else {
+            String pathArray[];
+            pathArray = req.getPathInfo().split("/");
+            if (pathArray[1] != null) {
+                Long id = Long.parseLong(pathArray[2]);
+                //tiez docasnu kod begin
+                CompanyLevelDTO dto = companyLevelCollectionToMap(getCls()).get(id);
+                //tiez docasny kod end
+                if (dto != null) {
+                    mapper.writeValue(resp.getOutputStream(), dto);
+                } else {
                     resp.setStatus(404);
                 }
             }
-            
+
         }
-        
+
     }
-    
-    private Map<Long, CompanyLevelDTO> companyLevelCollectionToMap(Collection<CompanyLevelDTO> companyLevels){
+
+    private Map<Long, CompanyLevelDTO> companyLevelCollectionToMap(Collection<CompanyLevelDTO> companyLevels) {
         Map<Long, CompanyLevelDTO> map = new HashMap<Long, CompanyLevelDTO>();
-        for(CompanyLevelDTO dto: companyLevels){
+        for (CompanyLevelDTO dto : companyLevels) {
             map.put(dto.getId(), dto);
         }
         return map;
     }
-    
-    
-    
-    private Collection<CompanyLevelDTO> getCls(){
+
+    private Collection<CompanyLevelDTO> getCls() {
         List<CompanyLevelDTO> result = new ArrayList<CompanyLevelDTO>();
         CompanyLevelDTO cl = new CompanyLevelDTO();
         cl.setId(new Long(1));
@@ -106,11 +136,8 @@ public class ApiServlet  extends HttpServlet{
         cl.setLevelValue(new Integer(2));
         cl.setName("asdf");
         result.add(cl);
-        
+
         return result;
-        
+
     }
-    
-    
-    
 }
