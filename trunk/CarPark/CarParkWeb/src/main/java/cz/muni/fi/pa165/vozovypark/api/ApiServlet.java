@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.vozovypark.api;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -45,7 +41,6 @@ public class ApiServlet extends HttpServlet {
         if (path.startsWith("/companyLevels")) {
             getCompanyLevels(req, resp);
         }
-
         if (path.startsWith("/cars")) {
             getCars(req, resp);
         }
@@ -57,7 +52,6 @@ public class ApiServlet extends HttpServlet {
         if (path.startsWith("/companyLevels")) {
             deleteCompanyLevels(req, resp);
         }
-
         if (path.startsWith("/cars")) {
             deleteCars(req, resp);
         }
@@ -88,12 +82,12 @@ public class ApiServlet extends HttpServlet {
             pathArray = req.getPathInfo().split("/");
             if (pathArray[1] != null) {
                 Long id = Long.parseLong(pathArray[2]);
-                //tiez docasnu kod begin
+                //tiez docasny kod begin
                 CompanyLevelDTO dto = companyLevelCollectionToMap(getCls()).get(id);
                 //tiez docasny kod end
                 if (dto != null) {
 
-                    // sem vlozit kod na deleTE
+                    // sem vlozit kod na delete
 
                     OperationStatus os = new OperationStatus();
                     //os.setCausedBy("");
@@ -113,25 +107,43 @@ public class ApiServlet extends HttpServlet {
     }
 
     protected void updateCompanyLevels(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.setContentType("application/json");
         ObjectMapper mapper = new ObjectMapper();
-        OperationStatus os = new OperationStatus();
-        os.setCausedBy("Input is not valid");
-        os.setOperation("update");
-        os.setStatus("failed");
-        JsonNode jsonNode = mapper.readValue(req.getInputStream(), JsonNode.class);
-
-        if (!jsonNode.isMissingNode() && jsonNode != null) {
-            CompanyLevelDTO clDTO = new CompanyLevelDTO();
-            if (!jsonNode.isMissingNode() && jsonNode != null) {
-                clDTO.setId(jsonNode.get("get").asLong());
-                resp.setStatus(201);
-                mapper.writeValue(resp.getOutputStream(), clDTO);
-            } else {
-                resp.setStatus(500);
-                mapper.writeValue(resp.getOutputStream(), os);
-            }
-            resp.setStatus(500);
+        String path = req.getPathInfo();
+        if (path.equals("/companyLevels") || path.equals("/companyLevels/")) {
+            OperationStatus os = new OperationStatus();
+            os.setCausedBy("Updating all companyLevels is not supported");
+            os.setOperation("update");
+            os.setStatus("failed");
+            resp.setStatus(403);
             mapper.writeValue(resp.getOutputStream(), os);
+
+        } else {
+            String pathArray[];
+            pathArray = req.getPathInfo().split("/");
+            if (pathArray[1] != null) {
+                Long id = Long.parseLong(pathArray[2]);
+                //tiez docasny kod begin
+                CompanyLevelDTO dto = companyLevelCollectionToMap(getCls()).get(id);
+                //tiez docasny kod end
+                if (dto != null) {
+
+                    // sem vlozit kod na update
+
+                    OperationStatus os = new OperationStatus();
+                    //os.setCausedBy("");
+                    os.setOperation("update");
+                    os.setStatus("successful");
+                    mapper.writeValue(resp.getOutputStream(), os);
+                } else {
+                    OperationStatus os = new OperationStatus();
+                    os.setCausedBy("CompanyLevel not found");
+                    os.setOperation("update");
+                    os.setStatus("failed");
+                    resp.setStatus(404);
+                    mapper.writeValue(resp.getOutputStream(), os);
+                }
+            }
         }
     }
 
@@ -157,7 +169,7 @@ public class ApiServlet extends HttpServlet {
                 //tiez docasny kod end
                 if (dto != null) {
 
-                    // sem vlozit kod na deleTE
+                    // sem vlozit kod na delete
 
                     OperationStatus os = new OperationStatus();
                     //os.setCausedBy("");
@@ -168,6 +180,46 @@ public class ApiServlet extends HttpServlet {
                     OperationStatus os = new OperationStatus();
                     os.setCausedBy("Car not found");
                     os.setOperation("delete");
+                    os.setStatus("failed");
+                    resp.setStatus(404);
+                    mapper.writeValue(resp.getOutputStream(), os);
+                }
+            }
+        }
+    }
+
+    protected void updateCars(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.setContentType("application/json");
+        ObjectMapper mapper = new ObjectMapper();
+        String path = req.getPathInfo();
+        if (path.equals("/cars") || path.equals("/cars")) {
+            OperationStatus os = new OperationStatus();
+            os.setCausedBy("Updating all cars is not supported");
+            os.setOperation("update");
+            os.setStatus("failed");
+            resp.setStatus(403);
+            mapper.writeValue(resp.getOutputStream(), os);
+        } else {
+            String pathArray[];
+            pathArray = req.getPathInfo().split("/");
+            if (pathArray[1] != null) {
+                Long id = Long.parseLong(pathArray[2]);
+                //tiez docasnu kod begin
+                CarDTO dto = carCollectionToMap(getCars()).get(id);
+                //tiez docasny kod end
+                if (dto != null) {
+
+                    // sem vlozit kod na Update
+
+                    OperationStatus os = new OperationStatus();
+                    //os.setCausedBy("");
+                    os.setOperation("update");
+                    os.setStatus("successful");
+                    mapper.writeValue(resp.getOutputStream(), os);
+                } else {
+                    OperationStatus os = new OperationStatus();
+                    os.setCausedBy("Car not found");
+                    os.setOperation("update");
                     os.setStatus("failed");
                     resp.setStatus(404);
                     mapper.writeValue(resp.getOutputStream(), os);
