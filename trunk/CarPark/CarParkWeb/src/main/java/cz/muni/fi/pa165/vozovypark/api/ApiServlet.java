@@ -112,6 +112,29 @@ public class ApiServlet extends HttpServlet {
         }
     }
 
+    protected void updateCompanyLevels(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        OperationStatus os = new OperationStatus();
+        os.setCausedBy("Input is not valid");
+        os.setOperation("update");
+        os.setStatus("failed");
+        JsonNode jsonNode = mapper.readValue(req.getInputStream(), JsonNode.class);
+
+        if (!jsonNode.isMissingNode() && jsonNode != null) {
+            CompanyLevelDTO clDTO = new CompanyLevelDTO();
+            if (!jsonNode.isMissingNode() && jsonNode != null) {
+                clDTO.setId(jsonNode.get("get").asLong());
+                resp.setStatus(201);
+                mapper.writeValue(resp.getOutputStream(), clDTO);
+            } else {
+                resp.setStatus(500);
+                mapper.writeValue(resp.getOutputStream(), os);
+            }
+            resp.setStatus(500);
+            mapper.writeValue(resp.getOutputStream(), os);
+        }
+    }
+
     protected void deleteCars(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("application/json");
         ObjectMapper mapper = new ObjectMapper();
