@@ -176,28 +176,28 @@ public class ApiServlet extends HttpServlet {
             pathArray = req.getPathInfo().split("/");
             if (pathArray[1] != null) {
                 try {
-                Long id = Long.parseLong(pathArray[2]);
-                //tiez docasnu kod begin
-                CarDTO dto = carCollectionToMap(getCars()).get(id);
-                //tiez docasny kod end
-                if (dto != null) {
+                    Long id = Long.parseLong(pathArray[2]);
+                    //tiez docasnu kod begin
+                    CarDTO dto = carCollectionToMap(getCars()).get(id);
+                    //tiez docasny kod end
+                    if (dto != null) {
 
-                    carService.removeCar(dto.getId());
+                        carService.removeCar(dto.getId());
 
-                    OperationStatus os = new OperationStatus();
-                    //os.setCausedBy("");
-                    os.setOperation("delete");
-                    os.setStatus("successful");
-                    mapper.writeValue(resp.getOutputStream(), os);
-                } else {
-                    OperationStatus os = new OperationStatus();
-                    os.setCausedBy("Car not found");
-                    os.setOperation("delete");
-                    os.setStatus("failed");
-                    resp.setStatus(404);
-                    mapper.writeValue(resp.getOutputStream(), os);
-                }
-                }catch (Exception ex) {
+                        OperationStatus os = new OperationStatus();
+                        //os.setCausedBy("");
+                        os.setOperation("delete");
+                        os.setStatus("successful");
+                        mapper.writeValue(resp.getOutputStream(), os);
+                    } else {
+                        OperationStatus os = new OperationStatus();
+                        os.setCausedBy("Car not found");
+                        os.setOperation("delete");
+                        os.setStatus("failed");
+                        resp.setStatus(404);
+                        mapper.writeValue(resp.getOutputStream(), os);
+                    }
+                } catch (Exception ex) {
                     OperationStatus os = new OperationStatus();
                     os.setCausedBy(ex.getMessage());
                     os.setOperation("delete");
@@ -226,27 +226,27 @@ public class ApiServlet extends HttpServlet {
             if (pathArray[1] != null) {
                 Long id = Long.parseLong(pathArray[2]);
                 try {
-                //tiez docasnu kod begin
-                CarDTO dto = carCollectionToMap(getCars()).get(id);
-                //tiez docasny kod end
-                if (dto != null) {
+                    //tiez docasnu kod begin
+                    CarDTO dto = carCollectionToMap(getCars()).get(id);
+                    //tiez docasny kod end
+                    if (dto != null) {
 
-                   carService.updateCar(dto);
+                        carService.updateCar(dto);
 
-                    OperationStatus os = new OperationStatus();
-                    //os.setCausedBy("");
-                    os.setOperation("update");
-                    os.setStatus("successful");
-                    mapper.writeValue(resp.getOutputStream(), os);
-                } else {
-                    OperationStatus os = new OperationStatus();
-                    os.setCausedBy("Car not found");
-                    os.setOperation("update");
-                    os.setStatus("failed");
-                    resp.setStatus(404);
-                    mapper.writeValue(resp.getOutputStream(), os);
-                }
-                }catch(Exception ex) {
+                        OperationStatus os = new OperationStatus();
+                        //os.setCausedBy("");
+                        os.setOperation("update");
+                        os.setStatus("successful");
+                        mapper.writeValue(resp.getOutputStream(), os);
+                    } else {
+                        OperationStatus os = new OperationStatus();
+                        os.setCausedBy("Car not found");
+                        os.setOperation("update");
+                        os.setStatus("failed");
+                        resp.setStatus(404);
+                        mapper.writeValue(resp.getOutputStream(), os);
+                    }
+                } catch (Exception ex) {
                     OperationStatus os = new OperationStatus();
                     os.setCausedBy(ex.getMessage());
                     os.setOperation("update");
@@ -312,18 +312,17 @@ public class ApiServlet extends HttpServlet {
             } else {
                 mapper.writeValue(resp.getOutputStream(), carCollectionToMap(getCars()));
             }
-
         } else {
             String pathArray[];
             pathArray = req.getPathInfo().split("/");
             if (pathArray[1] != null) {
                 Long id = Long.parseLong(pathArray[2]);
                 try {
-                CarDTO dto = carCollectionToMap(getCars()).get(id);
-                if (dto != null) {
-                    mapper.writeValue(resp.getOutputStream(), dto);
+                    CarDTO dto = carCollectionToMap(getCars()).get(id);
+                    if (dto != null) {
+                        mapper.writeValue(resp.getOutputStream(), dto);
                     } else {
-                    resp.setStatus(404);
+                        resp.setStatus(404);
                     }
                 } catch (Exception ex) {
                     OperationStatus os = new OperationStatus();
@@ -333,7 +332,6 @@ public class ApiServlet extends HttpServlet {
                     resp.setStatus(500);
                     mapper.writeValue(resp.getOutputStream(), os);
                 }
-
             }
         }
     }
@@ -443,6 +441,5 @@ public class ApiServlet extends HttpServlet {
         } else {
             throw new IllegalArgumentException("Company level with given id does not exist");
         }
-
     }
 }
