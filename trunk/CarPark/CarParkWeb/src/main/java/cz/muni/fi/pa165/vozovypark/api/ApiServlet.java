@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonAnyFormatVisitor;
 import cz.muni.fi.pa165.vozovypark.DTO.CarDTO;
 import cz.muni.fi.pa165.vozovypark.DTO.CompanyLevelDTO;
+import cz.muni.fi.pa165.vozovypark.service.CarService;
 import cz.muni.fi.pa165.vozovypark.service.CompanyLevelService;
 import java.io.IOException;
 import java.text.ParseException;
@@ -17,6 +18,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,6 +35,16 @@ import org.springframework.beans.factory.annotation.Configurable;
 public class ApiServlet extends HttpServlet {
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    CompanyLevelService companyLevelService;
+    CarService carService;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        Object obj = config.getServletContext().getAttribute("companyLevelService");
+        companyLevelService = (CompanyLevelService) obj;
+        obj = config.getServletContext().getAttribute("carService");
+        carService = (CarService) obj;
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -233,7 +245,17 @@ public class ApiServlet extends HttpServlet {
         ObjectMapper mapper = new ObjectMapper();
         String path = req.getPathInfo();
         if (path.equals("/companyLevels") || path.equals("/companyLevels/")) {
-            mapper.writeValue(resp.getOutputStream(), companyLevelCollectionToMap(getCls()));
+            try {
+                mapper.writeValue(resp.getOutputStream(), companyLevelCollectionToMap(companyLevelService.getAllCompanyLevels()));
+            } catch (Exception e) {
+                OperationStatus os = new OperationStatus();
+                os.setCausedBy(e.getMessage());
+                os.setOperation("getCompanyLevels");
+                os.setStatus("failed");
+                resp.setStatus(500);
+                mapper.writeValue(resp.getOutputStream(), os);
+            }
+
 
         } else {
             String pathArray[];
