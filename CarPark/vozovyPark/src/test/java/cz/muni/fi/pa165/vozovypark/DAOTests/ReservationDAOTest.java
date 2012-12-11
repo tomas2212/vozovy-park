@@ -24,10 +24,8 @@ public class ReservationDAOTest extends AbstractDAOTest {
 
     @Autowired
     private CarDAO carDao;
-    
     @Autowired
     private EmployeeDAO employeeDao;
-    
     @Autowired
     private ReservationDAO reservationDao;
 
@@ -36,23 +34,18 @@ public class ReservationDAOTest extends AbstractDAOTest {
         Car car = new Car();
         car.setAvailable(true);
         car.setBrand("Mercedes");
-
-        
         carDao.insert(car);
 
         Employee employee = new Employee();
         employee.setName("Tomas");
         employee.setAddress("Zilina");
-
-        
         employeeDao.insert(employee);
 
         Reservation reservation = new Reservation();
         reservation.setCar(car);
         reservation.setEmployee(employee);
-
-        
         reservationDao.insert(reservation);
+
         Reservation reservation2 = reservationDao.getReservationById(reservation.getId());
         assertEquals(reservation, reservation2);
 
@@ -68,28 +61,21 @@ public class ReservationDAOTest extends AbstractDAOTest {
         Car car = new Car();
         car.setAvailable(true);
         car.setBrand("Mercedes");
-
-        
         carDao.insert(car);
 
         Car car2 = new Car();
         car2.setAvailable(true);
         car2.setBrand("Audi");
-
         carDao.insert(car2);
 
         Employee employee = new Employee();
         employee.setName("Tomas");
         employee.setAddress("Zilina");
-
-        
         employeeDao.insert(employee);
 
         Reservation reservation = new Reservation();
         reservation.setCar(car);
         reservation.setEmployee(employee);
-
-        
         reservationDao.insert(reservation);
 
         reservation.setCar(car2);
@@ -116,22 +102,16 @@ public class ReservationDAOTest extends AbstractDAOTest {
         Car car = new Car();
         car.setAvailable(true);
         car.setBrand("Mercedes");
-
-        
         carDao.insert(car);
 
         Employee employee = new Employee();
         employee.setName("Tomas");
         employee.setAddress("Zilina");
-
-        
         employeeDao.insert(employee);
 
         Reservation reservation = new Reservation();
         reservation.setCar(car);
         reservation.setEmployee(employee);
-
-        
         reservationDao.insert(reservation);
 
         Reservation reservation2 = reservationDao.getReservationById(reservation.getId());
@@ -159,34 +139,26 @@ public class ReservationDAOTest extends AbstractDAOTest {
         Car car = new Car();
         car.setAvailable(true);
         car.setBrand("Mercedes");
-
-        
         carDao.insert(car);
 
         Employee employee = new Employee();
         employee.setName("Tomas");
         employee.setAddress("Zilina");
-
-        
         employeeDao.insert(employee);
 
         Reservation reservation = new Reservation();
         reservation.setCar(car);
         reservation.setEmployee(employee);
-
-        
         reservationDao.insert(reservation);
 
         Employee employee2 = new Employee();
         employee2.setName("Martin");
         employee2.setAddress("Brno");
-
         employeeDao.insert(employee2);
 
         Reservation reservation2 = new Reservation();
         reservation2.setCar(car);
         reservation2.setEmployee(employee2);
-
         reservationDao.insert(reservation2);
 
         List<Reservation> list = reservationDao.getReservationByCar(car);
@@ -212,30 +184,22 @@ public class ReservationDAOTest extends AbstractDAOTest {
         Car car = new Car();
         car.setAvailable(true);
         car.setBrand("Mercedes");
-
-        
         carDao.insert(car);
 
         Employee employee = new Employee();
         employee.setName("Tomas");
         employee.setAddress("Zilina");
-
-        
         employeeDao.insert(employee);
 
         Reservation reservation = new Reservation();
         reservation.setCar(car);
         reservation.setEmployee(employee);
-
-        
         reservationDao.insert(reservation);
 
         Car car2 = new Car();
         car2.setAvailable(true);
         car2.setBrand("Audi");
         car2.setSpz("Ahoj-ko");
-
-
         carDao.insert(car2);
 
         Reservation reservation2 = new Reservation();
@@ -267,33 +231,26 @@ public class ReservationDAOTest extends AbstractDAOTest {
         Car car = new Car();
         car.setAvailable(true);
         car.setBrand("Mercedes");
-     
         carDao.insert(car);
 
         Employee employee = new Employee();
         employee.setName("Tomas");
         employee.setAddress("Zilina");
-
-        
         employeeDao.insert(employee);
 
         Reservation reservation = new Reservation();
         reservation.setCar(car);
         reservation.setEmployee(employee);
-
-        
         reservationDao.insert(reservation);
 
         Employee employee2 = new Employee();
         employee2.setName("Martin");
         employee2.setAddress("Brno");
-
         employeeDao.insert(employee2);
 
         Reservation reservation2 = new Reservation();
         reservation2.setCar(car);
         reservation2.setEmployee(employee2);
-
         reservationDao.insert(reservation2);
 
         assertTrue(reservationDao.getReservationByCarAndEmployee(car, employee).contains(reservation));
@@ -337,28 +294,22 @@ public class ReservationDAOTest extends AbstractDAOTest {
         Car car = new Car();
         car.setAvailable(true);
         car.setBrand("Mercedes");
-       
         carDao.insert(car);
 
         Employee employee = new Employee();
         employee.setName("Tomas");
         employee.setAddress("Zilina");
-
-        
         employeeDao.insert(employee);
 
         Reservation reservation = new Reservation();
         reservation.setCar(car);
         reservation.setEmployee(employee);
-
-        
         reservationDao.insert(reservation);
 
         Car car2 = new Car();
         car2.setAvailable(true);
         car2.setBrand("Audi");
         car2.setSpz("Ahoj-ko");
-
         carDao.insert(car2);
 
         Reservation reservation2 = new Reservation();
@@ -370,5 +321,102 @@ public class ReservationDAOTest extends AbstractDAOTest {
         List<Reservation> list = reservationDao.getAllReservations();
 
         assertEquals(2, list.size());
+    }
+
+    @Test
+    public void getReservationByIdTest() {
+        Car car = new Car();
+        car.setAvailable(true);
+        car.setBrand("Mercedes");
+        carDao.insert(car);
+
+        Employee employee = new Employee();
+        employee.setName("Tomas");
+        employee.setAddress("Zilina");
+        employeeDao.insert(employee);
+
+        Reservation reservation = new Reservation();
+        reservation.setCar(car);
+        reservation.setEmployee(employee);
+        reservationDao.insert(reservation);
+
+        Reservation reservation2 = reservationDao.getReservationById(reservation.getId());
+
+        assertEquals(reservation, reservation2);
+
+        try {
+            reservationDao.getReservationById(null);
+            fail("Queried with null id");
+        } catch (DataAccessException e) {
+        }
+    }
+
+    @Test
+    public void getReservationsToConfirmTest() {
+        Car car = new Car();
+        car.setAvailable(true);
+        car.setBrand("Mercedes");
+        carDao.insert(car);
+
+        Employee employee = new Employee();
+        employee.setName("Tomas");
+        employee.setAddress("Zilina");
+        employeeDao.insert(employee);
+
+        Reservation reservation = new Reservation();
+        reservation.setCar(car);
+        reservation.setEmployee(employee);
+        reservation.setConfirmed(true);
+        reservationDao.insert(reservation);
+
+        Employee employee2 = new Employee();
+        employee2.setName("Martin");
+        employee2.setAddress("Brno");
+        employeeDao.insert(employee2);
+
+        Reservation reservation2 = new Reservation();
+        reservation2.setCar(car);
+        reservation2.setEmployee(employee2);
+        reservation2.setConfirmed(false);
+        reservationDao.insert(reservation2);
+
+        List<Reservation> list = reservationDao.getReservationsToConfirm();
+
+        assertEquals(1, list.size());
+    }
+
+    @Test
+    public void getAcceptedReservationsTest() {
+        Car car = new Car();
+        car.setAvailable(true);
+        car.setBrand("Mercedes");
+        carDao.insert(car);
+
+        Employee employee = new Employee();
+        employee.setName("Tomas");
+        employee.setAddress("Zilina");
+        employeeDao.insert(employee);
+
+        Reservation reservation = new Reservation();
+        reservation.setCar(car);
+        reservation.setEmployee(employee);
+        reservation.setConfirmed(true);
+        reservationDao.insert(reservation);
+
+        Employee employee2 = new Employee();
+        employee2.setName("Martin");
+        employee2.setAddress("Brno");
+        employeeDao.insert(employee2);
+
+        Reservation reservation2 = new Reservation();
+        reservation2.setCar(car);
+        reservation2.setEmployee(employee2);
+        reservation2.setConfirmed(false);
+        reservationDao.insert(reservation2);
+
+        List<Reservation> list = reservationDao.getAcceptedReservations();
+        Reservation reservation3 = list.get(0);
+       
+        assertEquals(reservation, reservation3);   
     }
 }
