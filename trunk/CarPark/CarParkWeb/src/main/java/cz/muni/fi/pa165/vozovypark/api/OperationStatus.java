@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.vozovypark.api;
 
 /**
@@ -9,6 +5,10 @@ package cz.muni.fi.pa165.vozovypark.api;
  * @author andrej
  */
 public class OperationStatus {
+
+    String operation;
+    String status;
+    String causedBy;
 
     public String getOperation() {
         return operation;
@@ -33,10 +33,4 @@ public class OperationStatus {
     public void setCausedBy(String causedBy) {
         this.causedBy = causedBy;
     }
-    String operation;
-    String status;
-    String causedBy;
-    
-    
-    
 }
