@@ -42,13 +42,21 @@ public interface CompanyLevelDAO {
      */
     List<CompanyLevel> getAllCompanyLevels();    
     
+    /**
+     * Make Company level as root
+     * @return {@link CompanyLevel} if exists
+     */
     CompanyLevel getRootCompanyLevel();
     
+    /**
+     * Getiing maximal Level value
+     * @return the highest Level value
+     */
     Integer getMaxLevelValue();
     
+    /**
+     * Getting minimal Level Value
+     * @return the lowest Level value
+     */
     Integer getMinLevelValue();
-    
-    
-    
-    
 }
