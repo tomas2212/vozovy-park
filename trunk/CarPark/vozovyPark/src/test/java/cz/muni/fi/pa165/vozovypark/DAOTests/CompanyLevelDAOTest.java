@@ -18,16 +18,16 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  * @author Lukas Maticky
  */
-public class CompanyLevelDAOTest extends AbstractDAOTest{
+public class CompanyLevelDAOTest extends AbstractDAOTest {
 
     @Autowired
     private CompanyLevelDAO companyLevelDao;
-    
+
     @Test
     public void insertTest() {
         CompanyLevel cl = new CompanyLevel();
         cl.setLevelValue(1);
-        
+
         companyLevelDao.insert(cl);
 
         CompanyLevel cl2 = companyLevelDao.getCompanyLevelById(cl.getId());
@@ -40,7 +40,6 @@ public class CompanyLevelDAOTest extends AbstractDAOTest{
         CompanyLevel cl1 = new CompanyLevel();
         cl1.setLevelValue(1);
 
-        
         companyLevelDao.insert(cl1);
 
         CompanyLevel cl2 = companyLevelDao.getCompanyLevelById(cl1.getId());
@@ -57,7 +56,6 @@ public class CompanyLevelDAOTest extends AbstractDAOTest{
         CompanyLevel cl1 = new CompanyLevel();
         cl1.setLevelValue(1);
 
-        
         companyLevelDao.insert(cl1);
 
         CompanyLevel cl2 = companyLevelDao.getCompanyLevelById(cl1.getId());
@@ -71,7 +69,6 @@ public class CompanyLevelDAOTest extends AbstractDAOTest{
         CompanyLevel cl1 = new CompanyLevel();
         cl1.setLevelValue(1);
 
-        
         companyLevelDao.insert(cl1);
 
         CompanyLevel cl2 = companyLevelDao.getCompanyLevelById(cl1.getId());
@@ -84,7 +81,6 @@ public class CompanyLevelDAOTest extends AbstractDAOTest{
         CompanyLevel cl1 = new CompanyLevel();
         cl1.setLevelValue(1);
 
-        
         companyLevelDao.insert(cl1);
 
         int amount1 = companyLevelDao.getAllCompanyLevels().size();
