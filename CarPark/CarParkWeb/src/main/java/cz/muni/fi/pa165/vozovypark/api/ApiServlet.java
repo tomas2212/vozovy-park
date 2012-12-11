@@ -279,7 +279,21 @@ public class ApiServlet extends HttpServlet {
         ObjectMapper mapper = new ObjectMapper();
         String path = req.getPathInfo();
         if (path.equals("/cars") || path.equals("/cars/")) {
-            mapper.writeValue(resp.getOutputStream(), carCollectionToMap(getCars()));
+            if (req.getParameter("companyLevel") != null) {
+                long id = Long.valueOf(req.getParameter("companyLevel")).longValue();
+                try {
+                    mapper.writeValue(resp.getOutputStream(), carCollectionToMap(getCarsByCompanyLevel(id)));
+                } catch (IllegalArgumentException ex) {
+                    OperationStatus os = new OperationStatus();
+                    os.setCausedBy(ex.getMessage());
+                    os.setOperation("getCars");
+                    os.setStatus("failed");
+                    resp.setStatus(500);
+                    mapper.writeValue(resp.getOutputStream(), os);
+                }
+            } else {
+                mapper.writeValue(resp.getOutputStream(), carCollectionToMap(getCars()));
+            }
 
         } else {
             String pathArray[];
@@ -331,18 +345,7 @@ public class ApiServlet extends HttpServlet {
     }
 
     private Collection<CarDTO> getCars() {
-        List<CarDTO> result = new ArrayList<CarDTO>();
-        CarDTO car1 = new CarDTO();
-        car1.setId(new Long(1));
-        car1.setModel("Volkswagen");
-        car1.setSpz("BR668BF");
-        result.add(car1);
-        CarDTO car2 = new CarDTO();
-        car2.setId(new Long(1));
-        car2.setModel("Skoda");
-        car2.setSpz("BR975AM");
-        result.add(car2);
-
+        List<CarDTO> result = carService.getAllCars();
         return result;
     }
 
@@ -405,5 +408,16 @@ public class ApiServlet extends HttpServlet {
         }
         response.setStatus(500);
         mapper.writeValue(response.getOutputStream(), os);
+    }
+
+    private Collection<CarDTO> getCarsByCompanyLevel(long id) {
+        CompanyLevelDTO clDTO = companyLevelService.getCompanyLevelById(id);
+        if (clDTO != null) {
+            List<CarDTO> cars = carService.getCarsByCompanyLevel(clDTO);
+            return cars;
+        } else {
+            throw new IllegalArgumentException("Company level with given id does not exist");
+        }
+
     }
 }
