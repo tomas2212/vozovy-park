@@ -175,13 +175,14 @@ public class ApiServlet extends HttpServlet {
             String pathArray[];
             pathArray = req.getPathInfo().split("/");
             if (pathArray[1] != null) {
+                try {
                 Long id = Long.parseLong(pathArray[2]);
                 //tiez docasnu kod begin
                 CarDTO dto = carCollectionToMap(getCars()).get(id);
                 //tiez docasny kod end
                 if (dto != null) {
 
-                    // sem vlozit kod na delete
+                    carService.removeCar(dto.getId());
 
                     OperationStatus os = new OperationStatus();
                     //os.setCausedBy("");
@@ -194,6 +195,14 @@ public class ApiServlet extends HttpServlet {
                     os.setOperation("delete");
                     os.setStatus("failed");
                     resp.setStatus(404);
+                    mapper.writeValue(resp.getOutputStream(), os);
+                }
+                }catch (Exception ex) {
+                    OperationStatus os = new OperationStatus();
+                    os.setCausedBy(ex.getMessage());
+                    os.setOperation("delete");
+                    os.setStatus("failed");
+                    resp.setStatus(500);
                     mapper.writeValue(resp.getOutputStream(), os);
                 }
             }
@@ -216,12 +225,13 @@ public class ApiServlet extends HttpServlet {
             pathArray = req.getPathInfo().split("/");
             if (pathArray[1] != null) {
                 Long id = Long.parseLong(pathArray[2]);
+                try {
                 //tiez docasnu kod begin
                 CarDTO dto = carCollectionToMap(getCars()).get(id);
                 //tiez docasny kod end
                 if (dto != null) {
 
-                    // sem vlozit kod na Update
+                   carService.updateCar(dto);
 
                     OperationStatus os = new OperationStatus();
                     //os.setCausedBy("");
@@ -234,6 +244,14 @@ public class ApiServlet extends HttpServlet {
                     os.setOperation("update");
                     os.setStatus("failed");
                     resp.setStatus(404);
+                    mapper.writeValue(resp.getOutputStream(), os);
+                }
+                }catch(Exception ex) {
+                    OperationStatus os = new OperationStatus();
+                    os.setCausedBy(ex.getMessage());
+                    os.setOperation("update");
+                    os.setStatus("failed");
+                    resp.setStatus(500);
                     mapper.writeValue(resp.getOutputStream(), os);
                 }
             }
@@ -300,14 +318,22 @@ public class ApiServlet extends HttpServlet {
             pathArray = req.getPathInfo().split("/");
             if (pathArray[1] != null) {
                 Long id = Long.parseLong(pathArray[2]);
-                //tiez docasnu kod begin
+                try {
                 CarDTO dto = carCollectionToMap(getCars()).get(id);
-                //tiez docasny kod end
                 if (dto != null) {
                     mapper.writeValue(resp.getOutputStream(), dto);
-                } else {
+                    } else {
                     resp.setStatus(404);
+                    }
+                } catch (Exception ex) {
+                    OperationStatus os = new OperationStatus();
+                    os.setOperation("getCars");
+                    os.setStatus("failed");
+                    os.setCausedBy(ex.getMessage());
+                    resp.setStatus(500);
+                    mapper.writeValue(resp.getOutputStream(), os);
                 }
+
             }
         }
     }
@@ -329,18 +355,7 @@ public class ApiServlet extends HttpServlet {
     }
 
     private Collection<CompanyLevelDTO> getCls() {
-        List<CompanyLevelDTO> result = new ArrayList<CompanyLevelDTO>();
-        CompanyLevelDTO cl = new CompanyLevelDTO();
-        cl.setId(new Long(1));
-        cl.setLevelValue(new Integer(1));
-        cl.setName("fadsf");
-        result.add(cl);
-        cl = new CompanyLevelDTO();
-        cl.setId(new Long(2));
-        cl.setLevelValue(new Integer(2));
-        cl.setName("asdf");
-        result.add(cl);
-
+        List<CompanyLevelDTO> result = companyLevelService.getAllCompanyLevels();
         return result;
     }
 
@@ -362,8 +377,13 @@ public class ApiServlet extends HttpServlet {
             if (jsonNode.get("name") != null && jsonNode.hasNonNull("name")) {
                 clDTO.setName(jsonNode.get("name").asText());
 
-                //TODO Vlozit kod pre create
-
+                try {
+                    companyLevelService.createCompanyLevel(clDTO.getName());
+                } catch (Exception ex) {
+                    os.setCausedBy(ex.getMessage());
+                    response.setStatus(500);
+                    mapper.writeValue(response.getOutputStream(), os);
+                }
                 response.setStatus(201);
                 mapper.writeValue(response.getOutputStream(), clDTO);
             } else {
@@ -396,8 +416,13 @@ public class ApiServlet extends HttpServlet {
                 carDTO.setCreationYear(date);
                 carDTO.setAvailable(jsonNode.get("available").asBoolean());
 
-
-                //TODO Vlozit kod pre create
+                try {
+                    carService.createCar(carDTO);
+                } catch (Exception ex) {
+                    os.setCausedBy(ex.getMessage());
+                    response.setStatus(500);
+                    mapper.writeValue(response.getOutputStream(), os);
+                }
 
                 response.setStatus(201);
                 mapper.writeValue(response.getOutputStream(), carDTO);
