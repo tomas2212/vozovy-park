@@ -93,26 +93,36 @@ public class ApiServlet extends HttpServlet {
             String pathArray[];
             pathArray = req.getPathInfo().split("/");
             if (pathArray[1] != null) {
-                Long id = Long.parseLong(pathArray[2]);
-                //tiez docasny kod begin
-                CompanyLevelDTO dto = companyLevelCollectionToMap(getCls()).get(id);
-                //tiez docasny kod end
-                if (dto != null) {
+                try {
+                    Long id = Long.parseLong(pathArray[2]);
+                    //tiez docasny kod begin
+                    CompanyLevelDTO dto = companyLevelCollectionToMap(getCls()).get(id);
+                    //tiez docasny kod end
+                    if (dto != null) {
 
-                    // sem vlozit kod na delete
+                        companyLevelService.removeCompanyLevel(dto.getId());
 
+                        OperationStatus os = new OperationStatus();
+                        //os.setCausedBy("");
+                        os.setOperation("delete");
+                        os.setStatus("successful");
+                        mapper.writeValue(resp.getOutputStream(), os);
+                    } else {
+                        OperationStatus os = new OperationStatus();
+                        os.setCausedBy("CompanyLevel not found");
+                        os.setOperation("delete");
+                        os.setStatus("failed");
+                        resp.setStatus(404);
+                        mapper.writeValue(resp.getOutputStream(), os);
+                    }
+                } catch (Exception e) {
                     OperationStatus os = new OperationStatus();
-                    //os.setCausedBy("");
-                    os.setOperation("delete");
-                    os.setStatus("successful");
-                    mapper.writeValue(resp.getOutputStream(), os);
-                } else {
-                    OperationStatus os = new OperationStatus();
-                    os.setCausedBy("CompanyLevel not found");
+                    os.setCausedBy(e.getMessage());
                     os.setOperation("delete");
                     os.setStatus("failed");
-                    resp.setStatus(404);
+                    resp.setStatus(500);
                     mapper.writeValue(resp.getOutputStream(), os);
+
                 }
             }
         }
@@ -136,23 +146,32 @@ public class ApiServlet extends HttpServlet {
             if (pathArray[1] != null) {
                 Long id = Long.parseLong(pathArray[2]);
                 //tiez docasny kod begin
-                CompanyLevelDTO dto = companyLevelCollectionToMap(getCls()).get(id);
-                //tiez docasny kod end
-                if (dto != null) {
+                try {
+                    CompanyLevelDTO dto = companyLevelCollectionToMap(getCls()).get(id);
+                    //tiez docasny kod end
+                    if (dto != null) {
 
-                    // sem vlozit kod na update
+                        companyLevelService.updateCompanyLevel(dto);
 
+                        OperationStatus os = new OperationStatus();
+                        //os.setCausedBy("");
+                        os.setOperation("update");
+                        os.setStatus("successful");
+                        mapper.writeValue(resp.getOutputStream(), os);
+                    } else {
+                        OperationStatus os = new OperationStatus();
+                        os.setCausedBy("CompanyLevel not found");
+                        os.setOperation("update");
+                        os.setStatus("failed");
+                        resp.setStatus(404);
+                        mapper.writeValue(resp.getOutputStream(), os);
+                    }
+                } catch (Exception e) {
                     OperationStatus os = new OperationStatus();
-                    //os.setCausedBy("");
-                    os.setOperation("update");
-                    os.setStatus("successful");
-                    mapper.writeValue(resp.getOutputStream(), os);
-                } else {
-                    OperationStatus os = new OperationStatus();
-                    os.setCausedBy("CompanyLevel not found");
+                    os.setCausedBy(e.getMessage());
                     os.setOperation("update");
                     os.setStatus("failed");
-                    resp.setStatus(404);
+                    resp.setStatus(500);
                     mapper.writeValue(resp.getOutputStream(), os);
                 }
             }
@@ -281,12 +300,21 @@ public class ApiServlet extends HttpServlet {
             if (pathArray[1] != null) {
                 Long id = Long.parseLong(pathArray[2]);
                 //tiez docasnu kod begin
-                CompanyLevelDTO dto = companyLevelCollectionToMap(getCls()).get(id);
-                //tiez docasny kod end
-                if (dto != null) {
-                    mapper.writeValue(resp.getOutputStream(), dto);
-                } else {
-                    resp.setStatus(404);
+                try {
+                    CompanyLevelDTO dto = companyLevelCollectionToMap(getCls()).get(id);
+                    //tiez docasny kod end
+                    if (dto != null) {
+                        mapper.writeValue(resp.getOutputStream(), dto);
+                    } else {
+                        resp.setStatus(404);
+                    }
+                } catch (Exception e) {
+                    OperationStatus os = new OperationStatus();
+                    os.setOperation("getCompanyLevels");
+                    os.setStatus("failed");
+                    os.setCausedBy(e.getMessage());
+                    resp.setStatus(500);
+                    mapper.writeValue(resp.getOutputStream(), os);
                 }
             }
         }
@@ -377,8 +405,8 @@ public class ApiServlet extends HttpServlet {
 
                 try {
                     companyLevelService.createCompanyLevel(clDTO.getName());
-                } catch (Exception ex) {
-                    os.setCausedBy(ex.getMessage());
+                } catch (Exception e) {
+                    os.setCausedBy(e.getMessage());
                     response.setStatus(500);
                     mapper.writeValue(response.getOutputStream(), os);
                 }
