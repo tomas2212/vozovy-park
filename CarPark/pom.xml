@@ -10,6 +10,7 @@
         <module>vozovyPark</module>
         <module>CarParkWeb</module>
         <module>CarParkAPI</module>
+        <module>CarParkREST</module>
     </modules>
     <dependencies>
         <dependency>
