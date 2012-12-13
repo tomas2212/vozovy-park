@@ -14,7 +14,5 @@ public interface LayoutPage {
     
     public Menu getSubMenu();
     
-    public void setSubMenu(Menu subMenu);
-    
-    
+    public void setSubMenu(Menu subMenu);  
 }

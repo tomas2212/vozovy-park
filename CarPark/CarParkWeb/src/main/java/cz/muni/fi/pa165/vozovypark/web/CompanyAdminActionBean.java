@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 @UrlBinding("/company/{$event}/")
 public class CompanyAdminActionBean implements ActionBean, LayoutPage {
 
-    // final static Logger log = LoggerFactory.getLogger(CompanyAdminActionBean.class);
+    final static Logger log = LoggerFactory.getLogger(CompanyAdminActionBean.class);
     private ActionBeanContext context;
     @SpringBean(value = "mainMenu")
     private Menu mainMenu;
@@ -47,7 +47,7 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
     @SpringBean(value = "EmployeeService")
     private EmployeeService employeeService;
     @ValidateNestedProperties(value = {
-        @Validate(on = {"createButtonEmployee", "saveButtonEmployee"}, field = "name", required = true)   
+        @Validate(on = {"createButtonEmployee", "saveButtonEmployee"}, field = "name", required = true)
     })
     private EmployeeDTO employee;
 
