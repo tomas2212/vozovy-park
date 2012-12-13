@@ -2,30 +2,21 @@ package cz.muni.fi.pa165.vozovypark.carparkrest;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonAnyFormatVisitor;
-import cz.muni.fi.pa165.vozovypark.DTO.CarDTO;
 import cz.muni.fi.pa165.vozovypark.DTO.CompanyLevelDTO;
 import cz.muni.fi.pa165.vozovypark.service.CarService;
 import cz.muni.fi.pa165.vozovypark.service.CompanyLevelService;
 import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import javax.annotation.Resource;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 
 /**
  *
@@ -194,7 +185,7 @@ public class CompanyLevelRest extends HttpServlet {
                 Long id = Long.parseLong(pathArray[1]);
                 //tiez docasny kod begin
                 try {
-                    CompanyLevelDTO dto = companyLevelCollectionToMap(getCls()).get(id);
+                    CompanyLevelDTO dto = companyLevelService.getCompanyLevelById(id);
                     //tiez docasny kod end
                     if (dto != null) {
 
