@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
 public class ReservationsActionBean implements ActionBean, LayoutPage{
     
     private ActionBeanContext context;
-   // final static Logger log = LoggerFactory.getLogger(ReservationsActionBean.class);
+    final static Logger log = LoggerFactory.getLogger(ReservationsActionBean.class);
     @SpringBean(value = "ReservationService")
     private ReservationService rs;
     
@@ -69,6 +69,7 @@ public class ReservationsActionBean implements ActionBean, LayoutPage{
         return context;
     }
   
+    @Override
     public Menu getMainMenu() {
         mainMenu.setActiveItemByUrl("/reservations");
         return mainMenu;
@@ -113,12 +114,10 @@ public class ReservationsActionBean implements ActionBean, LayoutPage{
     }
     
     public List<ReservationDTO> getUnconfirmedReservations() {
-        //return rs.getAllReservations();
         return rs.getReservationsToConfirm();
     }
     
     public List<ReservationDTO> getAcceptedReservations() {
-        //return rs.getAllReservations();
         return rs.getAcceptedReservations();
     }
     
@@ -201,11 +200,8 @@ public class ReservationsActionBean implements ActionBean, LayoutPage{
     
     public Resolution confirm() {
       //  log.debug("confirm() reservation={}", resDTO);
-        resDTO.setConfirmed(true);
-        
-        
+        resDTO.setConfirmed(true);         
         rs.updateReservation(resDTO);
         return new RedirectResolution(this.getClass(), "myReservations");
-    }
-    
+    }   
 }

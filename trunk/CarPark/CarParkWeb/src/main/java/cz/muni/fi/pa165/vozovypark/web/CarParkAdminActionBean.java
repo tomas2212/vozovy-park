@@ -53,8 +53,6 @@ public class CarParkAdminActionBean implements ActionBean, LayoutPage {
         @Validate(on = {"create", "update"}, field = "companyLevel", required = true)
     })
     private CarDTO car;
-    
-    
 
     @Override
     public void setContext(ActionBeanContext abc) {
@@ -98,31 +96,24 @@ public class CarParkAdminActionBean implements ActionBean, LayoutPage {
         String rss = context.getRequest().getParameter("resId");
         if (rss != null) {
             rs.rentCar(Long.parseLong(rss));
-            
-            
         }
-
         return new RedirectResolution(this.getClass(), "release");
     }
 
     public Resolution receive() {
         this.subMenu.setActiveItemByName("carPark.receive");
-
         return new ForwardResolution("/carAdmin/receive.jsp");
     }
 
     public Resolution receiveCar() {
         String rss = context.getRequest().getParameter("resId");
         if (rss != null) {
-         
             rs.returnCar(Long.parseLong(rss));
         }
-
         return new RedirectResolution(this.getClass(), "receive");
     }
 
     public Resolution cars() {
-
         this.subMenu.setActiveItemByName("carPark.cars");
         return new ForwardResolution("/carAdmin/cars.jsp");
     }
@@ -138,7 +129,6 @@ public class CarParkAdminActionBean implements ActionBean, LayoutPage {
     }
 
     public Resolution cancel() {
-        
         return new ForwardResolution("/carAdmin/cars.jsp");
     }
 
@@ -148,7 +138,6 @@ public class CarParkAdminActionBean implements ActionBean, LayoutPage {
             CompanyLevelDTO cl = cs.getCompanyLevelById(Long.parseLong(cls));
             car.setCompanyLevel(cl);
         }
-
         carService.createCar(car);
         return new RedirectResolution(this.getClass(), "cars");
     }
@@ -168,7 +157,6 @@ public class CarParkAdminActionBean implements ActionBean, LayoutPage {
 
         String ids = context.getRequest().getParameter("car.id");
         if (ids != null) {
-
             carService.removeCar(Long.parseLong(ids));
         }
         return new RedirectResolution(this.getClass(), "cars");
@@ -184,7 +172,6 @@ public class CarParkAdminActionBean implements ActionBean, LayoutPage {
         if (ids == null) {
             return;
         }
-
         car = carService.getCarById(Long.parseLong(ids));
     }
 

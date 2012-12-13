@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.vozovypark.web.menu;
 
 /**
@@ -9,6 +5,7 @@ package cz.muni.fi.pa165.vozovypark.web.menu;
  * @author andrej
  */
 public class MenuItem {
+
     private String url;
     private String name;
     private Boolean active;
@@ -36,6 +33,4 @@ public class MenuItem {
     public void setActive(Boolean active) {
         this.active = active;
     }
-    
-    
 }
