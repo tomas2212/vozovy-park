@@ -5,7 +5,9 @@ import java.util.Date;
 import javax.persistence.*;
 
 /**
- *
+ * Car entity
+ * represent company cars.
+ * 
  * @author Tomas Svrcek
  */
 @Entity
@@ -32,10 +34,9 @@ public class Car implements Serializable {
     private Date creationYear;
     private Boolean available;
     @OneToOne
-//    @JoinColumn(name="COMPANYLEVEL_ID")
     private CompanyLevel companyLevel;
     
-
+    
     public Long getId() {
         return id;
     }

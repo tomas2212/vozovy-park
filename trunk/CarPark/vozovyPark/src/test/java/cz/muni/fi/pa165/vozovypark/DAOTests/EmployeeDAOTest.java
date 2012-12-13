@@ -1,6 +1,5 @@
 package cz.muni.fi.pa165.vozovypark.DAOTests;
 
-
 import cz.muni.fi.pa165.vozovypark.DAO.CompanyLevelDAO;
 import cz.muni.fi.pa165.vozovypark.DAO.EmployeeDAO;
 import cz.muni.fi.pa165.vozovypark.entities.Car;
@@ -21,88 +20,80 @@ import org.springframework.dao.DataAccessException;
  *
  * @author Andrej Bauer
  */
-public class EmployeeDAOTest extends AbstractDAOTest{
-    
+public class EmployeeDAOTest extends AbstractDAOTest {
+
     @Autowired
     private EmployeeDAO employeeDao;
-    
     @Autowired
     private CompanyLevelDAO companyLevelDao;
-   
+
     @Test
-    public void findEmployeeTest(){
+    public void findEmployeeTest() {
         Employee em = new Employee();
-        em.setName("Ferdo M");       
-        employeeDao.insert(em);                  
+        em.setName("Ferdo M");
+        employeeDao.insert(em);
         Employee em1 = employeeDao.getEmployeeById(em.getId());
         assertNotNull(em1);
-        assertEquals(em,em1);
-        
+        assertEquals(em, em1);
+
         em1 = employeeDao.getEmployeeById(34567L);
         assertNull(em1);
         //wrong parameters
-        try{
+        try {
             employeeDao.getEmployeeById(null);
             fail("queried with null ID");
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             int a = 4;
-            
         }
-        
     }
-    
+
     @Test
-    public void insertTest(){
+    public void insertTest() {
         Employee em = new Employee();
-        em.setName("Ferdo M");      
+        em.setName("Ferdo M");
         employeeDao.insert(em);
-        assertNotNull(em.getId());                
+        assertNotNull(em.getId());
         Employee em1 = employeeDao.getEmployeeById(em.getId());
-        assertEquals(em,em1);
-        
+        assertEquals(em, em1);
+
         //Wrong inputs
-        try{
+        try {
             employeeDao.insert(null);
             fail("inserted null");
-        }
-        catch(DataAccessException e){
-            
+        } catch (DataAccessException e) {
         }
     }
-    
+
     @Test
-    public void updateTest(){
+    public void updateTest() {
         Employee em = new Employee();
-        em.setName("Ferdo M");      
+        em.setName("Ferdo M");
         employeeDao.insert(em);
         em.setPosition("CEO");
         employeeDao.update(em);
         Employee em1 = employeeDao.getEmployeeById(em.getId());
         assertEquals(em1.getPosition(), "CEO");
-        
+
         //Wrong inputs
-        try{
+        try {
             employeeDao.update(null);
             fail("Updated null entity");
+        } catch (DataAccessException e) {
         }
-        catch(DataAccessException e){}
-        
+
         Employee nullId = new Employee();
         nullId.setPosition("CEO");
-        try{
+        try {
             employeeDao.update(nullId);
             fail("Updated with null ID");
+        } catch (DataAccessException e) {
         }
-        catch(DataAccessException e){}
-        
-        
     }
-    
+
     @Test
-    public void removeTest(){
+    public void removeTest() {
         Employee em = new Employee();
-        em.setName("Ferdo M");        
+        em.setName("Ferdo M");
         employeeDao.insert(em);
         Employee em1 = employeeDao.getEmployeeById(em.getId());
         Employee em2 = new Employee();
@@ -113,92 +104,76 @@ public class EmployeeDAOTest extends AbstractDAOTest{
         assertNull(employeeDao.getEmployeeById(id));
         assertNull(employeeDao.getEmployeeById(em.getId()));
         assertNotNull(employeeDao.getEmployeeById(em2.getId()));
-        
+
         //wrong parameters
-        try{
+        try {
             employeeDao.remove(null);
             fail("Removed null");
+        } catch (DataAccessException e) {
         }
-        catch(DataAccessException e){}
-        
+
         Employee nullId = new Employee();
         nullId.setPosition("CEO");
-        try{
+        try {
             employeeDao.update(nullId);
             fail("Removed with null ID");
+        } catch (DataAccessException e) {
         }
-        catch(DataAccessException e){}
-        
-        
     }
-    
+
     @Test
-    public void hierarchyTest(){
+    public void hierarchyTest() {
         CompanyLevel cl1 = new CompanyLevel();
         cl1.setLevelValue(0);
-        
+
         CompanyLevel cl2 = new CompanyLevel();
         cl2.setLevelValue(1);
-        
-      
+
         companyLevelDao.insert(cl1);
         companyLevelDao.insert(cl2);
-        
+
         Employee ceo = new Employee();
         ceo.setPosition("CEO");
         ceo.setCompanyLevel(cl1);
-        
+
         Employee assistent = new Employee();
         assistent.setPosition("asistent");
         assistent.setCompanyLevel(cl2);
-        
-      
+
         employeeDao.insert(ceo);
-        employeeDao.insert(assistent);      
-        
-        
+        employeeDao.insert(assistent);
+
         assertEquals(employeeDao.getAllEmployeeWithHigherLevel(cl1).size(), 2);
         assertEquals(employeeDao.getAllEmployeeWithHigherLevel(cl2).size(), 1);
-        
-        
-        
     }
-    
+
     @Test
-    public void getAllEmployeesWithHigherLevelTest(){
+    public void getAllEmployeesWithHigherLevelTest() {
         CompanyLevel cl = new CompanyLevel();
         cl.setLevelValue(2);
-        
-       
+
         companyLevelDao.insert(cl);
         int amount1 = employeeDao.getAllEmployeeWithHigherLevel(cl).size();
 
-        
         CompanyLevel cl1 = new CompanyLevel();
         cl1.setLevelValue(1);
         companyLevelDao.insert(cl1);
-        
+
         Employee employee1 = new Employee();
         employee1.setCompanyLevel(cl1);
         employeeDao.insert(employee1);
-        
-        
+
+
         CompanyLevel cl2 = new CompanyLevel();
         cl2.setLevelValue(3);
         companyLevelDao.insert(cl2);
-        
+
         Employee employee2 = new Employee();
         employee2.setCompanyLevel(cl2);
         employeeDao.insert(employee2);
-        
+
         int amount2 = employeeDao.getAllEmployeeWithHigherLevel(cl).size();
-        
-        assertEquals(amount1, amount2-1);
+
+        assertEquals(amount1, amount2 - 1);
     }
-    
-    
-    
-    
-
-
 }

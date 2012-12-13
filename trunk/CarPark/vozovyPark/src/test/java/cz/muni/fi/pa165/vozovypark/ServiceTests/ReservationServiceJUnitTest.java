@@ -60,7 +60,6 @@ public class ReservationServiceJUnitTest extends AbstractServiceTest {
         ReservationDTO res2Dto = new ReservationDTO();
         res2Dto.setEmployee(employeeDto);
 
-
         reservationService.createReservation(resDto);
         verify(reservationDao, times(1)).insert(any(Reservation.class));
 
@@ -99,7 +98,6 @@ public class ReservationServiceJUnitTest extends AbstractServiceTest {
         ReservationDTO res2Dto = new ReservationDTO();
         res2Dto.setId(new Long(2));
         res2Dto.setEmployee(employeeDto);
-
 
         reservationService.updateReservation(resDto);
         verify(reservationDao, times(1)).update(any(Reservation.class));
@@ -230,7 +228,7 @@ public class ReservationServiceJUnitTest extends AbstractServiceTest {
         reservation3.setCar(car3);
         reservation3.setEmployee(employee3);
 
-
+        
         EmployeeDTO employee1dto = new EmployeeDTO();
         employee1dto.setId(new Long(1));
         employee1dto.setName("Johny Bravo");
@@ -242,7 +240,7 @@ public class ReservationServiceJUnitTest extends AbstractServiceTest {
         reservation1dto.setCar(car1dto);
         reservation1dto.setEmployee(employee1dto);
 
-
+        
         EmployeeDTO employee2dto = new EmployeeDTO();
         employee2dto.setId(new Long(2));
         employee2dto.setName("Silvester Vlkoucho");
@@ -434,7 +432,6 @@ public class ReservationServiceJUnitTest extends AbstractServiceTest {
 
         verify(reservationDao, times(1)).update(any(Reservation.class));
         verify(carDao, times(1)).update(any(Car.class));
-
     }
 
     @Test
@@ -472,7 +469,6 @@ public class ReservationServiceJUnitTest extends AbstractServiceTest {
 
         verify(reservationDao, times(1)).update(any(Reservation.class));
         verify(carDao, times(1)).update(any(Car.class));
-
     }
 
     @Test
@@ -548,7 +544,6 @@ public class ReservationServiceJUnitTest extends AbstractServiceTest {
         when(reservationDao.getReservationByCarAndEmployee(car1, employee1)).thenReturn(allEntities);
         List<ReservationDTO> reservations = reservationService.getReservationsByCarAndEmployee(car1dto, employee1dto);
         assertEquals(allDTO.size(), reservations.size());
-
     }
 
     @Test
@@ -611,8 +606,7 @@ public class ReservationServiceJUnitTest extends AbstractServiceTest {
         
         when(reservationDao.getReservationsToConfirm()).thenReturn(reser);
         List<ReservationDTO> reservations = reservationService.getReservationsToConfirm();
-        assertEquals(reserDto.size(), reservations.size());
-            
+        assertEquals(reserDto.size(), reservations.size());          
     }
 
     @Test
@@ -647,23 +641,4 @@ public class ReservationServiceJUnitTest extends AbstractServiceTest {
 
         verify(reservationDao, times(1)).update(any(Reservation.class));
     }
-    /*
-     class testovacieDao {
-
-     List getAll() {
-     return new Array
-    
-     }
-
-     getById(int i) {
-     if (i == 2) {
-     return null;
-     }
-
-     if (i == 0) {
-     return Object
-     }
-     }
-     }
-     */
 }

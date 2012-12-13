@@ -30,7 +30,6 @@ public class Employee implements Serializable {
     private Boolean approve;
     private String address;
     @OneToOne
-//    @JoinColumn(name="COMPANYLEVEL_ID")
     private CompanyLevel companyLevel;
 
     public String getName() {
@@ -82,7 +81,6 @@ public class Employee implements Serializable {
     }
     
     
-
     @Override
     public int hashCode() {
         int hash = 0;
