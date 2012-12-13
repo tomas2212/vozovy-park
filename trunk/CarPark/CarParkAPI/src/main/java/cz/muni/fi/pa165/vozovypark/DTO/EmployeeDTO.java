@@ -80,7 +80,5 @@ public class EmployeeDTO {
         int hash = 7;
         hash = 73 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
-    }
-    
-    
+    }   
 }

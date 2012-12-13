@@ -1,6 +1,5 @@
 package cz.muni.fi.pa165.vozovypark.DTO;
 
-
 import java.util.Date;
 
 /**
@@ -87,8 +86,6 @@ public class ReservationDTO {
     public void setConfirmed(boolean confirmed) {
         this.confirmed = confirmed;
     }
-
-    
     
     @Override
     public boolean equals(Object obj) {
@@ -110,7 +107,5 @@ public class ReservationDTO {
         int hash = 7;
         hash = 53 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
-    }
-    
-    
+    }    
 }
