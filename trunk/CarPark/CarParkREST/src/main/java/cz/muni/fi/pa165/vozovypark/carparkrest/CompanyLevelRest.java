@@ -53,18 +53,13 @@ public class CompanyLevelRest extends HttpServlet {
                 resp.setStatus(500);
                 mapper.writeValue(resp.getOutputStream(), os);
             }
-
-
         } else {
             String pathArray[];
             pathArray = req.getPathInfo().split("/");
             if (pathArray[1] != null) {
                 try {
                     Long id = Long.parseLong(pathArray[1]);
-                    //tiez docasnu kod begin
-
-                    CompanyLevelDTO dto = companyLevelCollectionToMap(getCls()).get(id);
-                    //tiez docasny kod end
+                    CompanyLevelDTO dto = companyLevelService.getCompanyLevelById(id);
                     if (dto != null) {
                         mapper.writeValue(resp.getOutputStream(), dto);
                     } else {
@@ -101,15 +96,10 @@ public class CompanyLevelRest extends HttpServlet {
             if (pathArray[1] != null) {
                 try {
                     Long id = Long.parseLong(pathArray[1]);
-                    //tiez docasny kod begin
-                    CompanyLevelDTO dto = companyLevelCollectionToMap(getCls()).get(id);
-                    //tiez docasny kod end
+                    CompanyLevelDTO dto = companyLevelService.getCompanyLevelById(id);
                     if (dto != null) {
-
                         companyLevelService.removeCompanyLevel(dto.getId());
-
                         OperationStatus os = new OperationStatus();
-                        //os.setCausedBy("");
                         os.setOperation("delete");
                         os.setStatus("successful");
                         mapper.writeValue(resp.getOutputStream(), os);
@@ -128,7 +118,6 @@ public class CompanyLevelRest extends HttpServlet {
                     os.setStatus("failed");
                     resp.setStatus(500);
                     mapper.writeValue(resp.getOutputStream(), os);
-
                 }
             }
         }
@@ -166,6 +155,7 @@ public class CompanyLevelRest extends HttpServlet {
         mapper.writeValue(response.getOutputStream(), os);
     }
 
+    @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("application/json");
         ObjectMapper mapper = new ObjectMapper();
@@ -177,25 +167,28 @@ public class CompanyLevelRest extends HttpServlet {
             os.setStatus("failed");
             resp.setStatus(403);
             mapper.writeValue(resp.getOutputStream(), os);
-
         } else {
             String pathArray[];
             pathArray = req.getPathInfo().split("/");
             if (pathArray[1] != null) {
                 Long id = Long.parseLong(pathArray[1]);
-                //tiez docasny kod begin
                 try {
                     CompanyLevelDTO dto = companyLevelService.getCompanyLevelById(id);
-                    //tiez docasny kod end
                     if (dto != null) {
-
-                        companyLevelService.updateCompanyLevel(dto);
-
-                        OperationStatus os = new OperationStatus();
-                        //os.setCausedBy("");
-                        os.setOperation("update");
-                        os.setStatus("successful");
-                        mapper.writeValue(resp.getOutputStream(), os);
+                        JsonNode jsonNode = mapper.readValue(req.getInputStream(), JsonNode.class);
+                        if (jsonNode != null && !jsonNode.isMissingNode()) {
+                            if (jsonNode.get("name") != null && jsonNode.hasNonNull("name")) {
+                                dto.setName(jsonNode.get("name").asText());
+                            }
+                            if (jsonNode.get("levelValue") != null && jsonNode.hasNonNull("levelValue")) {
+                                dto.setName(jsonNode.get("levelValue").asText());
+                            }
+                            companyLevelService.updateCompanyLevel(dto);
+                            OperationStatus os = new OperationStatus();
+                            os.setOperation("update");
+                            os.setStatus("successful");
+                            mapper.writeValue(resp.getOutputStream(), os);
+                        }
                     } else {
                         OperationStatus os = new OperationStatus();
                         os.setCausedBy("CompanyLevel not found");

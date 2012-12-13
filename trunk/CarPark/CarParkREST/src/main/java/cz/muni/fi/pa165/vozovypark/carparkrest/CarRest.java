@@ -66,8 +66,9 @@ public class CarRest extends HttpServlet {
             if (pathArray[1] != null) {
                 Long id = Long.parseLong(pathArray[1]);
                 try {
-                    CarDTO dto = carCollectionToMap(getCars()).get(id);
+                    CarDTO dto = carService.getCarById(id);
                     if (dto != null) {
+                        
                         mapper.writeValue(resp.getOutputStream(), dto);
                     } else {
                         resp.setStatus(404);
@@ -96,22 +97,16 @@ public class CarRest extends HttpServlet {
             os.setStatus("failed");
             resp.setStatus(403);
             mapper.writeValue(resp.getOutputStream(), os);
-
         } else {
             String pathArray[];
             pathArray = req.getPathInfo().split("/");
             if (pathArray[1] != null) {
                 try {
                     Long id = Long.parseLong(pathArray[1]);
-                    //tiez docasnu kod begin
-                    CarDTO dto = carCollectionToMap(getCars()).get(id);
-                    //tiez docasny kod end
+                    CarDTO dto = carService.getCarById(id);
                     if (dto != null) {
-
                         carService.removeCar(dto.getId());
-
                         OperationStatus os = new OperationStatus();
-                        //os.setCausedBy("");
                         os.setOperation("delete");
                         os.setStatus("successful");
                         mapper.writeValue(resp.getOutputStream(), os);
@@ -157,15 +152,12 @@ public class CarRest extends HttpServlet {
                     Date date = sdf.parse(jsonNode.get("creationYear").asText());
                     carDTO.setCreationYear(date);
                     carDTO.setAvailable(jsonNode.get("available").asBoolean());
-
-
                     carService.createCar(carDTO);
                 } catch (Exception ex) {
                     os.setCausedBy(ex.getMessage());
                     response.setStatus(500);
                     mapper.writeValue(response.getOutputStream(), os);
                 }
-
                 response.setStatus(201);
                 mapper.writeValue(response.getOutputStream(), carDTO);
             } else {
@@ -177,6 +169,7 @@ public class CarRest extends HttpServlet {
         mapper.writeValue(response.getOutputStream(), os);
     }
 
+    @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("application/json");
         ObjectMapper mapper = new ObjectMapper();
@@ -194,15 +187,33 @@ public class CarRest extends HttpServlet {
             if (pathArray[1] != null) {
                 Long id = Long.parseLong(pathArray[1]);
                 try {
-                    //tiez docasnu kod begin
                     CarDTO dto = carCollectionToMap(getCars()).get(id);
-                    //tiez docasny kod end
                     if (dto != null) {
-
+                        JsonNode jsonNode = mapper.readValue(req.getInputStream(), JsonNode.class);
+                        if (jsonNode != null && !jsonNode.isMissingNode()) {
+                            if (jsonNode.get("model") != null && jsonNode.hasNonNull("model")) {
+                                dto.setModel(jsonNode.get("model").asText());
+                            }
+                            if (jsonNode.get("brand") != null && jsonNode.hasNonNull("brand")) {
+                                dto.setBrand(jsonNode.get("brand").asText());
+                            }
+                            if (jsonNode.get("spz") != null && jsonNode.hasNonNull("spz")) {
+                                dto.setSpz(jsonNode.get("spz").asText());
+                            }
+                            if (jsonNode.get("available") != null && jsonNode.hasNonNull("available")) {
+                                dto.setAvailable(jsonNode.get("available").asBoolean());
+                            }
+                            if (jsonNode.get("companyLevel") != null && jsonNode.hasNonNull("companyLevel")) {
+                                CompanyLevelDTO clDto = companyLevelService.getCompanyLevelById(Long.parseLong(jsonNode.get("companyLevel").asText()));
+                                dto.setCompanyLevel(clDto);
+                            }
+                            if (jsonNode.get("creationYear") != null && jsonNode.hasNonNull("creationYear")) {
+                                Date date = sdf.parse(jsonNode.get("creationYear").asText());
+                                dto.setCreationYear(date);
+                            }
+                        }
                         carService.updateCar(dto);
-
                         OperationStatus os = new OperationStatus();
-                        //os.setCausedBy("");
                         os.setOperation("update");
                         os.setStatus("successful");
                         mapper.writeValue(resp.getOutputStream(), os);
