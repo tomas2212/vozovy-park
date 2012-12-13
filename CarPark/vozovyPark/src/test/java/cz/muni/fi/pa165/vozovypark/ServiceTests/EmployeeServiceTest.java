@@ -24,16 +24,15 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  * @author Andrej Bauer
  */
-
 public class EmployeeServiceTest extends AbstractServiceTest {
 
     @Autowired
     private EmployeeDAO employeeDao;
     @Autowired
     private EmployeeService employeeService;
-    
+
     @Before
-    public void setUp(){
+    public void setUp() {
         reset(employeeDao);
     }
 
@@ -45,7 +44,6 @@ public class EmployeeServiceTest extends AbstractServiceTest {
 
         EmployeeDTO noNameDto = new EmployeeDTO();
 
-
         employeeService.createEmployee(employeeDto);
         verify(employeeDao, times(1)).insert(any(Employee.class));
 
@@ -54,7 +52,6 @@ public class EmployeeServiceTest extends AbstractServiceTest {
             fail("accepted null value");
         } catch (IllegalArgumentException e) {
         }
-
         //testing if employeDao was called before throwing exception
         verify(employeeDao, never()).insert(null);
 
@@ -63,8 +60,6 @@ public class EmployeeServiceTest extends AbstractServiceTest {
             fail("accepted no name");
         } catch (IllegalArgumentException e) {
         }
-
-
     }
 
     @Test
@@ -107,8 +102,8 @@ public class EmployeeServiceTest extends AbstractServiceTest {
 
         when(employeeDao.getEmployeeById(new Long(1))).thenReturn(employee);
         EmployeeDTO employeeById = employeeService.getEmployeeById(new Long(1));
-        assertEquals( dto, employeeById);
-        
+        assertEquals(dto, employeeById);
+
         verify(employeeDao, times(1)).getEmployeeById(eq(new Long(1)));
 
         try {
@@ -147,25 +142,25 @@ public class EmployeeServiceTest extends AbstractServiceTest {
         EmployeeDTO employee3dto = new EmployeeDTO();
         employee3dto.setId(new Long(3));
         employee3dto.setName("Margareta Svietislnkova");
-        
+
         List<Employee> allEntities = new ArrayList<Employee>();
         allEntities.add(employee1);
         allEntities.add(employee2);
         allEntities.add(employee3);
-        
+
         List<EmployeeDTO> allDTO = new ArrayList<EmployeeDTO>();
         allDTO.add(employee1dto);
         allDTO.add(employee2dto);
         allDTO.add(employee3dto);
-        
+
         when(employeeDao.getAllEmployee()).thenReturn(allEntities);
         List<EmployeeDTO> returnedEmployees = employeeService.getAllEmployees();
         assertEquals(allDTO.size(), returnedEmployees.size());
-        for(int i = 0; i < returnedEmployees.size(); i++){
+        for (int i = 0; i < returnedEmployees.size(); i++) {
             assertEquals(allDTO.get(i), returnedEmployees.get(i));
         }
         verify(employeeDao, times(1)).getAllEmployee();
-        
+
     }
 
     @Test
@@ -173,27 +168,27 @@ public class EmployeeServiceTest extends AbstractServiceTest {
         CompanyLevel cl1 = new CompanyLevel();
         cl1.setLevelValue(1);
         cl1.setId(new Long(1));
-        
+
         CompanyLevel cl2 = new CompanyLevel();
         cl2.setLevelValue(2);
         cl2.setId(new Long(2));
-        
+
         CompanyLevel cl3 = new CompanyLevel();
         cl3.setLevelValue(3);
         cl3.setId(new Long(3));
-        
+
         CompanyLevelDTO cl1dto = new CompanyLevelDTO();
         cl1dto.setLevelValue(1);
         cl1dto.setId(new Long(1));
-        
+
         CompanyLevelDTO cl2dto = new CompanyLevelDTO();
         cl2dto.setLevelValue(2);
         cl2dto.setId(new Long(2));
-        
+
         CompanyLevelDTO cl3dto = new CompanyLevelDTO();
         cl3dto.setLevelValue(3);
         cl3dto.setId(new Long(3));
-        
+
         Employee employee1 = new Employee();
         employee1.setId(new Long(1));
         employee1.setName("Johny Bravo");
@@ -223,48 +218,46 @@ public class EmployeeServiceTest extends AbstractServiceTest {
         employee3dto.setId(new Long(3));
         employee3dto.setName("Margareta Svietislnkova");
         employee2dto.setCompanyLevel(cl2dto);
-        
+
         List<Employee> allEntities = new ArrayList<Employee>();
         allEntities.add(employee1);
         allEntities.add(employee2);
         allEntities.add(employee3);
-        
+
         List<Employee> cl2Entities = new ArrayList<Employee>();
         cl2Entities.add(employee2);
         cl2Entities.add(employee3);
-        
+
         when(employeeDao.getAllEmployee()).thenReturn(allEntities); //if in some case when implementation wants to call it
         when(employeeDao.getAllEmployeeWithHigherLevel(eq(cl2))).thenReturn(cl2Entities);
         List<EmployeeDTO> returnedEmployees = employeeService.getEmployeesByCompanyLevel(cl2dto);
         assertEquals(cl2Entities.size(), returnedEmployees.size());
-        for(EmployeeDTO em : returnedEmployees){
+        for (EmployeeDTO em : returnedEmployees) {
             assertTrue(em.getCompanyLevel().getLevelValue() >= cl2dto.getLevelValue());
         }
-        
-        try{
+
+        try {
             employeeService.getEmployeesByCompanyLevel(null);
             fail("Implementation accepts null value of company Level");
+        } catch (IllegalArgumentException e) {
         }
-        catch(IllegalArgumentException e){}
-        
-
     }
-    
+
     @Test
-    public void testRemoveEmployee(){
-       Employee employee = new Employee();
+    public void testRemoveEmployee() {
+        Employee employee = new Employee();
         employee.setId(new Long(1));
         employee.setName("Johny Bravo");
 
         when(employeeDao.getEmployeeById(new Long(1))).thenReturn(employee);
-         
+
         employeeService.removeEmployee(new Long(1));
         verify(employeeDao, times(1)).remove(any(Employee.class));
-        
-        try{
+
+        try {
             employeeService.removeEmployee(null);
             fail("accepted null id");
+        } catch (IllegalArgumentException e) {
         }
-        catch(IllegalArgumentException e) {}
     }
 }

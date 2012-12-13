@@ -23,14 +23,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class EmployeeServiceImpl implements EmployeeService {
 
     private EmployeeDAO employeeDAO;
-    
     private Mapper mapper;
 
     public void setEmployeeDAO(EmployeeDAO employeeDAO) {
         this.employeeDAO = employeeDAO;
     }
-    
-    public void setMapper(Mapper mapper){
+
+    public void setMapper(Mapper mapper) {
         this.mapper = mapper;
     }
 
@@ -43,7 +42,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         Employee ead = mapper.map(employee, Employee.class);
         employeeDAO.insert(ead);
-
 
         return mapper.map(ead, EmployeeDTO.class);
     }
@@ -77,7 +75,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new IllegalArgumentException("ID is not specified");
         }
         Employee employeeById = employeeDAO.getEmployeeById(id);
-        if(employeeById == null){
+        if (employeeById == null) {
             return null;
         }
         return mapper.map(employeeById, EmployeeDTO.class);
@@ -102,7 +100,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         for (Employee e : clEmployees) {
             employee.add(mapper.map(e, EmployeeDTO.class));
         }
-
         return employee;
     }
 }

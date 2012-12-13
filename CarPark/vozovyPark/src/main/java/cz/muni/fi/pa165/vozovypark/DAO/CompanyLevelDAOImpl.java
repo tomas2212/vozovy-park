@@ -14,53 +14,47 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class CompanyLevelDAOImpl implements CompanyLevelDAO {
-    
+
     @PersistenceContext
     protected EntityManager entityManager;
-    
-   
+
     public void insert(CompanyLevel companyLevel) {
-        if(companyLevel == null){
+        if (companyLevel == null) {
             throw new IllegalArgumentException("you must specify company level");
-        }        
+        }
         entityManager.persist(companyLevel);
-       
     }
 
     public void update(CompanyLevel companyLevel) {
-        if(companyLevel == null){
+        if (companyLevel == null) {
             throw new IllegalArgumentException("you must specify company level");
         }
-        if(companyLevel.getId() == null){
+        if (companyLevel.getId() == null) {
             throw new IllegalArgumentException("cant update not persit entity");
-        }  
+        }
         entityManager.merge(companyLevel);
-        
     }
 
     public void remove(CompanyLevel companyLevel) {
-       if(companyLevel == null){
+        if (companyLevel == null) {
             throw new IllegalArgumentException("you must specify company level");
         }
-        if(companyLevel.getId() == null){
+        if (companyLevel.getId() == null) {
             throw new IllegalArgumentException("cant rentityManagerove not persit entity");
-        } 
+        }
         entityManager.remove(entityManager.merge(companyLevel));
-       
     }
 
     public CompanyLevel getCompanyLevelById(Long id) {
-        if(id == null){
+        if (id == null) {
             throw new IllegalArgumentException("you must specify id of company level");
-        }        
+        }
         return entityManager.find(CompanyLevel.class, id);
-        
     }
 
-    public List<CompanyLevel> getAllCompanyLevels() {        
+    public List<CompanyLevel> getAllCompanyLevels() {
         TypedQuery<CompanyLevel> q = entityManager.createQuery("SELECT c FROM CompanyLevel c", CompanyLevel.class);
         return q.getResultList();
-        
     }
 
     public CompanyLevel getRootCompanyLevel() {
@@ -68,7 +62,7 @@ public class CompanyLevelDAOImpl implements CompanyLevelDAO {
         q.setParameter("levelValue", getMinLevelValue());
         return q.getSingleResult();
     }
-    
+
     public Integer getMaxLevelValue() {
         TypedQuery<Integer> q = entityManager.createQuery("SELECT max(c.levelValue) as max FROM CompanyLevel c", Integer.class);
         return q.getSingleResult();

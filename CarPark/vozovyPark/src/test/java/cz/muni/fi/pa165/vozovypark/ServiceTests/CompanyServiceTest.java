@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.vozovypark.ServiceTests;
 
 import cz.muni.fi.pa165.vozovypark.DAO.CompanyLevelDAO;
@@ -28,7 +24,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  *
  * @author Lukas Maticky
  */
-
 public class CompanyServiceTest extends AbstractServiceTest{
     
     
@@ -46,8 +41,6 @@ public class CompanyServiceTest extends AbstractServiceTest{
     @Test
     public void testCreateCompanyLevel() {
        
-
-
         companyLevelService.createCompanyLevel("first level");
         verify(companyLevelDao, times(1)).insert(any(CompanyLevel.class));
 
@@ -56,17 +49,10 @@ public class CompanyServiceTest extends AbstractServiceTest{
             fail("accepted null value");
         } catch (IllegalArgumentException e) {
         }
-
         //testing if companyLevelDao was called before throwing exception
         verify(companyLevelDao, never()).insert(null);
-
-        /*try {
-            companyLevelService.createCompanyLevel(noNameDto);
-            fail("accepted no name");
-        } catch (IllegalArgumentException e) {
-        }*/
-
     }
+    
     //@Test
     public void testUpdateCompanyLevel() {
         CompanyLevelDTO companyLevelDto = new CompanyLevelDTO();
@@ -86,9 +72,7 @@ public class CompanyServiceTest extends AbstractServiceTest{
         }
 
         //testing if companyLevelDao was called before throwing exception
-        verify(companyLevelDao, never()).update(null);
-
-       
+        verify(companyLevelDao, never()).update(null);   
     }
     
     @Test
@@ -118,7 +102,7 @@ public class CompanyServiceTest extends AbstractServiceTest{
         assertNull(companyLevelService.getCompanyLevelById(new Long(2)));
     }
     
-     @Test
+    @Test
     public void testgetAllCompanyLeves() {
         CompanyLevel companyLevel1 = new CompanyLevel();
         companyLevel1.setId(new Long(1));
@@ -160,12 +144,10 @@ public class CompanyServiceTest extends AbstractServiceTest{
         for(int i = 0; i < returnedCompanyLevels.size(); i++){
             assertEquals(allDTO.get(i), returnedCompanyLevels.get(i));
         }
-        verify(companyLevelDao, times(1)).getAllCompanyLevels();
-        
+        verify(companyLevelDao, times(1)).getAllCompanyLevels();     
     }
-     
-          
-     @Test
+            
+    @Test
     public void testRemooveCompanyLevel() {
          CompanyLevel companyLevel = new CompanyLevel();
         companyLevel.setId(new Long(1));

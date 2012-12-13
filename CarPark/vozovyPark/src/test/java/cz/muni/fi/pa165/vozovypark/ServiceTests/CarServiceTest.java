@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.vozovypark.ServiceTests;
 
 import cz.muni.fi.pa165.vozovypark.DAO.CarDAO;
@@ -18,11 +14,11 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import static org.mockito.Mockito.*;
 import org.springframework.beans.factory.annotation.Autowired;
+
 /**
  *
  * @author Eduard Krak
  */
-
 public class CarServiceTest extends AbstractServiceTest {
     
     @Autowired
@@ -38,11 +34,9 @@ public class CarServiceTest extends AbstractServiceTest {
     
     @Test
     public void testCreateCar() {
-
         CarDTO carDto = new CarDTO();
         carDto.setBrand("Volkswagen");
-
-        
+  
         carService.createCar(carDto);
         verify(carDao, times(1)).insert(any(Car.class));
 
@@ -54,7 +48,6 @@ public class CarServiceTest extends AbstractServiceTest {
 
         //testing if carDao was called before throwing exception
         verify(carDao, never()).insert(null);
-
     }
     
     @Test
@@ -190,8 +183,7 @@ public class CarServiceTest extends AbstractServiceTest {
         for(int i = 0; i < returnedCars.size(); i++){
             assertEquals(allDTO.get(i), returnedCars.get(i));
         }
-        verify(carDao, times(1)).getAllCars();
-        
+        verify(carDao, times(1)).getAllCars();      
     }
      
      @Test
@@ -221,7 +213,7 @@ public class CarServiceTest extends AbstractServiceTest {
         cl3dto.setId(new Long(3));
         
         
-         Car car1 = new Car();
+        Car car1 = new Car();
         car1.setId(new Long(1));
         car1.setModel("Volkswagen");
         car1.setCompanyLevel(cl3);
@@ -259,6 +251,5 @@ public class CarServiceTest extends AbstractServiceTest {
             fail("Implementation accepts null value of company Level");
         }
         catch(IllegalArgumentException e){}
-     }
-    
+     }  
 }
