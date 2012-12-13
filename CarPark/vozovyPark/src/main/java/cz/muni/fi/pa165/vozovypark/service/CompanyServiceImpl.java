@@ -88,7 +88,7 @@ public class CompanyServiceImpl implements CompanyLevelService {
         }
         List<CompanyLevel> allCompanyLevels = companyLevelDao.getAllCompanyLevels();
         for(CompanyLevel cl : allCompanyLevels){
-            if(cl.getLevelValue() >= position){
+            if(!cl.getId().equals(id) && cl.getLevelValue() >= position){
                 cl.setLevelValue(cl.getLevelValue() + 1);
                 companyLevelDao.update(cl);
             }
