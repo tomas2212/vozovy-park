@@ -53,7 +53,7 @@ public class CompanyServiceTest extends AbstractServiceTest{
         verify(companyLevelDao, never()).insert(null);
     }
     
-    //@Test
+    
     public void testUpdateCompanyLevel() {
         CompanyLevelDTO companyLevelDto = new CompanyLevelDTO();
         companyLevelDto.setName("first level");

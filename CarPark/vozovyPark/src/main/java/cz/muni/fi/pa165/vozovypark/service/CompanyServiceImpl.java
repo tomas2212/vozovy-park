@@ -52,32 +52,20 @@ public class CompanyServiceImpl implements CompanyLevelService {
         if (companyLevel.getId() == null) {
             throw new IllegalArgumentException("CompanyLevel ID is not specified");
         }
-        setCompanyLevelToPosition(companyLevel.getId(), companyLevel.getLevelValue());
+       
+        List<CompanyLevel> allCompanyLevels = companyLevelDao.getAllCompanyLevels();
+        for (CompanyLevel cl : allCompanyLevels) {
+            if (!cl.getId().equals(companyLevel.getId()) && cl.getLevelValue() >= companyLevel.getLevelValue()) {
+                cl.setLevelValue(cl.getLevelValue() + 1);
+                companyLevelDao.update(cl);
+            }
+        }
+        
         CompanyLevel entity = mapper.map(companyLevel, CompanyLevel.class);
         companyLevelDao.update(entity);
         return mapper.map(entity, CompanyLevelDTO.class);
     }
 
-    public CompanyLevelDTO setCompanyLevelToPosition(Long id, Integer position) {
-        if (id == null) {
-            throw new IllegalArgumentException("ID is not specified");
-        }
-        CompanyLevel companyLevel = companyLevelDao.getCompanyLevelById(id);
-        if (companyLevel == null) {
-            throw new IllegalArgumentException("Company Level with specified ID does not exists");
-        }
-        List<CompanyLevel> allCompanyLevels = companyLevelDao.getAllCompanyLevels();
-        for (CompanyLevel cl : allCompanyLevels) {
-            if (!cl.getId().equals(id) && cl.getLevelValue() >= position) {
-                cl.setLevelValue(cl.getLevelValue() + 1);
-                companyLevelDao.update(cl);
-            }
-        }
-        companyLevel.setLevelValue(position);
-        companyLevelDao.update(companyLevel);
-
-        return mapper.map(companyLevel, CompanyLevelDTO.class);
-    }
 
     public CompanyLevelDTO getCompanyLevelById(Long id) {
         if (id == null) {
