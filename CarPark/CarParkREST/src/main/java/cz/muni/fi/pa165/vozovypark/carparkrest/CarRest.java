@@ -208,7 +208,7 @@ public class CarRest extends HttpServlet {
                     if (dto != null) {
                         JsonNode jsonNode = mapper.readValue(req.getInputStream(), JsonNode.class);
                         if (jsonNode != null && !jsonNode.isMissingNode()) {
-                            if (jsonNode.get("model") != null && jsonNode.hasNonNull("model")) {
+                                if (jsonNode.get("model") != null && jsonNode.hasNonNull("model")) {
                                 dto.setModel(jsonNode.get("model").asText());
                             }
                             if (jsonNode.get("brand") != null && jsonNode.hasNonNull("brand")) {
