@@ -17,6 +17,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -24,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(urlPatterns = "/companyLevels/*")
 public class CompanyLevelRest extends HttpServlet {
-
+    final static Logger log = LoggerFactory.getLogger(CompanyLevelRest.class);
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     CompanyLevelService companyLevelService;
     CarService carService;
@@ -146,6 +148,7 @@ public class CompanyLevelRest extends HttpServlet {
                 }
                 response.setStatus(201);
                 mapper.writeValue(response.getOutputStream(), clDTO);
+                return;
             } else {
                 response.setStatus(500);
                 mapper.writeValue(response.getOutputStream(), os);

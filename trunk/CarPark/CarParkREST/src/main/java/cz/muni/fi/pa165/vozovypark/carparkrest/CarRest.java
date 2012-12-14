@@ -19,6 +19,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -27,6 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(urlPatterns = "/cars/*")
 public class CarRest extends HttpServlet {
 
+    final static Logger log = LoggerFactory.getLogger(CarRest.class);
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     CompanyLevelService companyLevelService;
     CarService carService;
@@ -43,13 +46,15 @@ public class CarRest extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
         ObjectMapper mapper = new ObjectMapper();
+        mapper.setDateFormat(sdf);
         String path = req.getPathInfo();
         if (path == null || path.equals("/")) {
             if (req.getParameter("companyLevel") != null) {
                 long id = Long.valueOf(req.getParameter("companyLevel")).longValue();
                 try {
                     mapper.writeValue(resp.getOutputStream(), carCollectionToMap(getCarsByCompanyLevel(id)));
-                } catch (IllegalArgumentException ex) {
+                } catch (Exception ex) {
+                    log.debug(ex.getMessage(), ex);
                     OperationStatus os = new OperationStatus();
                     os.setCausedBy(ex.getMessage());
                     os.setOperation("getCars");
@@ -58,7 +63,19 @@ public class CarRest extends HttpServlet {
                     mapper.writeValue(resp.getOutputStream(), os);
                 }
             } else {
-                mapper.writeValue(resp.getOutputStream(), carCollectionToMap(getCars()));
+                try {
+                    mapper.writeValue(resp.getOutputStream(), carCollectionToMap(getCars()));
+                } catch (Exception ex) {
+                    
+                    log.debug(ex.getMessage(), ex);
+                    OperationStatus os = new OperationStatus();
+                    os.setCausedBy(ex.getMessage());
+                    os.setOperation("getCars");
+                    os.setStatus("failed");
+                    resp.setStatus(500);
+                    mapper.writeValue(resp.getOutputStream(), os);
+                }
+
             }
         } else {
             String pathArray[];
@@ -68,7 +85,7 @@ public class CarRest extends HttpServlet {
                 try {
                     CarDTO dto = carService.getCarById(id);
                     if (dto != null) {
-                        
+
                         mapper.writeValue(resp.getOutputStream(), dto);
                     } else {
                         resp.setStatus(404);
