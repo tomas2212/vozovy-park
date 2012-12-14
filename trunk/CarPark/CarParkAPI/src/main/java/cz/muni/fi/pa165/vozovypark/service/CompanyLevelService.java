@@ -26,16 +26,7 @@ public interface CompanyLevelService {
      */
     CompanyLevelDTO updateCompanyLevel(CompanyLevelDTO companyLevel);
 
-    /**
-     * Set company to current position. It moved all other companyLevel if it is
-     * necessary
-     *
-     * @param id
-     * @param position
-     * @return return updated CompanyLevelDTO originally from persistence layer
-     */
-    CompanyLevelDTO setCompanyLevelToPosition(Long id, Integer position);
-
+   
     /**
      * Gets company level by its ID
      *
