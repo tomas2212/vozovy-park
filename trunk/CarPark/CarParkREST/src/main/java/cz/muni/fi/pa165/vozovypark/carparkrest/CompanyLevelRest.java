@@ -184,7 +184,7 @@ public class CompanyLevelRest extends HttpServlet {
                                 dto.setName(jsonNode.get("name").asText());
                             }
                             if (jsonNode.get("levelValue") != null && jsonNode.hasNonNull("levelValue")) {
-                                dto.setName(jsonNode.get("levelValue").asText());
+                                dto.setLevelValue(jsonNode.get("levelValue").asInt());
                             }
                             companyLevelService.updateCompanyLevel(dto);
                             OperationStatus os = new OperationStatus();
