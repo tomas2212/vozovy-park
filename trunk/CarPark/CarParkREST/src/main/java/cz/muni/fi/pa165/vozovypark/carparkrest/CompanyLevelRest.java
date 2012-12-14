@@ -48,6 +48,7 @@ public class CompanyLevelRest extends HttpServlet {
             try {
                 mapper.writeValue(resp.getOutputStream(), companyLevelCollectionToMap(companyLevelService.getAllCompanyLevels()));
             } catch (Exception e) {
+                log.debug(e.getMessage(), e);
                 OperationStatus os = new OperationStatus();
                 os.setCausedBy(e.getMessage());
                 os.setOperation("getCompanyLevels");
@@ -68,6 +69,7 @@ public class CompanyLevelRest extends HttpServlet {
                         resp.setStatus(404);
                     }
                 } catch (Exception e) {
+                    log.debug(e.getMessage(), e);
                     OperationStatus os = new OperationStatus();
                     os.setOperation("getCompanyLevels");
                     os.setStatus("failed");
@@ -114,6 +116,7 @@ public class CompanyLevelRest extends HttpServlet {
                         mapper.writeValue(resp.getOutputStream(), os);
                     }
                 } catch (Exception e) {
+                    log.debug(e.getMessage(), e);
                     OperationStatus os = new OperationStatus();
                     os.setCausedBy(e.getMessage());
                     os.setOperation("delete");
@@ -142,6 +145,7 @@ public class CompanyLevelRest extends HttpServlet {
                 try {
                     companyLevelService.createCompanyLevel(clDTO.getName());
                 } catch (Exception e) {
+                    log.debug(e.getMessage(), e);
                     os.setCausedBy(e.getMessage());
                     response.setStatus(500);
                     mapper.writeValue(response.getOutputStream(), os);
@@ -201,6 +205,7 @@ public class CompanyLevelRest extends HttpServlet {
                         mapper.writeValue(resp.getOutputStream(), os);
                     }
                 } catch (Exception e) {
+                    log.debug(e.getMessage(), e);
                     OperationStatus os = new OperationStatus();
                     os.setCausedBy(e.getMessage());
                     os.setOperation("update");

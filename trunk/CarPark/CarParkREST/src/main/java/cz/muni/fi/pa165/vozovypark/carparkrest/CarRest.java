@@ -66,7 +66,6 @@ public class CarRest extends HttpServlet {
                 try {
                     mapper.writeValue(resp.getOutputStream(), carCollectionToMap(getCars()));
                 } catch (Exception ex) {
-                    
                     log.debug(ex.getMessage(), ex);
                     OperationStatus os = new OperationStatus();
                     os.setCausedBy(ex.getMessage());
@@ -91,6 +90,7 @@ public class CarRest extends HttpServlet {
                         resp.setStatus(404);
                     }
                 } catch (Exception ex) {
+                    log.debug(ex.getMessage(), ex);
                     OperationStatus os = new OperationStatus();
                     os.setOperation("getCars");
                     os.setStatus("failed");
@@ -136,6 +136,7 @@ public class CarRest extends HttpServlet {
                         mapper.writeValue(resp.getOutputStream(), os);
                     }
                 } catch (Exception ex) {
+                    log.debug(ex.getMessage(), ex);
                     OperationStatus os = new OperationStatus();
                     os.setCausedBy(ex.getMessage());
                     os.setOperation("delete");
@@ -171,6 +172,7 @@ public class CarRest extends HttpServlet {
                     carDTO.setAvailable(jsonNode.get("available").asBoolean());
                     carService.createCar(carDTO);
                 } catch (Exception ex) {
+                    log.debug(ex.getMessage(), ex);
                     os.setCausedBy(ex.getMessage());
                     response.setStatus(500);
                     mapper.writeValue(response.getOutputStream(), os);
@@ -243,6 +245,7 @@ public class CarRest extends HttpServlet {
                         mapper.writeValue(resp.getOutputStream(), os);
                     }
                 } catch (Exception ex) {
+                    log.debug(ex.getMessage(), ex);
                     OperationStatus os = new OperationStatus();
                     os.setCausedBy(ex.getMessage());
                     os.setOperation("update");
