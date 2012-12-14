@@ -170,12 +170,12 @@ public class ReservationsActionBean implements ActionBean, LayoutPage{
      }
 
     public Resolution edit() {
-       // log.debug("edit() reservation={}", resDTO);
+        log.debug("edit() reservation={}", resDTO);
         return new ForwardResolution("/reservations/editReservation.jsp");
     }
 
     public Resolution update() {
-       // log.debug("save() reservation={}", resDTO);
+        log.debug("save() reservation={}", resDTO);
         resDTO.setConfirmed(false);
         String carId = context.getRequest().getParameter("resDTO.car");
          String employeeId = context.getRequest().getParameter("resDTO.employee");
@@ -193,13 +193,13 @@ public class ReservationsActionBean implements ActionBean, LayoutPage{
     }
 
     public Resolution delete() {
-       // log.debug("delete({})", resDTO.getId());
+        log.debug("delete({})", resDTO.getId());
         rs.removeReservation(resDTO.getId());
         return new RedirectResolution(this.getClass(), "myReservations");
     }
     
     public Resolution confirm() {
-      //  log.debug("confirm() reservation={}", resDTO);
+        log.debug("confirm() reservation={}", resDTO);
         resDTO.setConfirmed(true);         
         rs.updateReservation(resDTO);
         return new RedirectResolution(this.getClass(), "myReservations");
