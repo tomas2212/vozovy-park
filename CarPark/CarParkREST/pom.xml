@@ -14,7 +14,7 @@
 
     <name>CarParkREST</name>
 
-  <properties>
+    <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.springframework.version>3.1.1.RELEASE</org.springframework.version>
@@ -103,14 +103,14 @@
                     </execution>
                 </executions>
             </plugin>
-             <plugin>
+            <!--plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.0</version>
                 <configuration>
                     <path>pa168/resources</path>
                 </configuration>
-            </plugin>
+            </plugin-->
         </plugins>
     </build>
 
