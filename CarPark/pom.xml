@@ -1,5 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>cz.muni.fi.pa165.carpark</groupId>
     <artifactId>CarPark</artifactId>
@@ -8,9 +8,10 @@
     <name>CarPark</name>
     <modules>
         <module>vozovyPark</module>
+        <module>CarParkREST</module>
         <module>CarParkWeb</module>
         <module>CarParkAPI</module>
-        <module>CarParkREST</module>
+        <module>CarParkClient</module>
     </modules>
     <dependencies>
         <dependency>
@@ -56,6 +57,41 @@
                     <source>1.7</source>
                     <target>1.7</target>
                     
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <configuration>
+                    <container>
+                        <containerId>jetty9x</containerId>
+                        <type>embedded</type>
+                    </container>
+                    <deployables>
+                        <deployable>                           
+                            <location>${basedir}/CarParkWeb/target/CarParkWeb-1.0-SNAPSHOT.war</location>
+                            <type>war</type>
+                            <properties>
+                                <context>/pa165/web</context>
+                            </properties>
+                        </deployable>
+                        <deployable>                            
+                            <location>${basedir}/CarParkREST/target/CarParkREST-1.0-SNAPSHOT.war</location>
+                            <type>war</type>
+                            <properties>
+                                <context>/pa165/resources</context>
+                            </properties>
+                        </deployable>  
+                        <deployable>                            
+                            <location>${basedir}/CarParkClient/target/CarParkClient-1.0-SNAPSHOT.war</location>
+                            <type>war</type>
+                            <properties>
+                                <context>/pa165/client</context>
+                            </properties>
+                        </deployable>                         
+                    </deployables>
+                  
+                        
                 </configuration>
             </plugin>
         </plugins>
