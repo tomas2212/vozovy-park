@@ -29,6 +29,7 @@ public class CompanyServiceImpl implements CompanyLevelService {
         this.mapper = mapper;
     }
 
+    @PreAuthorize("hasRole('sysAdmin')")
     public CompanyLevelDTO createCompanyLevel(String companyLevelName) {
         if (companyLevelName == null) {
             throw new IllegalArgumentException("CompanyLevel name is not specified");
@@ -45,6 +46,7 @@ public class CompanyServiceImpl implements CompanyLevelService {
         return mapper.map(companyLevel, CompanyLevelDTO.class);
     }
 
+    @PreAuthorize("hasRole('sysAdmin')")
     public CompanyLevelDTO updateCompanyLevel(CompanyLevelDTO companyLevel) {
         if (companyLevel == null) {
             throw new IllegalArgumentException("CompanyLevel name is not specified");
@@ -52,7 +54,7 @@ public class CompanyServiceImpl implements CompanyLevelService {
         if (companyLevel.getId() == null) {
             throw new IllegalArgumentException("CompanyLevel ID is not specified");
         }
-       
+
         List<CompanyLevel> allCompanyLevels = companyLevelDao.getAllCompanyLevels();
         for (CompanyLevel cl : allCompanyLevels) {
             if (!cl.getId().equals(companyLevel.getId()) && cl.getLevelValue() >= companyLevel.getLevelValue()) {
@@ -60,13 +62,13 @@ public class CompanyServiceImpl implements CompanyLevelService {
                 companyLevelDao.update(cl);
             }
         }
-        
+
         CompanyLevel entity = mapper.map(companyLevel, CompanyLevel.class);
         companyLevelDao.update(entity);
         return mapper.map(entity, CompanyLevelDTO.class);
     }
 
-
+    @PreAuthorize("hasRole('sysAdmin')")
     public CompanyLevelDTO getCompanyLevelById(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("ID is not specified");
@@ -78,6 +80,7 @@ public class CompanyServiceImpl implements CompanyLevelService {
         return mapper.map(companyLevelById, CompanyLevelDTO.class);
     }
 
+    @PreAuthorize("hasRole('sysAdmin')")
     public List<CompanyLevelDTO> getAllCompanyLevels() {
         List<CompanyLevelDTO> companyLevels = new ArrayList<CompanyLevelDTO>();
         List<CompanyLevel> allCompanyLevels = companyLevelDao.getAllCompanyLevels();
@@ -87,6 +90,7 @@ public class CompanyServiceImpl implements CompanyLevelService {
         return companyLevels;
     }
 
+    @PreAuthorize("hasRole('sysAdmin')")
     public void removeCompanyLevel(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("ID is not specified");
