@@ -33,6 +33,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         this.mapper = mapper;
     }
 
+    @PreAuthorize("hasRole('sysAdmin')")
     public EmployeeDTO createEmployee(EmployeeDTO employee) {
         if (employee == null) {
             throw new IllegalArgumentException("Employee is not specified");
@@ -46,6 +47,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return mapper.map(ead, EmployeeDTO.class);
     }
 
+    @PreAuthorize("hasRole('sysAdmin')")
     public EmployeeDTO updateEmployee(EmployeeDTO employee) {
         if (employee == null) {
             throw new IllegalArgumentException("Employee name is not specified");
@@ -59,6 +61,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     }
 
+    @PreAuthorize("hasRole('sysAdmin')")
     public void removeEmployee(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("ID is not specified");
@@ -70,6 +73,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeDAO.remove(employee);
     }
 
+    @PreAuthorize("hasRole('sysAdmin')")
     public EmployeeDTO getEmployeeById(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("ID is not specified");
@@ -81,6 +85,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return mapper.map(employeeById, EmployeeDTO.class);
     }
 
+    @PreAuthorize("hasRole('sysAdmin')")
     public List<EmployeeDTO> getAllEmployees() {
         List<EmployeeDTO> employee = new ArrayList<EmployeeDTO>();
         List<Employee> allEmployee = employeeDAO.getAllEmployee();
@@ -90,6 +95,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employee;
     }
 
+    @PreAuthorize("hasRole('sysAdmin')")
     public List<EmployeeDTO> getEmployeesByCompanyLevel(CompanyLevelDTO companyLevel) {
         if (companyLevel == null) {
             throw new IllegalArgumentException("CompanyLevel is not specified");

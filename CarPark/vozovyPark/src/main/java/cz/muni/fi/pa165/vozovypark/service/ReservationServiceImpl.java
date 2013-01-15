@@ -40,6 +40,7 @@ public class ReservationServiceImpl implements ReservationService {
         this.reservationDao = reservationDao;
     }
 
+    @PreAuthorize("hasRole('sysAdmin')")
     public ReservationDTO createReservation(ReservationDTO reservation) {
         if (reservation == null) {
             throw new IllegalArgumentException("Reservation name is not specified");
@@ -56,6 +57,7 @@ public class ReservationServiceImpl implements ReservationService {
         return mapper.map(res, ReservationDTO.class);
     }
 
+    @PreAuthorize("hasRole('sysAdmin')")
     public ReservationDTO updateReservation(ReservationDTO reservation) {
         if (reservation == null) {
             throw new IllegalArgumentException("Reservation name is not specified");
@@ -75,6 +77,7 @@ public class ReservationServiceImpl implements ReservationService {
         return mapper.map(res, ReservationDTO.class);
     }
 
+    @PreAuthorize("hasRole('manager') or hasRole('sysAdmin')")
     public ReservationDTO getReservationById(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("ID is not specified");
@@ -86,6 +89,7 @@ public class ReservationServiceImpl implements ReservationService {
         return mapper.map(reservationById, ReservationDTO.class);
     }
 
+    @PreAuthorize("hasRole('manager') or hasRole('sysAdmin')")
     public List<ReservationDTO> getReservationsByEmployee(EmployeeDTO employee) {
         if (employee == null) {
             throw new IllegalArgumentException("ID is not specified");
@@ -97,6 +101,7 @@ public class ReservationServiceImpl implements ReservationService {
         return reservations;
     }
 
+    @PreAuthorize("hasRole('manager') or hasRole('sysAdmin')")
     public List<ReservationDTO> getReservationsByCar(CarDTO car) {
         if (car == null) {
             throw new IllegalArgumentException("Car is not specified");
@@ -108,6 +113,7 @@ public class ReservationServiceImpl implements ReservationService {
         return reservations;
     }
 
+    @PreAuthorize("hasRole('manager') or hasRole('sysAdmin')")
     public List<ReservationDTO> getReservationsByCarAndEmployee(CarDTO car, EmployeeDTO employee) {
         if (car == null) {
             throw new IllegalArgumentException("Car is not specified");
@@ -122,6 +128,7 @@ public class ReservationServiceImpl implements ReservationService {
         return reservations;
     }
 
+    @PreAuthorize("hasRole('manager') or hasRole('sysAdmin')")
     public List<ReservationDTO> getReservationsToConfirm() {
 
         List<ReservationDTO> reservations = new ArrayList<ReservationDTO>();
@@ -131,6 +138,7 @@ public class ReservationServiceImpl implements ReservationService {
         return reservations;
     }
 
+    @PreAuthorize("hasRole('manager') or hasRole('sysAdmin')")
     public List<ReservationDTO> getAcceptedReservations() {
 
         List<ReservationDTO> reservations = new ArrayList<ReservationDTO>();
@@ -176,6 +184,7 @@ public class ReservationServiceImpl implements ReservationService {
         return mapper.map(res, ReservationDTO.class);
     }
 
+    @PreAuthorize("hasRole('sysAdmin')")
     public void removeReservation(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("Reservation ID is not specified");
@@ -188,6 +197,7 @@ public class ReservationServiceImpl implements ReservationService {
         reservationDao.remove(reservation);
     }
 
+    @PreAuthorize("hasRole('manager') or hasRole('sysAdmin')")
     public List<ReservationDTO> getAllReservations() {
 
         List<ReservationDTO> reservations = new ArrayList<ReservationDTO>();
