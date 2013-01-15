@@ -27,12 +27,10 @@ import org.slf4j.LoggerFactory;
  * @author tomas
  */
 @UrlBinding("/company/{$event}/")
-public class CompanyAdminActionBean implements ActionBean, LayoutPage {
+public class CompanyAdminActionBean extends LayoutPage{
 
     final static Logger log = LoggerFactory.getLogger(CompanyAdminActionBean.class);
-    private ActionBeanContext context;
-    @SpringBean(value = "mainMenu")
-    private Menu mainMenu;
+    private ActionBeanContext context;    
     @SpringBean(value = "companySubMenu")
     private Menu subMenu;
     @SpringBean(value = "CarService")
@@ -63,8 +61,9 @@ public class CompanyAdminActionBean implements ActionBean, LayoutPage {
 
     @Override
     public Menu getMainMenu() {
-        mainMenu.setActiveItemByUrl("/company");
-        return mainMenu;
+        Menu menu = super.getMainMenu();
+        menu.setActiveItemByUrl("/company");
+        return menu;
     }
 
     @Override

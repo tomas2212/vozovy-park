@@ -7,6 +7,7 @@ import cz.muni.fi.pa165.vozovypark.service.CarService;
 import cz.muni.fi.pa165.vozovypark.service.EmployeeService;
 import cz.muni.fi.pa165.vozovypark.service.ReservationService;
 import cz.muni.fi.pa165.vozovypark.web.menu.Menu;
+import cz.muni.fi.pa165.vozovypark.web.menu.MenuItem;
 import java.util.List;
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
@@ -20,13 +21,17 @@ import net.sourceforge.stripes.controller.LifecycleStage;
 import net.sourceforge.stripes.integration.spring.SpringBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  *
  * @author andrej
  */
 @UrlBinding("/reservation/{$event}")
-public class ReservationsActionBean implements ActionBean, LayoutPage{
+public class ReservationsActionBean extends LayoutPage{
     
     private ActionBeanContext context;
     final static Logger log = LoggerFactory.getLogger(ReservationsActionBean.class);
@@ -39,8 +44,6 @@ public class ReservationsActionBean implements ActionBean, LayoutPage{
     @SpringBean(value = "CarService")
     private CarService carService;
     
-    @SpringBean(value="mainMenu")
-    private Menu mainMenu;
     
     /**
     @ValidateNestedProperties(value = {
@@ -65,22 +68,33 @@ public class ReservationsActionBean implements ActionBean, LayoutPage{
   
     @Override
     public Menu getMainMenu() {
-        mainMenu.setActiveItemByUrl("/reservations");
-        return mainMenu;
+        Menu menu = super.getMainMenu();
+        menu.setActiveItemByUrl("/reservation");
+        return menu;
     }
 
     @Override
-    public void setMainMenu(Menu mainMenu) {
-        this.mainMenu = mainMenu;
+    public Menu getSubMenu() {       
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();         
+      
+        Menu authorisedMenu = new Menu();
+        for(MenuItem item : subMenu.getMenuItems()){
+            if(item.getUrl().equals("/reservation/acceptReservations")){
+                for(GrantedAuthority auth : authentication.getAuthorities()){
+                    if(auth.getAuthority().equals("manager")){
+                        authorisedMenu.addMenuItem(item);
+                    }
+                }
+            }
+            else{
+                authorisedMenu.addMenuItem(item);
+            }
+        }
+        return authorisedMenu;
     }
 
     @Override
-    public Menu getSubMenu() {
-        return subMenu;
-    }
-
-    @Override
-    public void setSubMenu(Menu subMenu) {
+    public void setSubMenu(Menu subMenu) {        
         this.subMenu = subMenu;
     }
     

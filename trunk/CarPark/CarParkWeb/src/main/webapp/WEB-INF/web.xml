@@ -12,8 +12,20 @@
     <context-param>
         <description>umístění konfiguračního souboru pro Spring</description>
         <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/spring-context.xml</param-value>
+        <param-value>
+            /WEB-INF/spring-context.xml
+            /WEB-INF/spring-security.xml
+        </param-value>
     </context-param>
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
     <!-- JSTL -->
     <context-param>
