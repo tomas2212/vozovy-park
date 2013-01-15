@@ -29,12 +29,10 @@ import net.sourceforge.stripes.validation.ValidateNestedProperties;
  * @author andrej
  */
 @UrlBinding("/carPark/{$event}/{car.id}")
-public class CarParkAdminActionBean implements ActionBean, LayoutPage {
+public class CarParkAdminActionBean extends LayoutPage{
 
     private ActionBeanContext context;
-    private boolean editing;
-    @SpringBean(value = "mainMenu")
-    private Menu mainMenu;
+    private boolean editing;    
     @SpringBean(value = "carParkSubMenu")
     private Menu subMenu;
     @SpringBean(value = "CarService")
@@ -66,8 +64,9 @@ public class CarParkAdminActionBean implements ActionBean, LayoutPage {
 
     @Override
     public Menu getMainMenu() {
-        mainMenu.setActiveItemByUrl("/carPark");
-        return mainMenu;
+        Menu menu = super.getMainMenu();
+        menu.setActiveItemByUrl("/carPark");
+        return menu;
     }
 
     @Override
