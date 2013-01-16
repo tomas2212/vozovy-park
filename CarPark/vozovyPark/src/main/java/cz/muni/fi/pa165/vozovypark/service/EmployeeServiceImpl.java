@@ -5,10 +5,10 @@ import cz.muni.fi.pa165.vozovypark.DTO.CompanyLevelDTO;
 import cz.muni.fi.pa165.vozovypark.DTO.EmployeeDTO;
 import cz.muni.fi.pa165.vozovypark.entities.CompanyLevel;
 import cz.muni.fi.pa165.vozovypark.entities.Employee;
-
 import java.util.ArrayList;
 import java.util.List;
 import org.dozer.Mapper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +34,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @PreAuthorize("hasRole('sysAdmin')")
+    @Override
     public EmployeeDTO createEmployee(EmployeeDTO employee) {
         if (employee == null) {
             throw new IllegalArgumentException("Employee is not specified");
@@ -48,6 +49,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @PreAuthorize("hasRole('sysAdmin')")
+    @Override
     public EmployeeDTO updateEmployee(EmployeeDTO employee) {
         if (employee == null) {
             throw new IllegalArgumentException("Employee name is not specified");
@@ -62,6 +64,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @PreAuthorize("hasRole('sysAdmin')")
+    @Override
     public void removeEmployee(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("ID is not specified");
@@ -73,7 +76,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeDAO.remove(employee);
     }
 
-    @PreAuthorize("hasRole('sysAdmin')")
+    @Override
     public EmployeeDTO getEmployeeById(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("ID is not specified");
@@ -85,7 +88,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return mapper.map(employeeById, EmployeeDTO.class);
     }
 
-    @PreAuthorize("hasRole('sysAdmin')")
+    @Override
     public List<EmployeeDTO> getAllEmployees() {
         List<EmployeeDTO> employee = new ArrayList<EmployeeDTO>();
         List<Employee> allEmployee = employeeDAO.getAllEmployee();
@@ -95,7 +98,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employee;
     }
 
-    @PreAuthorize("hasRole('sysAdmin')")
+    @Override
     public List<EmployeeDTO> getEmployeesByCompanyLevel(CompanyLevelDTO companyLevel) {
         if (companyLevel == null) {
             throw new IllegalArgumentException("CompanyLevel is not specified");
