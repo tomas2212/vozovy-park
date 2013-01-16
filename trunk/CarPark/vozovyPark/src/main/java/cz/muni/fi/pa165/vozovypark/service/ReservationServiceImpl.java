@@ -8,11 +8,11 @@ import cz.muni.fi.pa165.vozovypark.DTO.ReservationDTO;
 import cz.muni.fi.pa165.vozovypark.entities.Car;
 import cz.muni.fi.pa165.vozovypark.entities.Employee;
 import cz.muni.fi.pa165.vozovypark.entities.Reservation;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.dozer.Mapper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,7 +40,7 @@ public class ReservationServiceImpl implements ReservationService {
         this.reservationDao = reservationDao;
     }
 
-    @PreAuthorize("hasRole('sysAdmin')")
+    @Override
     public ReservationDTO createReservation(ReservationDTO reservation) {
         if (reservation == null) {
             throw new IllegalArgumentException("Reservation name is not specified");
@@ -57,7 +57,7 @@ public class ReservationServiceImpl implements ReservationService {
         return mapper.map(res, ReservationDTO.class);
     }
 
-    @PreAuthorize("hasRole('sysAdmin')")
+    @Override
     public ReservationDTO updateReservation(ReservationDTO reservation) {
         if (reservation == null) {
             throw new IllegalArgumentException("Reservation name is not specified");
@@ -77,7 +77,7 @@ public class ReservationServiceImpl implements ReservationService {
         return mapper.map(res, ReservationDTO.class);
     }
 
-    @PreAuthorize("hasRole('manager') or hasRole('sysAdmin')")
+    @Override
     public ReservationDTO getReservationById(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("ID is not specified");
@@ -89,7 +89,7 @@ public class ReservationServiceImpl implements ReservationService {
         return mapper.map(reservationById, ReservationDTO.class);
     }
 
-    @PreAuthorize("hasRole('manager') or hasRole('sysAdmin')")
+    @Override
     public List<ReservationDTO> getReservationsByEmployee(EmployeeDTO employee) {
         if (employee == null) {
             throw new IllegalArgumentException("ID is not specified");
@@ -101,7 +101,7 @@ public class ReservationServiceImpl implements ReservationService {
         return reservations;
     }
 
-    @PreAuthorize("hasRole('manager') or hasRole('sysAdmin')")
+    @Override
     public List<ReservationDTO> getReservationsByCar(CarDTO car) {
         if (car == null) {
             throw new IllegalArgumentException("Car is not specified");
@@ -113,7 +113,7 @@ public class ReservationServiceImpl implements ReservationService {
         return reservations;
     }
 
-    @PreAuthorize("hasRole('manager') or hasRole('sysAdmin')")
+    @Override
     public List<ReservationDTO> getReservationsByCarAndEmployee(CarDTO car, EmployeeDTO employee) {
         if (car == null) {
             throw new IllegalArgumentException("Car is not specified");
@@ -128,7 +128,7 @@ public class ReservationServiceImpl implements ReservationService {
         return reservations;
     }
 
-    @PreAuthorize("hasRole('manager') or hasRole('sysAdmin')")
+    @Override
     public List<ReservationDTO> getReservationsToConfirm() {
 
         List<ReservationDTO> reservations = new ArrayList<ReservationDTO>();
@@ -138,7 +138,7 @@ public class ReservationServiceImpl implements ReservationService {
         return reservations;
     }
 
-    @PreAuthorize("hasRole('manager') or hasRole('sysAdmin')")
+    @Override
     public List<ReservationDTO> getAcceptedReservations() {
 
         List<ReservationDTO> reservations = new ArrayList<ReservationDTO>();
@@ -148,6 +148,8 @@ public class ReservationServiceImpl implements ReservationService {
         return reservations;
     }
 
+    @PreAuthorize("hasRole('carAdmin')")
+    @Override
     public ReservationDTO rentCar(Long reservationId) {
         if (reservationId == null) {
             throw new IllegalArgumentException("ID is not specified");
@@ -166,6 +168,8 @@ public class ReservationServiceImpl implements ReservationService {
         return mapper.map(res, ReservationDTO.class);
     }
 
+    @PreAuthorize("hasRole('carAdmin')")
+    @Override
     public ReservationDTO returnCar(Long reservationId) {
         if (reservationId == null) {
             throw new IllegalArgumentException("ID is not specified");
@@ -184,7 +188,7 @@ public class ReservationServiceImpl implements ReservationService {
         return mapper.map(res, ReservationDTO.class);
     }
 
-    @PreAuthorize("hasRole('sysAdmin')")
+    @Override
     public void removeReservation(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("Reservation ID is not specified");
@@ -197,9 +201,9 @@ public class ReservationServiceImpl implements ReservationService {
         reservationDao.remove(reservation);
     }
 
-    @PreAuthorize("hasRole('manager') or hasRole('sysAdmin')")
+    @PreAuthorize("hasRole('manager')")
+    @Override
     public List<ReservationDTO> getAllReservations() {
-
         List<ReservationDTO> reservations = new ArrayList<ReservationDTO>();
         for (Reservation res : reservationDao.getAllReservations()) {
             reservations.add(mapper.map(res, ReservationDTO.class));
@@ -207,6 +211,8 @@ public class ReservationServiceImpl implements ReservationService {
         return reservations;
     }
 
+    @PreAuthorize("hasRole('manager')")
+    @Override
     public ReservationDTO acceptReservation(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("Reservation ID is not specified");

@@ -5,10 +5,10 @@ import cz.muni.fi.pa165.vozovypark.DTO.CarDTO;
 import cz.muni.fi.pa165.vozovypark.DTO.CompanyLevelDTO;
 import cz.muni.fi.pa165.vozovypark.entities.Car;
 import cz.muni.fi.pa165.vozovypark.entities.CompanyLevel;
-
 import java.util.ArrayList;
 import java.util.List;
 import org.dozer.Mapper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +32,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @PreAuthorize("hasRole('carAdmin')")
+    @Override
     public CarDTO createCar(CarDTO car) {
         if (car == null) {
             throw new IllegalArgumentException("Car is not specified");
@@ -42,6 +43,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @PreAuthorize("hasRole('carAdmin')")
+    @Override
     public CarDTO updateCar(CarDTO car) {
         if (car == null) {
             throw new IllegalArgumentException("Car name is not specified");
@@ -54,6 +56,7 @@ public class CarServiceImpl implements CarService {
         return mapper.map(entity, CarDTO.class);
     }
 
+    @Override
     public CarDTO setCarAvailable(Long id, Boolean available) {
         if (id == null) {
             throw new IllegalArgumentException("ID is not specified");
@@ -69,6 +72,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @PreAuthorize("hasRole('carAdmin')")
+    @Override
     public void removeCar(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("ID is not specified");
@@ -80,7 +84,7 @@ public class CarServiceImpl implements CarService {
         carDao.remove(car);
     }
 
-    @PreAuthorize("hasRole('carAdmin')")
+    @Override
     public CarDTO getCarById(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("ID is not specified");
@@ -92,7 +96,7 @@ public class CarServiceImpl implements CarService {
         return mapper.map(carById, CarDTO.class);
     }
 
-    @PreAuthorize("hasRole('carAdmin')")
+    @Override
     public List<CarDTO> getAllCars() {
         List<CarDTO> cars = new ArrayList<CarDTO>();
         List<Car> allCars = carDao.getAllCars();
@@ -102,7 +106,7 @@ public class CarServiceImpl implements CarService {
         return cars;
     }
 
-    @PreAuthorize("hasRole('carAdmin')")
+    @Override
     public List<CarDTO> getCarsByCompanyLevel(CompanyLevelDTO companyLevel) {
         if (companyLevel == null) {
             throw new IllegalArgumentException("CompanyLevel is not specified");
