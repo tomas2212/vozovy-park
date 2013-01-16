@@ -9,7 +9,6 @@ import cz.muni.fi.pa165.vozovypark.service.ReservationService;
 import cz.muni.fi.pa165.vozovypark.web.menu.Menu;
 import cz.muni.fi.pa165.vozovypark.web.menu.MenuItem;
 import java.util.List;
-import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
 import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;
@@ -24,7 +23,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  *
