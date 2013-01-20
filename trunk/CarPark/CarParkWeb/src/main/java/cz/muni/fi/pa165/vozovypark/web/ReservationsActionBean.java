@@ -100,9 +100,13 @@ public class ReservationsActionBean extends LayoutPage{
    @DefaultHandler
     public Resolution myReservations() {     
         this.subMenu.setActiveItemByName("reservationsSubMenu.myReservations");
-        return new ForwardResolution("/reservations/reservations.jsp");
+        return new ForwardResolution("/reservations/myReservations.jsp");
     }
     
+    public Resolution allReservations() {     
+        this.subMenu.setActiveItemByName("reservationsSubMenu.allReservations");
+        return new ForwardResolution("/reservations/reservations.jsp");
+    }
      
     public Resolution newReservation(){
         this.subMenu.setActiveItemByUrl("/reservations/newReservation");
@@ -114,9 +118,15 @@ public class ReservationsActionBean extends LayoutPage{
         return new ForwardResolution("/reservations/acceptReservations.jsp");
     }
     
-    public List<ReservationDTO> getReservations() {
+    public List<ReservationDTO> getAllReservations() {
         //return rs.getAllReservations();
         return rs.getAllReservations();
+    }
+    
+    public List<ReservationDTO> getMyReservations() {
+        //return rs.getAllReservations();
+        EmployeeDTO employee = employeeService.getEmployeeById(new Long(1));
+        return rs.getReservationsByEmployee(employee);
     }
     
     public List<ReservationDTO> getUnconfirmedReservations() {
@@ -160,7 +170,8 @@ public class ReservationsActionBean extends LayoutPage{
      
      public Resolution create() {
          String carId = context.getRequest().getParameter("resDTO.car");
-         String employeeId = context.getRequest().getParameter("resDTO.employee");
+         //String employeeId = context.getRequest().getParameter("resDTO.employee");
+         String employeeId = "1";
          if(carId != null) {
              CarDTO carDTO = carService.getCarById(Long.parseLong(carId));
              resDTO.setCar(carDTO);
