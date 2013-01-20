@@ -61,7 +61,12 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
                     <property name="active" value="false"/>
                     <property name="name" value="reservationsSubMenu.myReservations" />
                     <property name="url" value="/reservation" />
-                </bean>                
+                </bean>    
+                <bean class="cz.muni.fi.pa165.vozovypark.web.menu.MenuItem">
+                    <property name="active" value="false"/>
+                    <property name="name" value="reservationsSubMenu.allReservations" />
+                    <property name="url" value="/reservation/allReservations" />
+                </bean>              
                 <bean class="cz.muni.fi.pa165.vozovypark.web.menu.MenuItem">
                     <property name="active" value="false"/>
                     <property name="name" value="reservationsSubMenu.newReservation" />
