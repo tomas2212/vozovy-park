@@ -18,6 +18,8 @@ import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.UrlBinding;
 import net.sourceforge.stripes.controller.LifecycleStage;
 import net.sourceforge.stripes.integration.spring.SpringBean;
+import net.sourceforge.stripes.validation.Validate;
+import net.sourceforge.stripes.validation.ValidateNestedProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -43,13 +45,11 @@ public class ReservationsActionBean extends LayoutPage{
     private CarService carService;
     
     
-    /**
     @ValidateNestedProperties(value = {
         @Validate(on = {"create", "update"}, field = "dateFrom", required = true),
         @Validate(on = {"create", "update"}, field = "dateTo", required = true),
         @Validate(on = {"create", "update"}, field = "car", required = true),
-        @Validate(on = {"create", "update"}, field = "employee", required = true),
-    }) */
+    })
     
     @SpringBean(value="reservationsSubMenu")
     private Menu subMenu;
@@ -124,7 +124,6 @@ public class ReservationsActionBean extends LayoutPage{
     }
     
     public List<ReservationDTO> getMyReservations() {
-        //return rs.getAllReservations();
         EmployeeDTO employee = employeeService.getEmployeeById(new Long(1));
         return rs.getReservationsByEmployee(employee);
     }
@@ -170,7 +169,6 @@ public class ReservationsActionBean extends LayoutPage{
      
      public Resolution create() {
          String carId = context.getRequest().getParameter("resDTO.car");
-         //String employeeId = context.getRequest().getParameter("resDTO.employee");
          String employeeId = "1";
          if(carId != null) {
              CarDTO carDTO = carService.getCarById(Long.parseLong(carId));
