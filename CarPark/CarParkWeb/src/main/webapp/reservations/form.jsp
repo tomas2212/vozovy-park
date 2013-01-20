@@ -35,11 +35,4 @@
                              </s:select></td>
                 </tr>
                 <br/>
-                <!-- <tr>
-                    <th><s:label for="b4" name="reservation.employee"/></th>
-                    <td><s:select name="resDTO.employee">
-                            <s:options-collection value="id" label="name" collection="${actionBean.employees}" />
-                            </s:select>
-                    </td>
-                </tr> -->
 </table>
