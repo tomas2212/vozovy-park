@@ -14,6 +14,10 @@ Navod na spustenie:
 	mvn tomcat7:run
 	deployuje sa na 	
 	http://localhost:8085/pa165/web/
+
+	pre prihlasenia sa do aplikacie sluzi virtualny uzivatel superuser(superuser/andrej).
+	sluzi len na to aby sa vytvorili zamestnanci s pozadovanymi pravami. Tento uzivatel nemoze
+	si zakladat rezervacie aut
    CarParkClient:
 	mvn tomcat7:run
 	deployuje sa na 	
