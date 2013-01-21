@@ -75,41 +75,7 @@
                     
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.codehaus.cargo</groupId>
-                <artifactId>cargo-maven2-plugin</artifactId>
-                <configuration>
-                    <container>
-                        <containerId>jetty9x</containerId>
-                        <type>embedded</type>
-                    </container>
-                    <deployables>
-                        <deployable>                           
-                            <location>${basedir}/CarParkWeb/target/CarParkWeb-1.0-SNAPSHOT.war</location>
-                            <type>war</type>
-                            <properties>
-                                <context>/pa165/web</context>
-                            </properties>
-                        </deployable>
-                        <deployable>                            
-                            <location>${basedir}/CarParkREST/target/CarParkREST-1.0-SNAPSHOT.war</location>
-                            <type>war</type>
-                            <properties>
-                                <context>/pa165/resources</context>
-                            </properties>
-                        </deployable>  
-                        <deployable>                            
-                            <location>${basedir}/CarParkClient/target/CarParkClient-1.0-SNAPSHOT.war</location>
-                            <type>war</type>
-                            <properties>
-                                <context>/pa165/client</context>
-                            </properties>
-                        </deployable>                         
-                    </deployables>
-                  
-                        
-                </configuration>
-            </plugin>
+           
         </plugins>
     </build>
 </project>
