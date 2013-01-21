@@ -15,7 +15,7 @@
  
     <c:if test="${not empty param.login_error}">
       <font color="red">
-      Y<f:message key="login.error"/><br/><br/>
+      <f:message key="login.error"/><br/><br/>
       
       </font>
     </c:if>
