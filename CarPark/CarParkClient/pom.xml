@@ -83,10 +83,14 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
+             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.0</version>
+                <configuration>
+                    <port>8095</port>
+                    <path>/pa165/client</path>
+                </configuration>
             </plugin>
         </plugins>
     </build>
