@@ -32,7 +32,7 @@ public abstract class LayoutPage implements ActionBean {
             }
             else if(item.getUrl().equals("/company")){
                 for(GrantedAuthority auth : authentication.getAuthorities()){
-                    if(auth.getAuthority().equals("manager") || auth.getAuthority().equals("sysAdmin")){
+                    if(auth.getAuthority().equals("sysAdmin")){
                         authorisedMenu.addMenuItem(item);
                         break;
                     }
