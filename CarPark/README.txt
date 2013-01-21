@@ -10,19 +10,21 @@ Navod na spustenie:
 	 mvn tomcat7:run
 	 deployuje sa na 	
 	 http://localhost:8090/pa165/resources/ 
+
+   CarParkClient:
+	mvn tomcat7:run
+	deployuje sa na 	
+	http://localhost:8095/pa165/client/
+
+	Klient vyuziva proxy servlet pre ajaxovu komunikaciu mimo svojho kontextu.
+	defaultne je nastaveny na http://localhost:8090/pa165/resources/ V pripade potreby
+	je mozne zmenit vo web.xml projektu.
+
    CarParkWeb:
 	mvn tomcat7:run
 	deployuje sa na 	
 	http://localhost:8085/pa165/web/
 
-	pre prihlasenia sa do aplikacie sluzi virtualny uzivatel superuser(superuser/andrej).
-	sluzi len na to aby sa vytvorili zamestnanci s pozadovanymi pravami. Tento uzivatel nemoze
-	si zakladat rezervacie aut
-   CarParkClient:
-	mvn tomcat7:run
-	deployuje sa na 	
-	http://localhost:8096/pa165/client/
-
-	klient vyuziva proxy servlet pre ajaxovu komunikaciu mimo svojho kontextu.
-	defaultne je nastaveny na http://localhost:8090/pa165/resources/ V pripade poterby
-	je mozne zmenit vo web.xml projektu.
+	Pre prihlasenia sa do aplikacie sluzi virtualny uzivatel superuser(superuser/andrej).
+	sluzi len na to, aby sa vytvorili zamestnanci s pozadovanymi pravami. Tento uzivatel si nemoze
+        zakladat rezervacie aut.
