@@ -10,8 +10,24 @@
         <td><s:text id="employeePosition" name="employee.position" /></td>
     </tr>
     <tr>
-        <th><s:label for="employeeApprov" name="companyAdmin.approved"/></th>
-        <td><s:checkbox name="employee.approved" /></td>
+        <th><s:label for="employeeLogin" name="companyAdmin.login"/></th>
+        <td><s:text id="employeeLogin" name="employee.login" /></td>
+    </tr>
+    <tr>
+        <th><s:label for="password" name="companyAdmin.password"/></th>
+        <td><s:text id="password" name="password" /></td>
+    </tr>
+    <tr>
+        <th><s:label name="companyAdmin.manager"/></th>
+        <td><s:checkbox name="isManager" /></td>
+    </tr>
+    <tr>
+        <th><s:label name="companyAdmin.carAdmin"/></th>
+        <td><s:checkbox name="isCarAdmin" /></td>
+    </tr>
+    <tr>
+        <th><s:label name="companyAdmin.sysAdmin"/></th>
+        <td><s:checkbox name="isSysAdmin" /></td>
     </tr>
     <tr>
         <th><s:label for="employeeAddress" name="companyAdmin.address"/></th>

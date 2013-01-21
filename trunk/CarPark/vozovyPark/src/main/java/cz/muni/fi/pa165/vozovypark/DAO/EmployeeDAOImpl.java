@@ -80,4 +80,21 @@ public class EmployeeDAOImpl implements EmployeeDAO {
           q.setParameter("companyLevelValue", companyLevel.getLevelValue());
           return q.getResultList();   
     }
+
+    @Override
+    public Employee getEmployeeByLogin(String login) {
+        if (login == null) {
+            throw new IllegalArgumentException("you must specify the login of employee");
+        }        
+        //TypedQuery q = entityManager.createNamedQuery(Employee.FIND_BY_LOGIN);
+        TypedQuery<Employee> q = entityManager.createNamedQuery(Employee.FIND_BY_LOGIN, Employee.class);
+        q.setParameter("login", login);
+        List<Employee> resultList = q.getResultList();
+        if(resultList.size() > 0){
+            return resultList.get(0);
+        }
+        else{
+            return null;
+        }       
+    }
 }

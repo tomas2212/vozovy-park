@@ -11,7 +11,7 @@
     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
     <context:component-scan base-package="cz.muni.fi.pa165.vozovypark"/>
-
+    <context:annotation-config />
     <tx:annotation-driven transaction-manager="transactionManager" />  
     <import resource="dataSource.xml" />
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" /> 
@@ -32,6 +32,7 @@
     <bean id="companyLevelDao" class="cz.muni.fi.pa165.vozovypark.DAO.CompanyLevelDAOImpl" />
     <bean id="carDao" class="cz.muni.fi.pa165.vozovypark.DAO.CarDAOImpl" />
     <bean id="reservationDao" class="cz.muni.fi.pa165.vozovypark.DAO.ReservationDAOImpl" />
+  
     
     <bean id="CompanyLevelService" name="CompanyLevelService" class="cz.muni.fi.pa165.vozovypark.service.CompanyServiceImpl" >
         <property name="companyLevelDao" ref="companyLevelDao"/>

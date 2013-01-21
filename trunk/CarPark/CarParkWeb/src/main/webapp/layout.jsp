@@ -18,7 +18,9 @@
             <div class="wrapper">
                 <div class="header">
                     <h1>Car Park</h1>
-
+                    <div style="text-align: right; color: black; font-size: 14px;">
+                        <a href="<c:url value="/logout" />" > Logout</a>
+                    </div>
                 </div>
                 <div class="mainMenu">
                     <ul>
