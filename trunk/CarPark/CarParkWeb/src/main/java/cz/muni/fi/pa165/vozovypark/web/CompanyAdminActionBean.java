@@ -224,7 +224,7 @@ public class CompanyAdminActionBean extends LayoutPage{
             role.setName("manager");
             roles.add(role);           
         }
-        if(getPassword() != null || getPassword().length() > 0){
+        if(getPassword() != null && getPassword().length() > 0){
             employee.setPassword(password);
         }
         employee.setRoles(roles);
