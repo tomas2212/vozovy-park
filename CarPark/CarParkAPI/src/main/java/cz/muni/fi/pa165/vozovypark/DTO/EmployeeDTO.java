@@ -1,5 +1,7 @@
 package cz.muni.fi.pa165.vozovypark.DTO;
 
+import java.util.List;
+
 /**
  *
  * @author Lukas Maticky
@@ -10,6 +12,9 @@ public class EmployeeDTO {
     private String position;
     private Boolean approve;
     private String address;
+    private String login;    
+    private String password;
+    private List<UserRoleDTO> roles;
     private CompanyLevelDTO companyLevel;
 
     public String getAddress() {
@@ -60,6 +65,16 @@ public class EmployeeDTO {
         this.position = position;
     }
 
+    public List<UserRoleDTO> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<UserRoleDTO> roles) {
+        this.roles = roles;
+    }
+    
+    
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -74,6 +89,26 @@ public class EmployeeDTO {
         }
         return true;
     }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+   
+    
+    
 
     @Override
     public int hashCode() {

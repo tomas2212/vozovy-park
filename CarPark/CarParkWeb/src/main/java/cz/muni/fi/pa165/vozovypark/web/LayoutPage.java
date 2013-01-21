@@ -7,6 +7,7 @@ import net.sourceforge.stripes.integration.spring.SpringBean;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  *
@@ -48,6 +49,16 @@ public abstract class LayoutPage implements ActionBean {
     public void setMainMenu(Menu mainMenu){
         this.mainMenu = mainMenu;
     };
+    
+    public String getLogin(){
+        
+         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();  
+  
+        if(principal instanceof UserDetails){ 
+            return ((UserDetails) principal).getUsername();
+        }
+        return null;
+    }
     
     public abstract Menu getSubMenu();
     

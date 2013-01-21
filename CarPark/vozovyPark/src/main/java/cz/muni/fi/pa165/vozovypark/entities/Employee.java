@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.vozovypark.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.*;
 
 /**
@@ -12,6 +13,7 @@ import javax.persistence.*;
     @NamedQuery(name = Employee.FIND_ALL, query = "SELECT p from Employee p"),
     @NamedQuery(name = Employee.FIND_BY_ID, query = "SELECT p from Employee p where p.id=:id"),
     @NamedQuery(name = Employee.FIND_BY_NAME, query = "SELECT p from Employee p where p.name=:name"),
+    @NamedQuery(name = Employee.FIND_BY_LOGIN, query = "SELECT p from Employee p where p.login=:login"),
     @NamedQuery(name = Employee.FIND_BY_ADDRESS, query = "SELECT p from Employee p where p.address=:address")
 })
 public class Employee implements Serializable {
@@ -19,8 +21,9 @@ public class Employee implements Serializable {
     public static final String FIND_ALL = "findAllEmp";
     public static final String FIND_BY_ID = "findEmployeById";
     public static final String FIND_BY_NAME = "findEmployeByName";
+    public static final String FIND_BY_LOGIN = "findEmployeByLogin";
     public static final String FIND_BY_ADDRESS = "findEmployeByAddress";
-
+   
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,8 +32,13 @@ public class Employee implements Serializable {
     private String position;
     private Boolean approve;
     private String address;
+    @Column(unique=true)
+    private String login;    
+    private String password;    
     @OneToOne
     private CompanyLevel companyLevel;
+    @ManyToMany
+    private List<UserRole> roles;
 
     public String getName() {
         return name;
@@ -79,7 +87,30 @@ public class Employee implements Serializable {
     public void setCompanyLevel(CompanyLevel companyLevel) {
         this.companyLevel = companyLevel;
     }
-    
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public List<UserRole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<UserRole> roles) {
+        this.roles = roles;
+    }
     
     @Override
     public int hashCode() {

@@ -25,6 +25,14 @@ public interface EmployeeDAO {
      * @return Employee Employee with that Name
      */
     public Employee getEmployeeByName(String name);
+    
+    /**
+     * Returns Employee by Login. Argument is Login Employee
+     *
+     * @param login identifier
+     * @return Employee Employee with that login
+     */
+    public Employee getEmployeeByLogin(String login);
 
     /**
      * Returns Employee by Address. Argument is Address of Employee

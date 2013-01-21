@@ -8,6 +8,7 @@ import cz.muni.fi.pa165.vozovypark.service.EmployeeService;
 import cz.muni.fi.pa165.vozovypark.service.ReservationService;
 import cz.muni.fi.pa165.vozovypark.web.menu.Menu;
 import cz.muni.fi.pa165.vozovypark.web.menu.MenuItem;
+import java.util.ArrayList;
 import java.util.List;
 import net.sourceforge.stripes.action.ActionBeanContext;
 import net.sourceforge.stripes.action.Before;
@@ -31,27 +32,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
  * @author andrej
  */
 @UrlBinding("/reservation/{$event}")
-public class ReservationsActionBean extends LayoutPage{
-    
+public class ReservationsActionBean extends LayoutPage {
+
     private ActionBeanContext context;
     final static Logger log = LoggerFactory.getLogger(ReservationsActionBean.class);
     @SpringBean(value = "ReservationService")
     private ReservationService rs;
-    
     @SpringBean(value = "EmployeeService")
     private EmployeeService employeeService;
-    
     @SpringBean(value = "CarService")
     private CarService carService;
-    
-    
-    @ValidateNestedProperties(value = {
-        @Validate(on = {"create", "update"}, field = "dateFrom", required = true),
-        @Validate(on = {"create", "update"}, field = "dateTo", required = true),
-        @Validate(on = {"create", "update"}, field = "car", required = true),
-    })
-    
-    @SpringBean(value="reservationsSubMenu")
+     @SpringBean(value = "reservationsSubMenu")
     private Menu subMenu;
 
     @Override
@@ -63,7 +54,7 @@ public class ReservationsActionBean extends LayoutPage{
     public ActionBeanContext getContext() {
         return context;
     }
-  
+
     @Override
     public Menu getMainMenu() {
         Menu menu = super.getMainMenu();
@@ -72,19 +63,18 @@ public class ReservationsActionBean extends LayoutPage{
     }
 
     @Override
-    public Menu getSubMenu() {       
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();         
-      
+    public Menu getSubMenu() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
         Menu authorisedMenu = new Menu();
-        for(MenuItem item : subMenu.getMenuItems()){
-            if(item.getUrl().equals("/reservation/acceptReservations")){
-                for(GrantedAuthority auth : authentication.getAuthorities()){
-                    if(auth.getAuthority().equals("manager")){
+        for (MenuItem item : subMenu.getMenuItems()) {
+            if (item.getUrl().equals("/reservation/acceptReservations")) {
+                for (GrantedAuthority auth : authentication.getAuthorities()) {
+                    if (auth.getAuthority().equals("manager")) {
                         authorisedMenu.addMenuItem(item);
                     }
                 }
-            }
-            else{
+            } else {
                 authorisedMenu.addMenuItem(item);
             }
         }
@@ -92,58 +82,64 @@ public class ReservationsActionBean extends LayoutPage{
     }
 
     @Override
-    public void setSubMenu(Menu subMenu) {        
+    public void setSubMenu(Menu subMenu) {
         this.subMenu = subMenu;
     }
-    
-        
-   @DefaultHandler
-    public Resolution myReservations() {     
+
+    @DefaultHandler
+    public Resolution myReservations() {
         this.subMenu.setActiveItemByName("reservationsSubMenu.myReservations");
         return new ForwardResolution("/reservations/myReservations.jsp");
     }
-    
-    public Resolution allReservations() {     
+
+    public Resolution allReservations() {
         this.subMenu.setActiveItemByName("reservationsSubMenu.allReservations");
         return new ForwardResolution("/reservations/reservations.jsp");
     }
-     
-    public Resolution newReservation(){
+
+    public Resolution newReservation() {
         this.subMenu.setActiveItemByUrl("/reservations/newReservation");
         return new ForwardResolution("/reservations/newReservation.jsp");
     }
-    
-    public Resolution acceptReservations(){
+
+    public Resolution acceptReservations() {
         this.subMenu.setActiveItemByUrl("/reservations/acceptReservations");
         return new ForwardResolution("/reservations/acceptReservations.jsp");
     }
-    
+
     public List<ReservationDTO> getAllReservations() {
         //return rs.getAllReservations();
         return rs.getAllReservations();
     }
-    
+
     public List<ReservationDTO> getMyReservations() {
-        EmployeeDTO employee = employeeService.getEmployeeById(new Long(1));
+        if(getLogin().equals("superuser")){
+            return new ArrayList<>();
+        }
+        EmployeeDTO employee = employeeService.getEmployeeByLogin(getLogin());
         return rs.getReservationsByEmployee(employee);
     }
-    
+
     public List<ReservationDTO> getUnconfirmedReservations() {
         return rs.getReservationsToConfirm();
     }
-    
+
     public List<ReservationDTO> getAcceptedReservations() {
         return rs.getAcceptedReservations();
     }
-    
+
     public List<CarDTO> getCars() {
         return carService.getAllCars();
     }
-    
+
     public List<EmployeeDTO> getEmployees() {
         return employeeService.getAllEmployees();
     }
-    
+    @ValidateNestedProperties(value = {
+        @Validate(on = {"create", "update"}, field = "dateFrom", required = true),
+        @Validate(on = {"create", "update"}, field = "dateTo", required = true),
+        @Validate(on = {"create", "update"}, field = "car", required = true),})
+   
     ReservationDTO resDTO;
 
     public ReservationDTO getResDTO() {
@@ -162,27 +158,27 @@ public class ReservationsActionBean extends LayoutPage{
         }
         resDTO = rs.getReservationById(Long.parseLong(ids));
     }
-    
-     public Resolution storno() {
+
+    public Resolution storno() {
         return new ForwardResolution("reservations/reservations.jsp");
     }
-     
-     public Resolution create() {
-         String carId = context.getRequest().getParameter("resDTO.car");
-         String employeeId = "1";
-         if(carId != null) {
-             CarDTO carDTO = carService.getCarById(Long.parseLong(carId));
-             resDTO.setCar(carDTO);
-         }
-         
-         if(employeeId !=null) {
-             EmployeeDTO employeeDTO = employeeService.getEmployeeById(Long.parseLong(employeeId));
-             resDTO.setEmployee(employeeDTO);
-         }
-         
-         rs.createReservation(resDTO);
-         return new RedirectResolution(this.getClass(), "myReservations");
-     }
+
+    public Resolution create() {
+        String carId = context.getRequest().getParameter("resDTO.car");
+
+        if (carId != null) {
+            CarDTO carDTO = carService.getCarById(Long.parseLong(carId));
+            resDTO.setCar(carDTO);
+        }
+
+
+        EmployeeDTO employeeDTO = employeeService.getEmployeeByLogin(getLogin());
+        resDTO.setEmployee(employeeDTO);
+
+
+        rs.createReservation(resDTO);
+        return new RedirectResolution(this.getClass(), "myReservations");
+    }
 
     public Resolution edit() {
         log.debug("edit() reservation={}", resDTO);
@@ -193,16 +189,14 @@ public class ReservationsActionBean extends LayoutPage{
         log.debug("save() reservation={}", resDTO);
         resDTO.setConfirmed(false);
         String carId = context.getRequest().getParameter("resDTO.car");
-         String employeeId = context.getRequest().getParameter("resDTO.employee");
-         if(carId != null) {
-             CarDTO carDTO = carService.getCarById(Long.parseLong(carId));
-             resDTO.setCar(carDTO);
-         }
-         
-         if(employeeId !=null) {
-             EmployeeDTO employeeDTO = employeeService.getEmployeeById(Long.parseLong(employeeId));
-             resDTO.setEmployee(employeeDTO);
-         }
+        String employeeId = context.getRequest().getParameter("resDTO.employee");
+        if (carId != null) {
+            CarDTO carDTO = carService.getCarById(Long.parseLong(carId));
+            resDTO.setCar(carDTO);
+        }
+
+       EmployeeDTO employeeDTO = employeeService.getEmployeeByLogin(getLogin());
+        resDTO.setEmployee(employeeDTO);
         rs.updateReservation(resDTO);
         return new RedirectResolution(this.getClass(), "myReservations");
     }
@@ -212,11 +206,11 @@ public class ReservationsActionBean extends LayoutPage{
         rs.removeReservation(resDTO.getId());
         return new RedirectResolution(this.getClass(), "myReservations");
     }
-    
+
     public Resolution confirm() {
         log.debug("confirm() reservation={}", resDTO);
-        resDTO.setConfirmed(true);         
+        resDTO.setConfirmed(true);
         rs.updateReservation(resDTO);
         return new RedirectResolution(this.getClass(), "myReservations");
-    }   
+    }
 }

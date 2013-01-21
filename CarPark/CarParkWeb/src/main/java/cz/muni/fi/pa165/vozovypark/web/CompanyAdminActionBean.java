@@ -2,10 +2,13 @@ package cz.muni.fi.pa165.vozovypark.web;
 
 import cz.muni.fi.pa165.vozovypark.DTO.CompanyLevelDTO;
 import cz.muni.fi.pa165.vozovypark.DTO.EmployeeDTO;
+import cz.muni.fi.pa165.vozovypark.DTO.UserRoleDTO;
+import cz.muni.fi.pa165.vozovypark.entities.UserRole;
 import cz.muni.fi.pa165.vozovypark.service.CarService;
 import cz.muni.fi.pa165.vozovypark.service.CompanyLevelService;
 import cz.muni.fi.pa165.vozovypark.service.EmployeeService;
 import cz.muni.fi.pa165.vozovypark.web.menu.Menu;
+import java.util.ArrayList;
 import java.util.List;
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
@@ -48,6 +51,12 @@ public class CompanyAdminActionBean extends LayoutPage{
         @Validate(on = {"createButtonEmployee", "saveButtonEmployee"}, field = "name", required = true)
     })
     private EmployeeDTO employee;
+    private Boolean isManager;
+    private Boolean isSysAdmin;
+    private Boolean isCarAdmin;
+    private String password;
+    
+    
 
     @Override
     public void setContext(ActionBeanContext abc) {
@@ -164,6 +173,26 @@ public class CompanyAdminActionBean extends LayoutPage{
             CompanyLevelDTO cl = cls.getCompanyLevelById(Long.parseLong(cs));
             employee.setCompanyLevel(cl);
         }
+        List<UserRoleDTO> roles = new ArrayList<>();
+        if(getIsCarAdmin() != null && getIsCarAdmin().equals(Boolean.TRUE)){
+            UserRoleDTO role = new UserRoleDTO();
+            role.setName("carAdmin");
+            roles.add(role);           
+        }
+        if(getIsSysAdmin() != null && getIsSysAdmin().equals(Boolean.TRUE)){
+            UserRoleDTO role = new UserRoleDTO();
+            role.setName("sysAdmin");
+            roles.add(role);           
+        }
+        if(getIsManager() != null && getIsManager().equals(Boolean.TRUE)){
+            UserRoleDTO role = new UserRoleDTO();
+            role.setName("manager");
+            roles.add(role);           
+        }
+        if(getPassword() != null || getPassword().length() > 0){
+            employee.setPassword(password);
+        }
+        employee.setRoles(roles);
         employeeService.createEmployee(employee);
         return new RedirectResolution(this.getClass(), "employees");
     }
@@ -179,6 +208,26 @@ public class CompanyAdminActionBean extends LayoutPage{
             CompanyLevelDTO cl = cls.getCompanyLevelById(Long.parseLong(cs));
             employee.setCompanyLevel(cl);
         }
+        List<UserRoleDTO> roles = new ArrayList<>();
+        if(getIsCarAdmin() != null && getIsCarAdmin().equals(Boolean.TRUE)){
+            UserRoleDTO role = new UserRoleDTO();
+            role.setName("carAdmin");
+            roles.add(role);           
+        }
+        if(getIsSysAdmin() != null && getIsSysAdmin().equals(Boolean.TRUE)){
+            UserRoleDTO role = new UserRoleDTO();
+            role.setName("sysAdmin");
+            roles.add(role);           
+        }
+        if(getIsManager() != null && getIsManager().equals(Boolean.TRUE)){
+            UserRoleDTO role = new UserRoleDTO();
+            role.setName("manager");
+            roles.add(role);           
+        }
+        if(getPassword() != null || getPassword().length() > 0){
+            employee.setPassword(password);
+        }
+        employee.setRoles(roles);
         employeeService.updateEmployee(employee);
         return new RedirectResolution(this.getClass(), "employees");
     }
@@ -207,5 +256,54 @@ public class CompanyAdminActionBean extends LayoutPage{
             return;
         }
         employee = employeeService.getEmployeeById(Long.parseLong(ids));
+        if(employee.getRoles() != null){
+            for(UserRoleDTO role : employee.getRoles()){
+                if(role.getName().equals("manager")){
+                    isManager = true;
+                }
+                if(role.getName().equals("carAdmin")){
+                    isCarAdmin = true;
+                }
+                if(role.getName().equals("sysAdmin")){
+                    isSysAdmin = true;
+                }
+            }
+        }
     }
+
+    public Boolean getIsManager() {
+        return isManager;
+    }
+
+    public void setIsManager(Boolean isManager) {
+        this.isManager = isManager;
+    }
+
+    public Boolean getIsSysAdmin() {
+        return isSysAdmin;
+    }
+
+    public void setIsSysAdmin(Boolean isSysAdmin) {
+        this.isSysAdmin = isSysAdmin;
+    }
+
+    public Boolean getIsCarAdmin() {
+        return isCarAdmin;
+    }
+
+    public void setIsCarAdmin(Boolean isCarAdmin) {
+        this.isCarAdmin = isCarAdmin;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
+    
+    
+    
 }

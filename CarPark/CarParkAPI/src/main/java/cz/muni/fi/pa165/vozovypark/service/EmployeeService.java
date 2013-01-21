@@ -56,4 +56,6 @@ public interface EmployeeService {
      * @return void
      */
     void removeEmployee(Long id);
+    
+    EmployeeDTO getEmployeeByLogin(String login);
 }
