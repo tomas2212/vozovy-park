@@ -20,6 +20,8 @@ define(["dojo/on", "client/companyLevel", "client/cars"], function(on, companyLe
             companyLevel.connect(url+"companyLevels");
             car.companyLevelUrl =url+"companyLevels";   
             car.connect(url+"cars");
+            companyLevel.activateToolBar();
+            
             
             
             
