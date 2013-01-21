@@ -7,11 +7,11 @@
                     http://www.springframework.org/schema/security/spring-security-3.0.xsd">
     <global-method-security pre-post-annotations="enabled" />
     <http use-expressions="true">
-        <intercept-url pattern="/**" access="isAuthenticated()" />
+        <intercept-url pattern="/reservation/**" access="isAuthenticated()" />
         <intercept-url pattern="/reservation/acceptReservations/**" access="hasRole('manager')" />
         <intercept-url pattern="/carPark/**" access="hasRole('carAdmin')" />
         <intercept-url pattern="/company/**" access="hasRole('sysAdmin')" />
-        <form-login />
+        <form-login login-page="/login.jsp" authentication-failure-url="/login.jsp?login_error=true"/>
         <logout invalidate-session="true" logout-url="/logout" />
     </http>
     

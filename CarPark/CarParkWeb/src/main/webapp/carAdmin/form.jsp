@@ -2,10 +2,8 @@
 <script>
     
     
-     var dateFormat = "M d yy";
-    if(navigator.language == "sk"){
-        dateFormat = "dd.mm.yy";
-    }
+     var dateFormat = "dd/mm/yy ";
+   
     $(function() {
         $("#carYear").datepicker({dateFormat: dateFormat});
     });
@@ -28,7 +26,7 @@
     </tr>
     <tr>
         <th><s:label for="carYear" name="car.creationYear"/></th>
-        <td><s:text id="carYear" name="car.creationYear" formatType="date" formatPattern="yyyy" /></td>
+        <td><s:text id="carYear" name="car.creationYear" formatType="date" /></td>
     </tr>
     <tr>
         <th><s:label for="carCL" name="car.companyLevel"/></th>
