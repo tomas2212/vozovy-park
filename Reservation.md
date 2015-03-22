@@ -1,0 +1,15 @@
+# Entita Reservation #
+
+Popisuje konkrétnu rezerváciu s daným autom, zamestnancom a dátumom začiatku aj konca.
+
+
+# Atribúty entity #
+<ul>
+<li><b>id</b> - id rezervácie v databáze</li>
+<li><b>dateFrom</b> - dátum od ktorého ma rezervácia začať</li>
+<li><b>dateTo</b> - dátum kedy má rezervácia skončiť</li>
+<li><b>startDate</b> - dátum, kedy bolo vozidlo fyzicky prevzaté</li>
+<li><b>endDate</b> - dátum, kedy bolo vozidlo fyzicky vrátené</li>
+<li><b>car</b> - konkrétne auto, ktoré je predmetom rezervácie</li>
+<li><b>employee</b> - zamestnanec, ktorý požiadal o rezerváciu</li>
+</ul>

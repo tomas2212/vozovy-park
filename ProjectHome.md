@@ -1,0 +1,1 @@
+Projekt má simulovat situaci v reálné firmě, kde si jednotlivý zaměstnanci můžou zážádat o vypůjčení auta na určitý datum z firemního vozového parku. Systém na základě požadavku výpíše seznam volných automobilů a umožní jejich rezervaci.

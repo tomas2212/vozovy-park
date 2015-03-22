@@ -1,0 +1,10 @@
+# Entita Company Level #
+
+Predstavuje úrovne postavenia zamestnanca vo firme, na základe ktorých má prístup k určitým autám.
+
+
+# Atribúty entity #
+
+<li><b>id</b> - id postavenia v databáze</li>
+<li><b>levelValue</b> - hodnota daného postavenia, čím vyššia hodnota tým vyššie postavenie</li>
+<li><b>name</b> - názov úrovne postavenia</li>
