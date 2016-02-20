@@ -30,7 +30,6 @@ public interface CarDAO {
     /**
      * Returns all cars from DB
      *
-     * @param nothing
      * @return List of all cars
      */
     public List<Car> getAllCars();
@@ -39,7 +38,6 @@ public interface CarDAO {
      * Inserts a car into database and collection
      *
      * @param car New car
-     * @return nothing
      */
     public void insert(Car car);
 
@@ -47,7 +45,6 @@ public interface CarDAO {
      * Remove car from the collection and database
      *
      * @param car Car, we want to delete
-     * @return nothing
      */
     public void remove(Car car);
 
@@ -55,7 +52,6 @@ public interface CarDAO {
      * Updates specified car
      *
      * @param car Car, which we want to change(update)
-     * @return nothing
      */
     public void update(Car car);
 
