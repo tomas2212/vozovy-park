@@ -94,7 +94,7 @@ public class ReservationServiceImpl implements ReservationService {
         if (employee == null) {
             throw new IllegalArgumentException("ID is not specified");
         }
-        List<ReservationDTO> reservations = new ArrayList<ReservationDTO>();
+        List<ReservationDTO> reservations = new ArrayList<>();
         for (Reservation res : reservationDao.getReservationByEmployee(mapper.map(employee, Employee.class))) {
             reservations.add(mapper.map(res, ReservationDTO.class));
         }
@@ -106,7 +106,7 @@ public class ReservationServiceImpl implements ReservationService {
         if (car == null) {
             throw new IllegalArgumentException("Car is not specified");
         }
-        List<ReservationDTO> reservations = new ArrayList<ReservationDTO>();
+        List<ReservationDTO> reservations = new ArrayList<>();
         for (Reservation res : reservationDao.getReservationByCar(mapper.map(car, Car.class))) {
             reservations.add(mapper.map(res, ReservationDTO.class));
         }
@@ -121,7 +121,7 @@ public class ReservationServiceImpl implements ReservationService {
         if (employee == null) {
             throw new IllegalArgumentException("Employee is not specified");
         }
-        List<ReservationDTO> reservations = new ArrayList<ReservationDTO>();
+        List<ReservationDTO> reservations = new ArrayList<>();
         for (Reservation res : reservationDao.getReservationByCarAndEmployee(mapper.map(car, Car.class), mapper.map(employee, Employee.class))) {
             reservations.add(mapper.map(res, ReservationDTO.class));
         }
@@ -131,7 +131,7 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public List<ReservationDTO> getReservationsToConfirm() {
 
-        List<ReservationDTO> reservations = new ArrayList<ReservationDTO>();
+        List<ReservationDTO> reservations = new ArrayList<>();
         for (Reservation res : reservationDao.getReservationsToConfirm()) {
             reservations.add(mapper.map(res, ReservationDTO.class));
         }
@@ -141,7 +141,7 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public List<ReservationDTO> getAcceptedReservations() {
 
-        List<ReservationDTO> reservations = new ArrayList<ReservationDTO>();
+        List<ReservationDTO> reservations = new ArrayList<>();
         for (Reservation res : reservationDao.getAcceptedReservations()) {
             reservations.add(mapper.map(res, ReservationDTO.class));
         }
@@ -204,7 +204,7 @@ public class ReservationServiceImpl implements ReservationService {
     @PreAuthorize("hasRole('manager')")
     @Override
     public List<ReservationDTO> getAllReservations() {
-        List<ReservationDTO> reservations = new ArrayList<ReservationDTO>();
+        List<ReservationDTO> reservations = new ArrayList<>();
         for (Reservation res : reservationDao.getAllReservations()) {
             reservations.add(mapper.map(res, ReservationDTO.class));
         }

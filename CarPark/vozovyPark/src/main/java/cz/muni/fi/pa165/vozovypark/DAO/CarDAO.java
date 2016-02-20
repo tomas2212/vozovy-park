@@ -62,7 +62,7 @@ public interface CarDAO {
     /**
      * Returns list of all cars, which have equal companyLevel or higher.
      *
-     * @param companyLevel  Hierarchy level of employees in the VozovyParkIS
+     * @param companyLevel Hierarchy level of employees in the VozovyParkIS
      * @return List of all cars with the same hierarchy level or higher
      */
     public List<Car> getAllCarsWithHigherLevel(CompanyLevel companyLevel);

@@ -1,13 +1,10 @@
 package cz.muni.fi.pa165.vozovypark.service;
 
 import cz.muni.fi.pa165.vozovypark.DAO.EmployeeDAO;
-import cz.muni.fi.pa165.vozovypark.DAO.UserRoleDAO;
 import cz.muni.fi.pa165.vozovypark.DTO.CompanyLevelDTO;
 import cz.muni.fi.pa165.vozovypark.DTO.EmployeeDTO;
-import cz.muni.fi.pa165.vozovypark.DTO.UserRoleDTO;
 import cz.muni.fi.pa165.vozovypark.entities.CompanyLevel;
 import cz.muni.fi.pa165.vozovypark.entities.Employee;
-import cz.muni.fi.pa165.vozovypark.entities.UserRole;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -16,7 +13,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.dozer.Mapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -105,7 +101,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         return mapper.map(employeeById, EmployeeDTO.class);
     }
-    
 
     public EmployeeDTO getEmployeeByLogin(String login) {
         if (login == null) {

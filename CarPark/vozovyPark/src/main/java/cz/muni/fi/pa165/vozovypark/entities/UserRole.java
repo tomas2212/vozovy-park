@@ -4,9 +4,8 @@
  */
 package cz.muni.fi.pa165.vozovypark.entities;
 
+import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
@@ -14,11 +13,11 @@ import javax.persistence.Id;
  * @author andrej
  */
 @Entity
-public class UserRole {
-    @Id   
+public class UserRole implements Serializable{
+
+    @Id
     private String name;
 
-   
     public String getName() {
         return name;
     }
@@ -26,7 +25,4 @@ public class UserRole {
     public void setName(String name) {
         this.name = name;
     }
-    
-    
-    
 }

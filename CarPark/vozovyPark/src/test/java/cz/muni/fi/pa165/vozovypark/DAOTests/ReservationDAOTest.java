@@ -1,17 +1,16 @@
 package cz.muni.fi.pa165.vozovypark.DAOTests;
 
-import cz.muni.fi.pa165.vozovypark.DAO.*;
+import cz.muni.fi.pa165.vozovypark.DAO.CarDAO;
+import cz.muni.fi.pa165.vozovypark.DAO.EmployeeDAO;
+import cz.muni.fi.pa165.vozovypark.DAO.ReservationDAO;
 import cz.muni.fi.pa165.vozovypark.entities.Car;
 import cz.muni.fi.pa165.vozovypark.entities.Employee;
 import cz.muni.fi.pa165.vozovypark.entities.Reservation;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.List;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import org.junit.After;
-import static org.junit.Assert.*;
-import org.junit.Before;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -130,7 +129,6 @@ public class ReservationDAOTest extends AbstractDAOTest {
             fail("Removed entity with null id");
         } catch (DataAccessException e) {
         }
-
 
     }
 
@@ -416,7 +414,7 @@ public class ReservationDAOTest extends AbstractDAOTest {
 
         List<Reservation> list = reservationDao.getAcceptedReservations();
         Reservation reservation3 = list.get(0);
-       
-        assertEquals(reservation, reservation3);   
+
+        assertEquals(reservation, reservation3);
     }
 }

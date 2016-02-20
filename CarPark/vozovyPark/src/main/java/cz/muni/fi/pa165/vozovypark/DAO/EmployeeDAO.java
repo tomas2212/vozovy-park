@@ -25,7 +25,7 @@ public interface EmployeeDAO {
      * @return Employee Employee with that Name
      */
     public Employee getEmployeeByName(String name);
-    
+
     /**
      * Returns Employee by Login. Argument is Login Employee
      *
@@ -59,7 +59,7 @@ public interface EmployeeDAO {
      */
     public void remove(Employee employee);
 
-   /**
+    /**
      * Updates specified employee
      *
      * @param employee Employee, which we want to change(update)
@@ -78,7 +78,7 @@ public interface EmployeeDAO {
     /**
      * Returns list of all employee, which have equal companyLevel or higher.
      *
-     * @param companyLevel  Hierarchy level of employees in the VozovyParkIS
+     * @param companyLevel Hierarchy level of employees in the VozovyParkIS
      * @return List of all employee with the same hierarchy level or higher
      */
     public List<Employee> getAllEmployeeWithHigherLevel(CompanyLevel companyLevel);

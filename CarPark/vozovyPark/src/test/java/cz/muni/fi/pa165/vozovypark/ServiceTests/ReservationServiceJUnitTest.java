@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.vozovypark.ServiceTests;
 
 import cz.muni.fi.pa165.vozovypark.DAO.CarDAO;
-import cz.muni.fi.pa165.vozovypark.DAO.EmployeeDAO;
 import cz.muni.fi.pa165.vozovypark.DAO.ReservationDAO;
 import cz.muni.fi.pa165.vozovypark.DTO.CarDTO;
 import cz.muni.fi.pa165.vozovypark.DTO.EmployeeDTO;
@@ -10,17 +9,20 @@ import cz.muni.fi.pa165.vozovypark.entities.Car;
 import cz.muni.fi.pa165.vozovypark.entities.Employee;
 import cz.muni.fi.pa165.vozovypark.entities.Reservation;
 import cz.muni.fi.pa165.vozovypark.service.ReservationService;
-import cz.muni.fi.pa165.vozovypark.service.ReservationServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import static org.mockito.Mockito.*;
-import org.mockito.runners.MockitoJUnitRunner;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -31,15 +33,15 @@ public class ReservationServiceJUnitTest extends AbstractServiceTest {
 
     @Autowired
     private ReservationDAO reservationDao;
-    
+
     @Autowired
     private CarDAO carDao;
-     
+
     @Autowired
     private ReservationService reservationService;
-    
+
     @Before
-    public void setUp(){
+    public void setUp() {
         reset(reservationDao);
         reset(carDao);
     }
@@ -159,7 +161,6 @@ public class ReservationServiceJUnitTest extends AbstractServiceTest {
         reservation.setCar(car);
         reservation.setEmployee(employee);
 
-
         EmployeeDTO edto = new EmployeeDTO();
         edto.setId(new Long(1));
         edto.setName("Johny Star");
@@ -204,7 +205,6 @@ public class ReservationServiceJUnitTest extends AbstractServiceTest {
         reservation1.setCar(car1);
         reservation1.setEmployee(employee1);
 
-
         Employee employee2 = new Employee();
         employee2.setId(new Long(2));
         employee2.setName("Silvester Vlkoucho");
@@ -215,7 +215,6 @@ public class ReservationServiceJUnitTest extends AbstractServiceTest {
         Reservation reservation2 = new Reservation();
         reservation2.setCar(car2);
         reservation2.setEmployee(employee2);
-
 
         Employee employee3 = new Employee();
         employee3.setId(new Long(3));
@@ -228,7 +227,6 @@ public class ReservationServiceJUnitTest extends AbstractServiceTest {
         reservation3.setCar(car3);
         reservation3.setEmployee(employee3);
 
-        
         EmployeeDTO employee1dto = new EmployeeDTO();
         employee1dto.setId(new Long(1));
         employee1dto.setName("Johny Bravo");
@@ -240,7 +238,6 @@ public class ReservationServiceJUnitTest extends AbstractServiceTest {
         reservation1dto.setCar(car1dto);
         reservation1dto.setEmployee(employee1dto);
 
-        
         EmployeeDTO employee2dto = new EmployeeDTO();
         employee2dto.setId(new Long(2));
         employee2dto.setName("Silvester Vlkoucho");
@@ -252,7 +249,6 @@ public class ReservationServiceJUnitTest extends AbstractServiceTest {
         reservation2dto.setCar(car2dto);
         reservation2dto.setEmployee(employee2dto);
 
-
         EmployeeDTO employee3dto = new EmployeeDTO();
         employee3dto.setId(new Long(3));
         employee3dto.setName("Margareta Svietislnkova");
@@ -263,7 +259,6 @@ public class ReservationServiceJUnitTest extends AbstractServiceTest {
         ReservationDTO reservation3dto = new ReservationDTO();
         reservation3dto.setCar(car3dto);
         reservation3dto.setEmployee(employee3dto);
-
 
         List<Reservation> allEntities = new ArrayList<Reservation>();
         allEntities.add(reservation1);
@@ -305,7 +300,6 @@ public class ReservationServiceJUnitTest extends AbstractServiceTest {
         reservation2.setCar(car2);
         reservation2.setEmployee(employee);
 
-
         EmployeeDTO edto = new EmployeeDTO();
         edto.setName("Johny Star");
 
@@ -324,7 +318,6 @@ public class ReservationServiceJUnitTest extends AbstractServiceTest {
         r2dto.setId(new Long(1));
         r2dto.setCar(c2dto);
         r2dto.setEmployee(edto);
-
 
         List<Reservation> allEntities = new ArrayList<Reservation>();
         allEntities.add(reservation1);
@@ -362,7 +355,6 @@ public class ReservationServiceJUnitTest extends AbstractServiceTest {
         reservation2.setCar(car1);
         reservation2.setEmployee(employee2);
 
-
         EmployeeDTO edto = new EmployeeDTO();
         edto.setName("Johny Star");
 
@@ -381,7 +373,6 @@ public class ReservationServiceJUnitTest extends AbstractServiceTest {
         r2dto.setId(new Long(1));
         r2dto.setCar(cdto);
         r2dto.setEmployee(e2dto);
-
 
         List<Reservation> allEntities = new ArrayList<Reservation>();
         allEntities.add(reservation1);
@@ -412,7 +403,6 @@ public class ReservationServiceJUnitTest extends AbstractServiceTest {
         reservation.setId(new Long(1));
         reservation.setCar(car);
         reservation.setEmployee(employee);
-
 
         EmployeeDTO edto = new EmployeeDTO();
         edto.setName("Johny Bravo");
@@ -484,7 +474,6 @@ public class ReservationServiceJUnitTest extends AbstractServiceTest {
         reservation1.setCar(car1);
         reservation1.setEmployee(employee1);
 
-
         Employee employee2 = new Employee();
         employee2.setId(new Long(2));
         employee2.setName("Silvester Vlkoucho");
@@ -496,12 +485,9 @@ public class ReservationServiceJUnitTest extends AbstractServiceTest {
         reservation2.setCar(car2);
         reservation2.setEmployee(employee2);
 
-
         Reservation reservation3 = new Reservation();
         reservation3.setCar(car1);
         reservation3.setEmployee(employee1);
-
-
 
         EmployeeDTO employee1dto = new EmployeeDTO();
         employee1dto.setId(new Long(1));
@@ -513,7 +499,6 @@ public class ReservationServiceJUnitTest extends AbstractServiceTest {
         ReservationDTO reservation1dto = new ReservationDTO();
         reservation1dto.setCar(car1dto);
         reservation1dto.setEmployee(employee1dto);
-
 
         EmployeeDTO employee2dto = new EmployeeDTO();
         employee2dto.setId(new Long(2));
@@ -529,7 +514,6 @@ public class ReservationServiceJUnitTest extends AbstractServiceTest {
         ReservationDTO reservation3dto = new ReservationDTO();
         reservation3dto.setCar(car1dto);
         reservation3dto.setEmployee(employee1dto);
-
 
         List<Reservation> allEntities = new ArrayList<Reservation>();
         allEntities.add(reservation1);
@@ -595,18 +579,18 @@ public class ReservationServiceJUnitTest extends AbstractServiceTest {
         ReservationDTO reservation2dto = new ReservationDTO();
         reservation2dto.setCar(car2dto);
         reservation2dto.setEmployee(employee2dto);
-        
+
         List<Reservation> reser = new ArrayList<Reservation>();
         reser.add(reservation1);
         reser.add(reservation2);
-        
+
         List<ReservationDTO> reserDto = new ArrayList<ReservationDTO>();
         reserDto.add(reservation1dto);
         reserDto.add(reservation2dto);
-        
+
         when(reservationDao.getReservationsToConfirm()).thenReturn(reser);
         List<ReservationDTO> reservations = reservationService.getReservationsToConfirm();
-        assertEquals(reserDto.size(), reservations.size());          
+        assertEquals(reserDto.size(), reservations.size());
     }
 
     @Test

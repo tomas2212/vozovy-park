@@ -6,13 +6,21 @@ import cz.muni.fi.pa165.vozovypark.DTO.CompanyLevelDTO;
 import cz.muni.fi.pa165.vozovypark.entities.Car;
 import cz.muni.fi.pa165.vozovypark.entities.CompanyLevel;
 import cz.muni.fi.pa165.vozovypark.service.CarService;
-import cz.muni.fi.pa165.vozovypark.service.CarServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import org.junit.Before;
-import static org.mockito.Mockito.*;
+import org.junit.Test;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -20,23 +28,23 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Eduard Krak
  */
 public class CarServiceTest extends AbstractServiceTest {
-    
+
     @Autowired
     private CarDAO carDao;
-    
+
     @Autowired
     private CarService carService;
-    
+
     @Before
-    public void setUp(){
+    public void setUp() {
         reset(carDao);
     }
-    
+
     @Test
     public void testCreateCar() {
         CarDTO carDto = new CarDTO();
         carDto.setBrand("Volkswagen");
-  
+
         carService.createCar(carDto);
         verify(carDao, times(1)).insert(any(Car.class));
 
@@ -49,7 +57,7 @@ public class CarServiceTest extends AbstractServiceTest {
         //testing if carDao was called before throwing exception
         verify(carDao, never()).insert(null);
     }
-    
+
     @Test
     public void testUpdateCar() {
         CarDTO carDto = new CarDTO();
@@ -77,43 +85,42 @@ public class CarServiceTest extends AbstractServiceTest {
         } catch (IllegalArgumentException e) {
         }
     }
-    
-    
+
     @Test
     public void testSetCarAvailable() {
         Car car = new Car();
         car.setModel("Volkswagen");
         car.setAvailable(Boolean.FALSE);
         car.setId(new Long(1));
-        
+
         when(carDao.getCarById(new Long(1))).thenReturn(car);
-        
+
         carDao.insert(car);
         verify(carDao, times(1)).insert(any(Car.class));
 
         carService.setCarAvailable(car.getId(), Boolean.TRUE);
-        
+
         assertTrue(carDao.getCarById(car.getId()).getAvailable());
     }
-    
+
     @Test
-    public void testRemoveCar(){
-       Car car = new Car();
+    public void testRemoveCar() {
+        Car car = new Car();
         car.setId(new Long(1));
         car.setModel("Skoda");
 
         when(carDao.getCarById(new Long(1))).thenReturn(car);
-         
+
         carService.removeCar(new Long(1));
         verify(carDao, times(1)).remove(any(Car.class));
-        
-        try{
+
+        try {
             carService.removeCar(null);
             fail("accepted null id");
+        } catch (IllegalArgumentException e) {
         }
-        catch(IllegalArgumentException e) {}
     }
-    
+
     @Test
     public void testGetCarById() {
         Car car = new Car();
@@ -126,8 +133,8 @@ public class CarServiceTest extends AbstractServiceTest {
 
         when(carDao.getCarById(new Long(1))).thenReturn(car);
         CarDTO employeeById = carService.getCarById(new Long(1));
-        assertEquals( dto, employeeById);
-        
+        assertEquals(dto, employeeById);
+
         verify(carDao, times(1)).getCarById(eq(new Long(1)));
 
         try {
@@ -140,8 +147,8 @@ public class CarServiceTest extends AbstractServiceTest {
         when(carDao.getCarById(eq(new Long(2)))).thenReturn(null);
         assertNull(carService.getCarById(new Long(2)));
     }
-    
-     @Test
+
+    @Test
     public void testGetAllCars() {
         Car car1 = new Car();
         car1.setId(new Long(1));
@@ -166,90 +173,89 @@ public class CarServiceTest extends AbstractServiceTest {
         CarDTO car3dto = new CarDTO();
         car3dto.setId(new Long(3));
         car3dto.setModel("Skoda");
-        
+
         List<Car> allEntities = new ArrayList<Car>();
         allEntities.add(car1);
         allEntities.add(car2);
         allEntities.add(car3);
-        
+
         List<CarDTO> allDTO = new ArrayList<CarDTO>();
         allDTO.add(car1dto);
         allDTO.add(car2dto);
         allDTO.add(car3dto);
-        
+
         when(carDao.getAllCars()).thenReturn(allEntities);
         List<CarDTO> returnedCars = carService.getAllCars();
         assertEquals(allDTO.size(), returnedCars.size());
-        for(int i = 0; i < returnedCars.size(); i++){
+        for (int i = 0; i < returnedCars.size(); i++) {
             assertEquals(allDTO.get(i), returnedCars.get(i));
         }
-        verify(carDao, times(1)).getAllCars();      
+        verify(carDao, times(1)).getAllCars();
     }
-     
-     @Test
-     public void testGetCarsByCompanyLevel() {
+
+    @Test
+    public void testGetCarsByCompanyLevel() {
         CompanyLevel cl1 = new CompanyLevel();
         cl1.setLevelValue(1);
         cl1.setId(new Long(1));
-        
+
         CompanyLevel cl2 = new CompanyLevel();
         cl2.setLevelValue(2);
         cl2.setId(new Long(2));
-        
+
         CompanyLevel cl3 = new CompanyLevel();
         cl3.setLevelValue(3);
         cl3.setId(new Long(3));
-        
+
         CompanyLevelDTO cl1dto = new CompanyLevelDTO();
         cl1dto.setLevelValue(1);
         cl1dto.setId(new Long(1));
-        
+
         CompanyLevelDTO cl2dto = new CompanyLevelDTO();
         cl2dto.setLevelValue(2);
         cl2dto.setId(new Long(2));
-        
+
         CompanyLevelDTO cl3dto = new CompanyLevelDTO();
         cl3dto.setLevelValue(3);
         cl3dto.setId(new Long(3));
-        
-        
+
         Car car1 = new Car();
         car1.setId(new Long(1));
         car1.setModel("Volkswagen");
         car1.setCompanyLevel(cl3);
         car1.setCompanyLevel(cl1);
-        
+
         Car car2 = new Car();
         car2.setId(new Long(2));
         car2.setModel("Mercedes");
         car2.setCompanyLevel(cl2);
-        
+
         Car car3 = new Car();
         car3.setId(new Long(3));
         car3.setModel("Skoda");
         car3.setCompanyLevel(cl3);
-        
+
         List<Car> allEntities = new ArrayList<Car>();
         allEntities.add(car1);
         allEntities.add(car2);
         allEntities.add(car3);
-        
+
         List<Car> cl2Entities = new ArrayList<Car>();
         cl2Entities.add(car2);
         cl2Entities.add(car3);
-         
+
         when(carDao.getAllCars()).thenReturn(allEntities); //if in some case when implementation wants to call it
         when(carDao.getAllCarsWithHigherLevel(eq(cl2))).thenReturn(cl2Entities);
         List<CarDTO> returnedEmployees = carService.getCarsByCompanyLevel(cl2dto);
         assertEquals(cl2Entities.size(), returnedEmployees.size());
-        for(CarDTO em : returnedEmployees){
+        for (CarDTO em : returnedEmployees) {
             assertTrue(em.getCompanyLevel().getLevelValue() >= cl2dto.getLevelValue());
         }
-        
-        try{
+
+        try {
             carService.getCarsByCompanyLevel(null);
             fail("Implementation accepts null value of company Level");
+        } catch (IllegalArgumentException e) {
         }
-        catch(IllegalArgumentException e){}
-     }  
+    }
 }

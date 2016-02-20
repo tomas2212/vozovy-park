@@ -3,7 +3,10 @@ package cz.muni.fi.pa165.vozovypark.DAO;
 import cz.muni.fi.pa165.vozovypark.entities.Car;
 import cz.muni.fi.pa165.vozovypark.entities.CompanyLevel;
 import java.util.List;
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -15,11 +18,13 @@ public class CarDAOImpl implements CarDAO {
     @PersistenceContext
     protected EntityManager entityManager;
 
+    @Override
     public Car getCarById(Long id) {
 
         return entityManager.find(Car.class, id);
     }
 
+    @Override
     public Car getCarBySpz(String spz) {
         if (spz == null) {
             throw new IllegalArgumentException("You have to set spz.");
@@ -30,12 +35,14 @@ public class CarDAOImpl implements CarDAO {
         return (Car) q.getSingleResult();
     }
 
+    @Override
     public List<Car> getAllCars() {
 
         TypedQuery<Car> q = entityManager.createQuery("SELECT e FROM Car e", Car.class);
         return q.getResultList();
     }
 
+    @Override
     public void insert(Car car) {
         if (car == null) {
             throw new IllegalArgumentException("You have to set car");
@@ -44,6 +51,7 @@ public class CarDAOImpl implements CarDAO {
 
     }
 
+    @Override
     public void remove(Car car) {
         if (car == null) {
             throw new IllegalArgumentException("You have to set car");
@@ -55,6 +63,7 @@ public class CarDAOImpl implements CarDAO {
 
     }
 
+    @Override
     public void update(Car car) {
         if (car == null) {
             throw new IllegalArgumentException("You have to specify car");
@@ -66,6 +75,7 @@ public class CarDAOImpl implements CarDAO {
 
     }
 
+    @Override
     public List<Car> getAllCarsWithHigherLevel(CompanyLevel companyLevel) {
         if (companyLevel == null) {
             throw new IllegalArgumentException("You have to specify company level");

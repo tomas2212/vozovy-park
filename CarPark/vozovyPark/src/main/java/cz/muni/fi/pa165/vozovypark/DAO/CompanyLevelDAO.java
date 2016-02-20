@@ -5,57 +5,66 @@ import java.util.List;
 
 /**
  * Dao for entity {@link CompanyLevel} provides data operations into database
+ *
  * @author Andrej Bauer
  */
 public interface CompanyLevelDAO {
-    
+
     /**
      * Create {@link CompanyLevel} in the database
-     * @param companyLevel 
+     *
+     * @param companyLevel
      */
     void insert(CompanyLevel companyLevel);
-    
+
     /**
-     * Update attributes of current {@link CompanyLevel} in database
-     * Parameter companyLevel must be identified with his attribute id
-     * @param companyLevel 
+     * Update attributes of current {@link CompanyLevel} in database Parameter
+     * companyLevel must be identified with his attribute id
+     *
+     * @param companyLevel
      */
     void update(CompanyLevel companyLevel);
-    
+
     /**
-     * Remove {@link CompanyLevel} given in parameter from database
-     * Parameter companyLevel must be identified with his attribute id
-     * @param companyLevel 
+     * Remove {@link CompanyLevel} given in parameter from database Parameter
+     * companyLevel must be identified with his attribute id
+     *
+     * @param companyLevel
      */
     void remove(CompanyLevel companyLevel);
-    
+
     /**
      * Finds {@link CompanyLevel} with given id in database
+     *
      * @param id
      * @return {@link CompanyLevel} if exist
      */
     CompanyLevel getCompanyLevelById(Long id);
-    
+
     /**
-     * Returns all  {@link CompanyLevel} entities from database
-     * @return  {@link List} of all  {@link CompanyLevel} in database
+     * Returns all {@link CompanyLevel} entities from database
+     *
+     * @return {@link List} of all {@link CompanyLevel} in database
      */
-    List<CompanyLevel> getAllCompanyLevels();    
-    
+    List<CompanyLevel> getAllCompanyLevels();
+
     /**
      * Make Company level as root
+     *
      * @return {@link CompanyLevel} if exists
      */
     CompanyLevel getRootCompanyLevel();
-    
+
     /**
      * Getiing maximal Level value
+     *
      * @return the highest Level value
      */
     Integer getMaxLevelValue();
-    
+
     /**
      * Getting minimal Level Value
+     *
      * @return the lowest Level value
      */
     Integer getMinLevelValue();

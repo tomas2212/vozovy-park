@@ -2,45 +2,44 @@ package cz.muni.fi.pa165.vozovypark.ServiceTests;
 
 import cz.muni.fi.pa165.vozovypark.DAO.CompanyLevelDAO;
 import cz.muni.fi.pa165.vozovypark.DTO.CompanyLevelDTO;
-import cz.muni.fi.pa165.vozovypark.DTO.EmployeeDTO;
 import cz.muni.fi.pa165.vozovypark.entities.CompanyLevel;
 import cz.muni.fi.pa165.vozovypark.service.CompanyLevelService;
-import cz.muni.fi.pa165.vozovypark.service.CompanyServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-import static org.mockito.Mockito.*;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 import org.junit.Before;
+import org.junit.Test;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  *
  * @author Lukas Maticky
  */
-public class CompanyServiceTest extends AbstractServiceTest{
-    
-    
+public class CompanyServiceTest extends AbstractServiceTest {
+
     @Autowired
     private CompanyLevelDAO companyLevelDao;
-   
+
     @Autowired
     private CompanyLevelService companyLevelService;
-    
+
     @Before
-    public void setUp(){
+    public void setUp() {
         reset(companyLevelDao);
     }
 
     @Test
     public void testCreateCompanyLevel() {
-       
+
         companyLevelService.createCompanyLevel("first level");
         verify(companyLevelDao, times(1)).insert(any(CompanyLevel.class));
 
@@ -52,7 +51,7 @@ public class CompanyServiceTest extends AbstractServiceTest{
         //testing if companyLevelDao was called before throwing exception
         verify(companyLevelDao, never()).insert(null);
     }
-    
+
     @Test
     public void testUpdateCompanyLevel() {
         CompanyLevelDTO companyLevelDto = new CompanyLevelDTO();
@@ -72,9 +71,9 @@ public class CompanyServiceTest extends AbstractServiceTest{
         }
 
         //testing if companyLevelDao was called before throwing exception
-        verify(companyLevelDao, never()).update(null);   
+        verify(companyLevelDao, never()).update(null);
     }
-    
+
     @Test
     public void testCompanyLevelById() {
         CompanyLevel companyLevel = new CompanyLevel();
@@ -87,8 +86,8 @@ public class CompanyServiceTest extends AbstractServiceTest{
 
         when(companyLevelDao.getCompanyLevelById(new Long(1))).thenReturn(companyLevel);
         CompanyLevelDTO companyLevelById = companyLevelService.getCompanyLevelById(new Long(1));
-        assertEquals( dto, companyLevelById);
-        
+        assertEquals(dto, companyLevelById);
+
         verify(companyLevelDao, times(1)).getCompanyLevelById(eq(new Long(1)));
 
         try {
@@ -101,7 +100,7 @@ public class CompanyServiceTest extends AbstractServiceTest{
         when(companyLevelDao.getCompanyLevelById(eq(new Long(2)))).thenReturn(null);
         assertNull(companyLevelService.getCompanyLevelById(new Long(2)));
     }
-    
+
     @Test
     public void testgetAllCompanyLeves() {
         CompanyLevel companyLevel1 = new CompanyLevel();
@@ -127,41 +126,41 @@ public class CompanyServiceTest extends AbstractServiceTest{
         CompanyLevelDTO companyLevel3dto = new CompanyLevelDTO();
         companyLevel3dto.setId(new Long(3));
         companyLevel3dto.setName("third level");
-        
+
         List<CompanyLevel> allEntities = new ArrayList<CompanyLevel>();
         allEntities.add(companyLevel1);
         allEntities.add(companyLevel2);
         allEntities.add(companyLevel3);
-        
+
         List<CompanyLevelDTO> allDTO = new ArrayList<CompanyLevelDTO>();
         allDTO.add(companyLevel1dto);
         allDTO.add(companyLevel2dto);
         allDTO.add(companyLevel3dto);
-        
+
         when(companyLevelDao.getAllCompanyLevels()).thenReturn(allEntities);
         List<CompanyLevelDTO> returnedCompanyLevels = companyLevelService.getAllCompanyLevels();
         assertEquals(allDTO.size(), returnedCompanyLevels.size());
-        for(int i = 0; i < returnedCompanyLevels.size(); i++){
+        for (int i = 0; i < returnedCompanyLevels.size(); i++) {
             assertEquals(allDTO.get(i), returnedCompanyLevels.get(i));
         }
-        verify(companyLevelDao, times(1)).getAllCompanyLevels();     
+        verify(companyLevelDao, times(1)).getAllCompanyLevels();
     }
-            
+
     @Test
     public void testRemooveCompanyLevel() {
-         CompanyLevel companyLevel = new CompanyLevel();
+        CompanyLevel companyLevel = new CompanyLevel();
         companyLevel.setId(new Long(1));
         companyLevel.setName("first level");
 
         when(companyLevelDao.getCompanyLevelById(new Long(1))).thenReturn(companyLevel);
-         
+
         companyLevelService.removeCompanyLevel(new Long(1));
         verify(companyLevelDao, times(1)).remove(any(CompanyLevel.class));
-        
-        try{
+
+        try {
             companyLevelService.removeCompanyLevel(null);
             fail("accepted null id");
+        } catch (IllegalArgumentException e) {
         }
-        catch(IllegalArgumentException e) {}
-     }
+    }
 }

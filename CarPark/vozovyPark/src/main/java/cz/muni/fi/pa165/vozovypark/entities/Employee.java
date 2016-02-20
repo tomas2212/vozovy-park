@@ -2,7 +2,15 @@ package cz.muni.fi.pa165.vozovypark.entities;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -17,13 +25,13 @@ import javax.persistence.*;
     @NamedQuery(name = Employee.FIND_BY_ADDRESS, query = "SELECT p from Employee p where p.address=:address")
 })
 public class Employee implements Serializable {
-    
+
     public static final String FIND_ALL = "findAllEmp";
     public static final String FIND_BY_ID = "findEmployeById";
     public static final String FIND_BY_NAME = "findEmployeByName";
     public static final String FIND_BY_LOGIN = "findEmployeByLogin";
     public static final String FIND_BY_ADDRESS = "findEmployeByAddress";
-   
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,9 +40,9 @@ public class Employee implements Serializable {
     private String position;
     private Boolean approve;
     private String address;
-    @Column(unique=true)
-    private String login;    
-    private String password;    
+    @Column(unique = true)
+    private String login;
+    private String password;
     @OneToOne
     private CompanyLevel companyLevel;
     @ManyToMany
@@ -111,7 +119,7 @@ public class Employee implements Serializable {
     public void setRoles(List<UserRole> roles) {
         this.roles = roles;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -133,6 +141,6 @@ public class Employee implements Serializable {
 
     @Override
     public String toString() {
-        return "id=" + id ;
+        return "id=" + id;
     }
 }

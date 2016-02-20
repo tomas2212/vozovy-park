@@ -2,31 +2,38 @@ package cz.muni.fi.pa165.vozovypark.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
 
 /**
- * Car entity
- * represent company cars.
- * 
+ * Car entity represent company cars.
+ *
  * @author Tomas Svrcek
  */
 @Entity
 @NamedQueries({
     @NamedQuery(name = Car.FIND_ALL, query = "SELECT p from Car p"),
     @NamedQuery(name = Car.FIND_BY_ID, query = "SELECT p from Car p where p.id=:id"),
-    @NamedQuery(name = Car.FIND_BY_SPZ, query = "SELECT p from Car p where p.spz=:spz") 
+    @NamedQuery(name = Car.FIND_BY_SPZ, query = "SELECT p from Car p where p.spz=:spz")
 })
 public class Car implements Serializable {
-    
+
     public static final String FIND_ALL = "findAllCars";
     public static final String FIND_BY_ID = "findCarById";
     public static final String FIND_BY_SPZ = "findCarBySpz";
-    
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(length=15)
+    @Column(length = 15)
     private String spz;
     private String brand;
     private String model;
@@ -35,8 +42,7 @@ public class Car implements Serializable {
     private Boolean available;
     @OneToOne
     private CompanyLevel companyLevel;
-    
-    
+
     public Long getId() {
         return id;
     }
@@ -92,7 +98,7 @@ public class Car implements Serializable {
     public void setCompanyLevel(CompanyLevel companyLevel) {
         this.companyLevel = companyLevel;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -115,5 +121,5 @@ public class Car implements Serializable {
     @Override
     public String toString() {
         return "id=" + id;
-    }  
+    }
 }

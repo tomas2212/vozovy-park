@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -27,7 +26,7 @@ import javax.persistence.Temporal;
     @NamedQuery(name = Reservation.FIND_ACCEPTED, query = "SELECT p from Reservation p where p.confirmed is true")
 })
 public class Reservation implements Serializable {
-    
+
     public static final String FIND_ALL = "findAllReservations";
     public static final String FIND_BY_ID = "findReservationById";
     public static final String FIND_BY_EMPLOYEE = "findReservationByEmployee";
@@ -35,7 +34,7 @@ public class Reservation implements Serializable {
     public static final String FIND_BY_CAR_AND_EMPLOYEE = "findReservationByCarAndEmployee";
     public static final String FIND_TO_CONFIRM = "findReservationsToConfirm";
     public static final String FIND_ACCEPTED = "findAcceptedReservations";
-    
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -51,9 +50,8 @@ public class Reservation implements Serializable {
     @OneToOne
     private Employee employee;
     @OneToOne
-    private Car car;    
+    private Car car;
     private boolean confirmed = false;
-    
 
     public Long getId() {
         return id;
@@ -118,8 +116,7 @@ public class Reservation implements Serializable {
     public void setConfirmed(boolean confirmed) {
         this.confirmed = confirmed;
     }
-    
-    
+
     @Override
     public int hashCode() {
         int hash = 0;

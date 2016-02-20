@@ -1,17 +1,10 @@
 package cz.muni.fi.pa165.vozovypark.DAOTests;
 
-import cz.muni.fi.pa165.vozovypark.DAO.CarDAO;
 import cz.muni.fi.pa165.vozovypark.DAO.CompanyLevelDAO;
-import cz.muni.fi.pa165.vozovypark.DAO.CompanyLevelDAOImpl;
 import cz.muni.fi.pa165.vozovypark.entities.CompanyLevel;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import org.junit.After;
-import org.junit.Before;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**

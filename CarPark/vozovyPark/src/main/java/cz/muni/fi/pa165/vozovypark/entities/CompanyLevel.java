@@ -7,13 +7,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
- * CompanyLevel entity
- * represent hierarchic structure of company.
+ * CompanyLevel entity represent hierarchic structure of company.
  *
- * @author Andrej Bauer 
+ * @author Andrej Bauer
  */
 @Entity
 public class CompanyLevel implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,8 +44,7 @@ public class CompanyLevel implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-    
-    
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -68,5 +67,5 @@ public class CompanyLevel implements Serializable {
     @Override
     public String toString() {
         return "cz.muni.fi.pa165.vozovypark.entities.CompanyLevel[ id=" + id + " ]";
-    }    
+    }
 }

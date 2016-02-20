@@ -2,16 +2,12 @@ package cz.muni.fi.pa165.vozovypark.DAOTests;
 
 import cz.muni.fi.pa165.vozovypark.DAO.CompanyLevelDAO;
 import cz.muni.fi.pa165.vozovypark.DAO.EmployeeDAO;
-import cz.muni.fi.pa165.vozovypark.entities.Car;
 import cz.muni.fi.pa165.vozovypark.entities.CompanyLevel;
 import cz.muni.fi.pa165.vozovypark.entities.Employee;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import org.junit.After;
-import static org.junit.Assert.*;
-import org.junit.Before;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -162,7 +158,6 @@ public class EmployeeDAOTest extends AbstractDAOTest {
         Employee employee1 = new Employee();
         employee1.setCompanyLevel(cl1);
         employeeDao.insert(employee1);
-
 
         CompanyLevel cl2 = new CompanyLevel();
         cl2.setLevelValue(3);

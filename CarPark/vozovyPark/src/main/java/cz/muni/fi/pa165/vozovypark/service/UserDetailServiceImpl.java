@@ -6,7 +6,6 @@ import cz.muni.fi.pa165.vozovypark.entities.Employee;
 import cz.muni.fi.pa165.vozovypark.entities.UserRole;
 import java.util.ArrayList;
 import java.util.Collection;
-import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
@@ -23,26 +22,26 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author andrej
  */
-@Service("userDetailsService") 
+@Service("userDetailsService")
 @Transactional
 public class UserDetailServiceImpl implements UserDetailsService {
-    
+
     @Autowired
     @Qualifier("employeeDao")
     private EmployeeDAO dao;
-    
+
     @Autowired
     UserRoleDAO userRoleDao;
-    
-    public void setEmployeeDao(EmployeeDAO dao){
+
+    public void setEmployeeDao(EmployeeDAO dao) {
         this.dao = dao;
     }
 
     @Override
     public UserDetails loadUserByUsername(String string) throws UsernameNotFoundException, DataAccessException {
-        
-        if(string.equals("superuser")){
-            if(userRoleDao.getAllUserRoles().size() == 0){
+
+        if (string.equals("superuser")) {
+            if (userRoleDao.getAllUserRoles().size() == 0) {
                 UserRole userRole = new UserRole();
                 userRole.setName("manager");
                 userRoleDao.insert(userRole);
@@ -53,26 +52,25 @@ public class UserDetailServiceImpl implements UserDetailsService {
                 userRole.setName("carAdmin");
                 userRoleDao.insert(userRole);
             }
-            Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-            authorities.add(new GrantedAuthorityImpl("manager") );
-            authorities.add(new GrantedAuthorityImpl("sysAdmin") );
-            authorities.add(new GrantedAuthorityImpl("carAdmin") );
+            Collection<GrantedAuthority> authorities = new ArrayList<>();
+            authorities.add(new GrantedAuthorityImpl("manager"));
+            authorities.add(new GrantedAuthorityImpl("sysAdmin"));
+            authorities.add(new GrantedAuthorityImpl("carAdmin"));
             return new User("superuser", "bed77bf881c52caf14da5d0b9cd84bc8", true, true, true, true, authorities);
-            
+
         }
-        
+
         Employee userEntity = dao.getEmployeeByLogin(string);
         if (userEntity == null) {
             throw new UsernameNotFoundException("user not found");
         }
-        
 
         return buildUserFromUserEntity(userEntity);
 
     }
 
     User buildUserFromUserEntity(Employee userEntity) {
-      
+
         String username = userEntity.getLogin();
         String password = userEntity.getPassword();
         boolean enabled = true;
@@ -80,8 +78,8 @@ public class UserDetailServiceImpl implements UserDetailsService {
         boolean credentialsNonExpired = true;
         boolean accountNonLocked = true;
 
-        Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-       for (UserRole role : userEntity.getRoles()) {
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        for (UserRole role : userEntity.getRoles()) {
             authorities.add(new GrantedAuthorityImpl(role.getName()));
         }
 
@@ -89,6 +87,4 @@ public class UserDetailServiceImpl implements UserDetailsService {
                 accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
         return user;
     }
-    
-    
 }
