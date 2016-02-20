@@ -24,6 +24,9 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
                 <entry key="carService">
                     <ref bean="CarService" />
                 </entry>
+<!--                <entry key="employeeService">
+                    <ref bean="EmployeeService" />
+                </entry>-->
             </map>
         </property>
     </bean>

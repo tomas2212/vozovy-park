@@ -26,8 +26,10 @@ import org.slf4j.LoggerFactory;
  */
 @WebServlet(urlPatterns = "/companyLevels/*")
 public class CompanyLevelRest extends HttpServlet {
+
     final static Logger log = LoggerFactory.getLogger(CompanyLevelRest.class);
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
     CompanyLevelService companyLevelService;
     CarService carService;
 

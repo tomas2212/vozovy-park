@@ -30,7 +30,8 @@ import org.slf4j.LoggerFactory;
 public class CarRest extends HttpServlet {
 
     final static Logger log = LoggerFactory.getLogger(CarRest.class);
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
     CompanyLevelService companyLevelService;
     CarService carService;
 
@@ -50,7 +51,7 @@ public class CarRest extends HttpServlet {
         String path = req.getPathInfo();
         if (path == null || path.equals("/")) {
             if (req.getParameter("companyLevel") != null) {
-                long id = Long.valueOf(req.getParameter("companyLevel")).longValue();
+                long id = Long.valueOf(req.getParameter("companyLevel"));
                 try {
                     mapper.writeValue(resp.getOutputStream(), carCollectionToMap(getCarsByCompanyLevel(id)));
                 } catch (Exception ex) {
@@ -210,7 +211,7 @@ public class CarRest extends HttpServlet {
                     if (dto != null) {
                         JsonNode jsonNode = mapper.readValue(req.getInputStream(), JsonNode.class);
                         if (jsonNode != null && !jsonNode.isMissingNode()) {
-                                if (jsonNode.get("model") != null && jsonNode.hasNonNull("model")) {
+                            if (jsonNode.get("model") != null && jsonNode.hasNonNull("model")) {
                                 dto.setModel(jsonNode.get("model").asText());
                             }
                             if (jsonNode.get("brand") != null && jsonNode.hasNonNull("brand")) {
