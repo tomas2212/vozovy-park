@@ -7,23 +7,23 @@
 <f:message key="reservationsSubMenu.myReservations" var="title" />
 <s:layout-render name="/layout.jsp" title="${title}" 
                  mainMenu="${actionBean.mainMenu}" subMenu="${actionBean.subMenu}">
-    
+
     <s:layout-component name="content">
-          <s:useActionBean beanclass="cz.muni.fi.pa165.vozovypark.web.ReservationsActionBean" var="actionBean"/>  
+        <s:useActionBean beanclass="cz.muni.fi.pa165.vozovypark.web.ReservationsActionBean" var="actionBean"/>  
         <br/>
         <table>
             <thead>
-            <tr>
-                <td><s:label name="reservation.id" /></td>
-                <td><s:label name="reservation.from" /></td>
-                <td><s:label name="reservation.to" /></td>
-                <td><s:label name="reservation.start" /></td>
-                <td><s:label name="reservation.end" /></td>
-                <td><s:label name="reservation.confirmed" /></td>
-                <td><s:label name="reservation.car" /></td>
-                <td><s:label name="reservation.employee" /></td>
-                <td></td>
-            </tr>
+                <tr>
+                    <td><s:label name="reservation.id" /></td>
+                    <td><s:label name="reservation.from" /></td>
+                    <td><s:label name="reservation.to" /></td>
+                    <td><s:label name="reservation.start" /></td>
+                    <td><s:label name="reservation.end" /></td>
+                    <td><s:label name="reservation.confirmed" /></td>
+                    <td><s:label name="reservation.car" /></td>
+                    <td><s:label name="reservation.employee" /></td>
+                    <td></td>
+                </tr>
             </thead>
             <c:forEach items="${actionBean.unconfirmedReservations}" var="res">
                 <tr>
@@ -32,11 +32,17 @@
                     <td><s:format formatPattern="dd.MM.YYYY" value="${res.dateTo}" /></td>
                     <td><s:format formatPattern="dd.MM.YYYY" value="${res.startDate}" /></td>
                     <td><s:format formatPattern="dd.MM.YYYY" value="${res.returnDate}" /></td>
-                    <td class="confirmed"><img align="center" src="${pageContext.request.contextPath}${(res.confirmed)?'/images/available.png' :  '/images/unavailable.png'}"  /></td>
+                    <td class="confirmed">
+                        <img align="center" src="${pageContext.request.contextPath}${(res.confirmed) ? '/images/available.png' : '/images/unavailable.png'}" />
+                    </td>
                     <td><c:out value="${res.car.spz}" /></td>
                     <td><c:out value="${res.employee.name}" /></td>
-                    <td><s:link beanclass="cz.muni.fi.pa165.vozovypark.web.ReservationsActionBean" event="confirm"><s:param name="resDTO.id" value="${res.id}"/><f:message key="reservation.confirm"/></s:link> </td>
-              
+                    <td>
+                        <s:link beanclass="cz.muni.fi.pa165.vozovypark.web.ReservationsActionBean" event="confirm">
+                            <s:param name="resDTO.id" value="${res.id}"/>
+                            <f:message key="reservation.confirm"/>
+                        </s:link>
+                    </td>
                 </tr>
             </c:forEach>            
         </table>

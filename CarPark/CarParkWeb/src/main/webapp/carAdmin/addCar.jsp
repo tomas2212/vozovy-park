@@ -12,10 +12,10 @@
 
         <s:form beanclass="cz.muni.fi.pa165.vozovypark.web.CarParkAdminActionBean">
             <s:hidden name="car.id"/>
-          
-                <%@include file="form.jsp"%>
-                <s:submit name="create"><f:message key="carPark.addCar"/></s:submit>
-                
+
+            <%@include file="form.jsp"%>
+            <s:submit name="create"><f:message key="carPark.addCar"/></s:submit>
+
         </s:form>
     </s:layout-component>
 </s:layout-render>

@@ -12,12 +12,11 @@
 
         <s:form beanclass="cz.muni.fi.pa165.vozovypark.web.CarParkAdminActionBean">
             <s:hidden name="car.id"/>
-            
-                <%@include file="form.jsp"%>
-                <s:submit name="update"><f:message key="carPark.save"/></s:submit>
-                <s:submit name="cancel"><f:message key="carPark.cancel"/></s:submit>
-             
-                
+
+            <%@include file="form.jsp"%>
+            <s:submit name="update"><f:message key="carPark.save"/></s:submit>
+            <s:submit name="cancel"><f:message key="carPark.cancel"/></s:submit>
+
         </s:form>
     </s:layout-component>
 </s:layout-render>

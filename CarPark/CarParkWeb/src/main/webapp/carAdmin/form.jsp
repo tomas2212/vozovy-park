@@ -1,24 +1,24 @@
 <%@ taglib prefix="s" uri="http://stripes.sourceforge.net/stripes.tld" %>
 <script>
-    
-    
-     var dateFormat = "dd/mm/yy ";
-   
-    $(function() {
+
+
+    var dateFormat = "dd/mm/yy";
+
+    $(function () {
         $("#carYear").datepicker({dateFormat: dateFormat});
     });
-    
+
 </script>
-       
+
 <s:errors/>
 <table>
     <tr>
-        <th><s:label for="carModel" name="car.model"/></th>
-        <td><s:text id="carModel" name="car.model"/></td>
-    </tr>
-    <tr>
         <th><s:label for="carBrand" name="car.brand"/></th>
         <td><s:text id="carBrand" name="car.brand" /></td>
+    </tr>
+    <tr>
+        <th><s:label for="carModel" name="car.model"/></th>
+        <td><s:text id="carModel" name="car.model"/></td>
     </tr>
     <tr>
         <th><s:label for="carSPZ" name="car.spz"/></th>

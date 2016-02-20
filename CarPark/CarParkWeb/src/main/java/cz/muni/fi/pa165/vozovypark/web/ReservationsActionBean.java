@@ -42,7 +42,7 @@ public class ReservationsActionBean extends LayoutPage {
     private EmployeeService employeeService;
     @SpringBean(value = "CarService")
     private CarService carService;
-     @SpringBean(value = "reservationsSubMenu")
+    @SpringBean(value = "reservationsSubMenu")
     private Menu subMenu;
 
     @Override
@@ -113,7 +113,7 @@ public class ReservationsActionBean extends LayoutPage {
     }
 
     public List<ReservationDTO> getMyReservations() {
-        if(getLogin().equals("superuser")){
+        if (getLogin().equals("superuser")) {
             return new ArrayList<>();
         }
         EmployeeDTO employee = employeeService.getEmployeeByLogin(getLogin());
@@ -139,7 +139,7 @@ public class ReservationsActionBean extends LayoutPage {
         @Validate(on = {"create", "update"}, field = "dateFrom", required = true),
         @Validate(on = {"create", "update"}, field = "dateTo", required = true),
         @Validate(on = {"create", "update"}, field = "car", required = true),})
-   
+
     ReservationDTO resDTO;
 
     public ReservationDTO getResDTO() {
@@ -171,10 +171,8 @@ public class ReservationsActionBean extends LayoutPage {
             resDTO.setCar(carDTO);
         }
 
-
         EmployeeDTO employeeDTO = employeeService.getEmployeeByLogin(getLogin());
         resDTO.setEmployee(employeeDTO);
-
 
         rs.createReservation(resDTO);
         return new RedirectResolution(this.getClass(), "myReservations");
@@ -195,7 +193,7 @@ public class ReservationsActionBean extends LayoutPage {
             resDTO.setCar(carDTO);
         }
 
-       EmployeeDTO employeeDTO = employeeService.getEmployeeByLogin(getLogin());
+        EmployeeDTO employeeDTO = employeeService.getEmployeeByLogin(getLogin());
         resDTO.setEmployee(employeeDTO);
         rs.updateReservation(resDTO);
         return new RedirectResolution(this.getClass(), "myReservations");

@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.vozovypark.web.menu;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -13,7 +12,7 @@ public class Menu {
     List<MenuItem> menuItems;
 
     public Menu() {
-        menuItems = new ArrayList<MenuItem>();
+        menuItems = new ArrayList<>();
     }
 
     public void addMenuItem(MenuItem menuItem) {

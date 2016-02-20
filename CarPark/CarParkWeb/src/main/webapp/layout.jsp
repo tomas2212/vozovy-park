@@ -10,7 +10,7 @@
             <title>${title}</title>
             <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
             <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
-            
+
             <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" />
             <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/style.css" />
         </head>
@@ -39,16 +39,17 @@
                             <li>
                                 <s:link href="${subMenuItem.url}" class="${(subMenuItem.active)? 'active': ''}">
                                     <f:message key="${subMenuItem.name}"/>
-                                </s:link></li>
-                            </c:forEach>
+                                </s:link>
+                            </li>
+                        </c:forEach>
                     </ul>
-
                 </div>
+                    
                 <div class="content">
                     <h2>${title}</h2>
                     <s:layout-component name="content"/>
                 </div>
-                <div class="footer">© 2012</div>
+                <div class="footer"><br/>© 2012</div>
             </div>
         </body>
     </html>

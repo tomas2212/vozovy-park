@@ -11,7 +11,6 @@ import cz.muni.fi.pa165.vozovypark.web.menu.Menu;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
 import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;
@@ -29,10 +28,10 @@ import net.sourceforge.stripes.validation.ValidateNestedProperties;
  * @author andrej
  */
 @UrlBinding("/carPark/{$event}/{car.id}")
-public class CarParkAdminActionBean extends LayoutPage{
+public class CarParkAdminActionBean extends LayoutPage {
 
     private ActionBeanContext context;
-    private boolean editing;    
+    private boolean editing;
     @SpringBean(value = "carParkSubMenu")
     private Menu subMenu;
     @SpringBean(value = "CarService")
@@ -191,7 +190,7 @@ public class CarParkAdminActionBean extends LayoutPage{
     }
 
     public List<ReservationDTO> getCarsToReceive() {
-        List<ReservationDTO> result = new ArrayList<ReservationDTO>();
+        List<ReservationDTO> result = new ArrayList<>();
         List<ReservationDTO> acceptedReservations = rs.getAcceptedReservations();
 
         for (ReservationDTO res : acceptedReservations) {

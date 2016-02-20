@@ -14,53 +14,51 @@ import org.springframework.security.core.userdetails.UserDetails;
  * @author andrej
  */
 public abstract class LayoutPage implements ActionBean {
-    
-   @SpringBean(value="mainMenu")
-   protected Menu mainMenu;
-   
-    public Menu getMainMenu(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();         
-      
+
+    @SpringBean(value = "mainMenu")
+    protected Menu mainMenu;
+
+    public Menu getMainMenu() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
         Menu authorisedMenu = new Menu();
-        for(MenuItem item : mainMenu.getMenuItems()){
-            if(item.getUrl().equals("/carPark")){
-                for(GrantedAuthority auth : authentication.getAuthorities()){
-                    if(auth.getAuthority().equals("carAdmin")){
+        for (MenuItem item : mainMenu.getMenuItems()) {
+            if (item.getUrl().equals("/carPark")) {
+                for (GrantedAuthority auth : authentication.getAuthorities()) {
+                    if (auth.getAuthority().equals("carAdmin")) {
                         authorisedMenu.addMenuItem(item);
                     }
                 }
-            }
-            else if(item.getUrl().equals("/company")){
-                for(GrantedAuthority auth : authentication.getAuthorities()){
-                    if(auth.getAuthority().equals("sysAdmin")){
+            } else if (item.getUrl().equals("/company")) {
+                for (GrantedAuthority auth : authentication.getAuthorities()) {
+                    if (auth.getAuthority().equals("sysAdmin")) {
                         authorisedMenu.addMenuItem(item);
                         break;
                     }
-                }                
-            }
-            else{
+                }
+            } else {
                 authorisedMenu.addMenuItem(item);
             }
         }
         return authorisedMenu;
-        
+
+    }
+
+    public void setMainMenu(Menu mainMenu) {
+        this.mainMenu = mainMenu;
     }
     
-    public void setMainMenu(Menu mainMenu){
-        this.mainMenu = mainMenu;
-    };
-    
-    public String getLogin(){
-        
-         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();  
-  
-        if(principal instanceof UserDetails){ 
+    public String getLogin() {
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof UserDetails) {
             return ((UserDetails) principal).getUsername();
         }
         return null;
     }
-    
+
     public abstract Menu getSubMenu();
-    
-    public abstract void setSubMenu(Menu subMenu);  
+
+    public abstract void setSubMenu(Menu subMenu);
 }

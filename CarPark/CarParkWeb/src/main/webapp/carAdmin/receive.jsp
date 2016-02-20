@@ -7,7 +7,7 @@
 <f:message key="carPark.receive" var="title" />
 <s:layout-render name="/layout.jsp" title="${title}" 
                  mainMenu="${actionBean.mainMenu}" subMenu="${actionBean.subMenu}">
-    
+
     <s:layout-component name="content">
         <table>
             <thead>
@@ -19,24 +19,25 @@
                         <s:label name="carPark.employee" />
                     </td>
                     <td>
-                       <s:label name="carPark.receive" />
+                        <s:label name="carPark.receive" />
                     </td>
                 </tr>
             </thead>
             <c:forEach items="${actionBean.carsToReceive}" var="reservation">
-            <tr>
-                
-                <td>
-                   <c:out value="${reservation.car.model}" />
-                </td>
-                 <td>
-                   <c:out value="${reservation.employee.name}" />
-                </td>
-              <td><s:link event="receiveCar" beanclass="cz.muni.fi.pa165.vozovypark.web.CarParkAdminActionBean">
-                        <s:param name="resId" value="${reservation.id}" />
-                        <s:label name="carPark.receive"/>
-                  </s:link></td>
-            </tr>
+                <tr>
+                    <td>
+                        <c:out value="${reservation.car.model}" />
+                    </td>
+                    <td>
+                        <c:out value="${reservation.employee.name}" />
+                    </td>
+                    <td>
+                        <s:link event="receiveCar" beanclass="cz.muni.fi.pa165.vozovypark.web.CarParkAdminActionBean">
+                            <s:param name="resId" value="${reservation.id}" />
+                            <s:label name="carPark.receive"/>
+                        </s:link>
+                    </td>
+                </tr>
             </c:forEach>
         </table>
     </s:layout-component>

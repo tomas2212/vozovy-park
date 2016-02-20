@@ -13,21 +13,31 @@
         <br/>
         <table>
             <thead>
-            <tr>
-                <td>ID</td>            
-                <td><s:label name="companyAdmin.name" /></td>         
-                <td><s:label name="companyAdmin.levelValue" /></td>
-                <td><s:label name="companyAdmin.edit" /></td>
-                <td><s:label name="companyAdmin.delete" /></td>
-            </tr>
+                <tr>
+                    <td>ID</td>            
+                    <td><s:label name="companyAdmin.name" /></td>         
+                    <td><s:label name="companyAdmin.levelValue" /></td>
+                    <td><s:label name="companyAdmin.edit" /></td>
+                    <td><s:label name="companyAdmin.delete" /></td>
+                </tr>
             </thead>
             <c:forEach items="${actionBean.allCompanyLevels}" var="acl">
                 <tr>
                     <td>${acl.id}</td>
                     <td><c:out value="${acl.name}" />
                     <td><c:out value="${acl.levelValue}" />
-                    <td><s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" event="editCl"><s:param name="companyLevel.id" value="${acl.id}"/><s:label name="companyAdmin.edit" /></s:link> </td>
-                    <td><s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" event="deleteCl"><s:param name="companyLevel.id" value="${acl.id}"/><s:label name="companyAdmin.delete" /></s:link></td>
+                    <td>
+                        <s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" event="editCl">
+                            <s:param name="companyLevel.id" value="${acl.id}"/>
+                            <s:label name="companyAdmin.edit" />
+                        </s:link> 
+                    </td>
+                    <td>
+                        <s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" event="deleteCl">
+                            <s:param name="companyLevel.id" value="${acl.id}"/>
+                            <s:label name="companyAdmin.delete" />
+                        </s:link>
+                    </td>
                 </tr>
             </c:forEach>            
         </table>

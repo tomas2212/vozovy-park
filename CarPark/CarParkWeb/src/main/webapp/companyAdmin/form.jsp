@@ -35,7 +35,8 @@
     </tr>
     <tr>
         <th><s:label for="employeeCL" name="companyAdmin.companyLevel"/></th>
-        <td><s:select id="employeeCL" name="employee.companyLevel">
+        <td>
+            <s:select id="employeeCL" name="employee.companyLevel">
                 <s:options-collection value="id" label="name" collection="${actionBean.allCompanyLevels}" />
             </s:select>
         </td>

@@ -32,9 +32,19 @@
                     <td><c:out value="${ae.approve}" />
                     <td><c:out value="${ae.address}" />
                     <td><c:out value="${ae.companyLevel.name}" />
-                    <td><s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" event="editEmployee"><s:param name="employee.id" value="${ae.id}"/><s:label name="companyAdmin.edit" /></s:link> </td>
-                    <td><s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" event="deleteEmployee"><s:param name="employee.id" value="${ae.id}"/><s:label name="companyAdmin.delete" /></s:link></td>
-                    </tr>
+                    <td>
+                        <s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" event="editEmployee">
+                            <s:param name="employee.id" value="${ae.id}"/>
+                            <s:label name="companyAdmin.edit" />
+                        </s:link>
+                    </td>
+                    <td>
+                        <s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" event="deleteEmployee">
+                            <s:param name="employee.id" value="${ae.id}"/>
+                            <s:label name="companyAdmin.delete" />
+                        </s:link>
+                    </td>
+                </tr>
             </c:forEach>  
         </table>
     </s:layout-component>

@@ -3,14 +3,12 @@ package cz.muni.fi.pa165.vozovypark.web;
 import cz.muni.fi.pa165.vozovypark.DTO.CompanyLevelDTO;
 import cz.muni.fi.pa165.vozovypark.DTO.EmployeeDTO;
 import cz.muni.fi.pa165.vozovypark.DTO.UserRoleDTO;
-import cz.muni.fi.pa165.vozovypark.entities.UserRole;
 import cz.muni.fi.pa165.vozovypark.service.CarService;
 import cz.muni.fi.pa165.vozovypark.service.CompanyLevelService;
 import cz.muni.fi.pa165.vozovypark.service.EmployeeService;
 import cz.muni.fi.pa165.vozovypark.web.menu.Menu;
 import java.util.ArrayList;
 import java.util.List;
-import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
 import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;
@@ -30,10 +28,10 @@ import org.slf4j.LoggerFactory;
  * @author tomas
  */
 @UrlBinding("/company/{$event}/")
-public class CompanyAdminActionBean extends LayoutPage{
+public class CompanyAdminActionBean extends LayoutPage {
 
     final static Logger log = LoggerFactory.getLogger(CompanyAdminActionBean.class);
-    private ActionBeanContext context;    
+    private ActionBeanContext context;
     @SpringBean(value = "companySubMenu")
     private Menu subMenu;
     @SpringBean(value = "CarService")
@@ -55,8 +53,6 @@ public class CompanyAdminActionBean extends LayoutPage{
     private Boolean isSysAdmin;
     private Boolean isCarAdmin;
     private String password;
-    
-    
 
     @Override
     public void setContext(ActionBeanContext abc) {
@@ -174,22 +170,22 @@ public class CompanyAdminActionBean extends LayoutPage{
             employee.setCompanyLevel(cl);
         }
         List<UserRoleDTO> roles = new ArrayList<>();
-        if(getIsCarAdmin() != null && getIsCarAdmin().equals(Boolean.TRUE)){
+        if (getIsCarAdmin() != null && getIsCarAdmin().equals(Boolean.TRUE)) {
             UserRoleDTO role = new UserRoleDTO();
             role.setName("carAdmin");
-            roles.add(role);           
+            roles.add(role);
         }
-        if(getIsSysAdmin() != null && getIsSysAdmin().equals(Boolean.TRUE)){
+        if (getIsSysAdmin() != null && getIsSysAdmin().equals(Boolean.TRUE)) {
             UserRoleDTO role = new UserRoleDTO();
             role.setName("sysAdmin");
-            roles.add(role);           
+            roles.add(role);
         }
-        if(getIsManager() != null && getIsManager().equals(Boolean.TRUE)){
+        if (getIsManager() != null && getIsManager().equals(Boolean.TRUE)) {
             UserRoleDTO role = new UserRoleDTO();
             role.setName("manager");
-            roles.add(role);           
+            roles.add(role);
         }
-        if(getPassword() != null || getPassword().length() > 0){
+        if (getPassword() != null || getPassword().length() > 0) {
             employee.setPassword(password);
         }
         employee.setRoles(roles);
@@ -209,22 +205,22 @@ public class CompanyAdminActionBean extends LayoutPage{
             employee.setCompanyLevel(cl);
         }
         List<UserRoleDTO> roles = new ArrayList<>();
-        if(getIsCarAdmin() != null && getIsCarAdmin().equals(Boolean.TRUE)){
+        if (getIsCarAdmin() != null && getIsCarAdmin().equals(Boolean.TRUE)) {
             UserRoleDTO role = new UserRoleDTO();
             role.setName("carAdmin");
-            roles.add(role);           
+            roles.add(role);
         }
-        if(getIsSysAdmin() != null && getIsSysAdmin().equals(Boolean.TRUE)){
+        if (getIsSysAdmin() != null && getIsSysAdmin().equals(Boolean.TRUE)) {
             UserRoleDTO role = new UserRoleDTO();
             role.setName("sysAdmin");
-            roles.add(role);           
+            roles.add(role);
         }
-        if(getIsManager() != null && getIsManager().equals(Boolean.TRUE)){
+        if (getIsManager() != null && getIsManager().equals(Boolean.TRUE)) {
             UserRoleDTO role = new UserRoleDTO();
             role.setName("manager");
-            roles.add(role);           
+            roles.add(role);
         }
-        if(getPassword() != null && getPassword().length() > 0){
+        if (getPassword() != null && getPassword().length() > 0) {
             employee.setPassword(password);
         }
         employee.setRoles(roles);
@@ -256,15 +252,15 @@ public class CompanyAdminActionBean extends LayoutPage{
             return;
         }
         employee = employeeService.getEmployeeById(Long.parseLong(ids));
-        if(employee.getRoles() != null){
-            for(UserRoleDTO role : employee.getRoles()){
-                if(role.getName().equals("manager")){
+        if (employee.getRoles() != null) {
+            for (UserRoleDTO role : employee.getRoles()) {
+                if (role.getName().equals("manager")) {
                     isManager = true;
                 }
-                if(role.getName().equals("carAdmin")){
+                if (role.getName().equals("carAdmin")) {
                     isCarAdmin = true;
                 }
-                if(role.getName().equals("sysAdmin")){
+                if (role.getName().equals("sysAdmin")) {
                     isSysAdmin = true;
                 }
             }
@@ -302,8 +298,4 @@ public class CompanyAdminActionBean extends LayoutPage{
     public void setPassword(String password) {
         this.password = password;
     }
-    
-    
-    
-    
 }

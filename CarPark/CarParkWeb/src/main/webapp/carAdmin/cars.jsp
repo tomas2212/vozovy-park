@@ -12,8 +12,8 @@
         <table>
             <thead>
                 <tr>
-                    <td><s:label name="car.model" /></td>
                     <td><s:label name="car.brand" /></td>
+                    <td><s:label name="car.model" /></td>
                     <td><s:label name="car.spz" /></td>
                     <td><s:label name="car.creationYear" /></td>
                     <td><s:label name="car.companyLevel" /></td>
@@ -23,19 +23,17 @@
             </thead>
             <c:forEach items="${actionBean.allCars}" var="car">
                 <tr>
-
-                    <td>
-                        <s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CarParkAdminActionBean" event="editCar">
-                            <s:param name="car.id" value="${car.id}" />
-                            <c:out value="${car.model}" />
-                        </s:link>
-                    </td>
                     <td> 
                         <s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CarParkAdminActionBean" event="editCar">
                             <s:param name="car.id" value="${car.id}" />
                             <c:out value="${car.brand}" />
                         </s:link>
-
+                    </td>
+                    <td>
+                        <s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CarParkAdminActionBean" event="editCar">
+                            <s:param name="car.id" value="${car.id}" />
+                            <c:out value="${car.model}" />
+                        </s:link>
                     </td>
                     <td> 
                         <s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CarParkAdminActionBean" event="editCar">
@@ -52,8 +50,11 @@
                     <td> 
                         <c:out value="${car.companyLevel.name}" />
                     </td>
-                    <td class="available"><img align="center" src="${pageContext.request.contextPath}${(car.available)?'/images/available.png' :  '/images/unavailable.png'}"  /></td>
-                    <td> <s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CarParkAdminActionBean" event="deleteCar">
+                    <td class="available">
+                        <img align="center" src="${pageContext.request.contextPath}${(car.available) ? '/images/available.png' : '/images/unavailable.png'}" />
+                    </td>
+                    <td> 
+                        <s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CarParkAdminActionBean" event="deleteCar">
                             <s:param name="car.id" value="${car.id}" />
                             <img align="center" src="${pageContext.request.contextPath}/images/delete.png"  />
                         </s:link>

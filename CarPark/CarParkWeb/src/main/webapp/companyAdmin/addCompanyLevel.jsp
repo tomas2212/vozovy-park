@@ -15,8 +15,9 @@
                 <tr>
                     <th><s:label for="companyLevelName" name="companyAdmin.name"/></th>
                     <td><s:text id="companyLevelName" name="companyLevel.name"/></td>                  
-                </tr>    </table>
-                <s:submit name="createButtonCl" />                           
-            </s:form>
-        </s:layout-component>
-    </s:layout-render>
+                </tr>    
+            </table>
+            <s:submit name="createButtonCl" />                           
+        </s:form>
+    </s:layout-component>
+</s:layout-render>

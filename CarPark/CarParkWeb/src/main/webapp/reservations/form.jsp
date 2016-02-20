@@ -2,35 +2,35 @@
 <s:errors/>
 
 <script>
-    var dateFormat = "dd/mm/yy ";
-    
-    $(function() {
-        $( "#datepicker" ).datepicker({dateFormat: dateFormat});
+    var dateFormat = "dd/mm/yy";
+
+    $(function () {
+        $("#datepicker").datepicker({dateFormat: dateFormat});
     });
-    $(function() {
-        $( "#datepicker2" ).datepicker({dateFormat: dateFormat});
+    $(function () {
+        $("#datepicker2").datepicker({dateFormat: dateFormat});
     });
 </script>
 
-
-
 <table>
     <tr>
-                    <th><s:label for="datepicker" name="reservation.start"/></th>
-                    <td><s:text formatType="date" name="resDTO.dateFrom" id="datepicker" /></p></td>
-                </tr>
-                <br/>
-                <tr>
-                    <th><s:label for="datepicker2" name="reservation.end"/></th>
-                    <td><s:text formatType="date"  name="resDTO.dateTo" id="datepicker2" /></p></td>
-                </tr>
-         
-                <br/>
-                <tr>
-                    <th><s:label for="b3" name="reservation.car"/></th>
-                    <td><s:select name="resDTO.car">
-                             <s:options-collection value="id" label="spz" collection="${actionBean.cars}" />
-                             </s:select></td>
-                </tr>
-                <br/>
+        <th><s:label for="datepicker" name="reservation.start"/></th>
+        <td><s:text formatType="date" name="resDTO.dateFrom" id="datepicker" /></p></td>
+    </tr>
+    <br/>
+    <tr>
+        <th><s:label for="datepicker2" name="reservation.end"/></th>
+        <td><s:text formatType="date"  name="resDTO.dateTo" id="datepicker2" /></p></td>
+    </tr>
+
+    <br/>
+    <tr>
+        <th><s:label for="b3" name="reservation.car"/></th>
+        <td>
+            <s:select name="resDTO.car">
+                <s:options-collection value="id" label="spz" collection="${actionBean.cars}" />
+            </s:select>
+        </td>
+    </tr>
+    <br/>
 </table>
