@@ -7,12 +7,13 @@ import java.util.List;
  * @author Lukas Maticky
  */
 public class EmployeeDTO {
+
     private Long id;
     private String name;
     private String position;
     private Boolean approve;
     private String address;
-    private String login;    
+    private String login;
     private String password;
     private List<UserRoleDTO> roles;
     private CompanyLevelDTO companyLevel;
@@ -72,8 +73,6 @@ public class EmployeeDTO {
     public void setRoles(List<UserRoleDTO> roles) {
         this.roles = roles;
     }
-    
-    
 
     @Override
     public boolean equals(Object obj) {
@@ -106,14 +105,10 @@ public class EmployeeDTO {
         this.password = password;
     }
 
-   
-    
-    
-
     @Override
     public int hashCode() {
         int hash = 7;
         hash = 73 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
-    }   
+    }
 }

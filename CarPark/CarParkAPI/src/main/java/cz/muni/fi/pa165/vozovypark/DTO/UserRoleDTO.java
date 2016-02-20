@@ -11,6 +11,7 @@ import java.util.Objects;
  * @author andrej
  */
 public class UserRoleDTO {
+
     String name;
 
     public String getName() {
@@ -42,7 +43,5 @@ public class UserRoleDTO {
         }
         return true;
     }
-    
-    
-    
+
 }

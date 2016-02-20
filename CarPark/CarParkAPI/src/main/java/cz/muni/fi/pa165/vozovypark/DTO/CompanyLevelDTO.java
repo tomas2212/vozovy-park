@@ -5,11 +5,11 @@ package cz.muni.fi.pa165.vozovypark.DTO;
  * @author andrej
  */
 public class CompanyLevelDTO {
-    
+
     private Long id;
     private String name;
     private Integer levelValue;
-    
+
     public Long getId() {
         return id;
     }

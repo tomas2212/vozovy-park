@@ -21,12 +21,11 @@ public interface CompanyLevelService {
     /**
      * Updated existing company Level
      *
-     * @param CopmanyLevelDTO
+     * @param companyLevel
      * @return return updated CompanyLevelDTO originally from persistence layer
      */
     CompanyLevelDTO updateCompanyLevel(CompanyLevelDTO companyLevel);
 
-   
     /**
      * Gets company level by its ID
      *

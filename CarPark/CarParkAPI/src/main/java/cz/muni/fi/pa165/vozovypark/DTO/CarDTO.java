@@ -7,6 +7,7 @@ import java.util.Date;
  * @author Tomas Svrcek
  */
 public class CarDTO {
+
     private Long id;
     private String spz;
     private String brand;
@@ -91,5 +92,5 @@ public class CarDTO {
         int hash = 3;
         hash = 97 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
-    }    
+    }
 }

@@ -7,6 +7,7 @@ import java.util.Date;
  * @author andrej
  */
 public class ReservationDTO {
+
     private Long id;
 
     private Date dateFrom;
@@ -16,11 +17,11 @@ public class ReservationDTO {
     private Date startDate;
 
     private Date returnDate;
-    
+
     private EmployeeDTO employee;
-   
+
     private CarDTO car;
-    
+
     private boolean confirmed = false;
 
     public CarDTO getCar() {
@@ -86,7 +87,7 @@ public class ReservationDTO {
     public void setConfirmed(boolean confirmed) {
         this.confirmed = confirmed;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -107,5 +108,5 @@ public class ReservationDTO {
         int hash = 7;
         hash = 53 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
-    }    
+    }
 }

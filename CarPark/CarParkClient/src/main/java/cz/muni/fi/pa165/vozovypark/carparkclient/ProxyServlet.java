@@ -1,39 +1,23 @@
 package cz.muni.fi.pa165.vozovypark.carparkclient;
 
 import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.List;
-import java.util.Map;
-
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.DeleteMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.InputStreamRequestEntity;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.PutMethod;
-import org.apache.commons.httpclient.methods.multipart.ByteArrayPartSource;
-import org.apache.commons.httpclient.methods.multipart.FilePart;
-import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
-import org.apache.commons.httpclient.methods.multipart.Part;
-import org.apache.commons.httpclient.methods.multipart.StringPart;
-import org.apache.commons.httpclient.methods.StringRequestEntity;
-import org.apache.commons.io.IOUtils;
 
 public class ProxyServlet extends HttpServlet {
 
@@ -66,12 +50,12 @@ public class ProxyServlet extends HttpServlet {
      */
     private String stringProxyHost;
     /**
-     * The port on the proxy host to wihch we are proxying requests. Default
+     * The port on the proxy host to which we are proxying requests. Default
      * value is 80.
      */
     private int intProxyPort = 80;
     /**
-     * The (optional) path on the proxy host to wihch we are proxying requests.
+     * The (optional) path on the proxy host to which we are proxying requests.
      * Default value is "".
      */
     private String stringProxyPath = "";
@@ -81,12 +65,12 @@ public class ProxyServlet extends HttpServlet {
     private int intMaxFileUploadSize = 5 * 1024 * 1024;
 
     /**
-     * Initialize the
-     * <code>ProxyServlet</code>
+     * Initialize the <code>ProxyServlet</code>
      *
      * @param servletConfig The Servlet configuration passed in by the servlet
-     * conatiner
+     * container
      */
+    @Override
     public void init(ServletConfig servletConfig) {
         // Get the proxy host
         String stringProxyHostNew = servletConfig.getInitParameter("proxyHost");
@@ -118,7 +102,10 @@ public class ProxyServlet extends HttpServlet {
      * by the servlet engine representing the client request to be proxied
      * @param httpServletResponse The {@link HttpServletResponse} object by
      * which we can send a proxied response to the client
+     * @throws java.io.IOException
+     * @throws javax.servlet.ServletException
      */
+    @Override
     public void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
             throws IOException, ServletException {
         // Create a GET request
@@ -128,7 +115,8 @@ public class ProxyServlet extends HttpServlet {
         // Execute the proxy request
         this.executeProxyRequest(getMethodProxyRequest, httpServletRequest, httpServletResponse);
     }
-    
+
+    @Override
     public void doDelete(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
             throws IOException, ServletException {
         // Create a GET request
@@ -146,7 +134,10 @@ public class ProxyServlet extends HttpServlet {
      * by the servlet engine representing the client request to be proxied
      * @param httpServletResponse The {@link HttpServletResponse} object by
      * which we can send a proxied response to the client
+     * @throws java.io.IOException
+     * @throws javax.servlet.ServletException
      */
+    @Override
     public void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
             throws IOException, ServletException {
         // Create a standard POST request
@@ -158,6 +149,7 @@ public class ProxyServlet extends HttpServlet {
         this.executeProxyRequest(postMethodProxyRequest, httpServletRequest, httpServletResponse);
     }
 
+    @Override
     public void doPut(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
             throws IOException, ServletException {
         // Create a standard POST request
@@ -270,12 +262,13 @@ public class ProxyServlet extends HttpServlet {
         }
     }
 
+    @Override
     public String getServletInfo() {
         return "Jason's Proxy Servlet";
     }
 
     /**
-     * Retreives all of the headers from the servlet request and sets them on
+     * Retrieves all of the headers from the servlet request and sets them on
      * the proxy request
      *
      * @param httpServletRequest The request object representing the client's

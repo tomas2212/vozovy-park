@@ -39,7 +39,6 @@ public interface CarService {
      * Removing Car from DB
      *
      * @param id car to remove
-     * @return void
      */
     void removeCar(Long id);
 

@@ -3,7 +3,6 @@ package cz.muni.fi.pa165.vozovypark.service;
 import cz.muni.fi.pa165.vozovypark.DTO.CarDTO;
 import cz.muni.fi.pa165.vozovypark.DTO.EmployeeDTO;
 import cz.muni.fi.pa165.vozovypark.DTO.ReservationDTO;
-import java.util.Date;
 import java.util.List;
 
 /**
