@@ -1,5 +1,13 @@
+
+/CarPark/.idea/
+/CarPark/CarPark.iml
 /CarPark/CarParkAPI/target/
+/CarPark/CarParkAPI/CarParkAPI.iml
 /CarPark/vozovyPark/target/
+/CarPark/vozovyPark/vozovyPark.iml
 /CarPark/CarParkREST/target/
+/CarPark/CarParkREST/CarParkREST.iml
 /CarPark/CarParkWeb/target/
+/CarPark/CarParkWeb/CarParkWeb.iml
 /CarPark/CarParkClient/target/
+/CarPark/CarParkClient/CarParkClient.iml
