@@ -41,26 +41,28 @@
                             <c:out value="${car.spz}" />
                         </s:link>
                     </td>
-                    <td>        
+                    <td><center>      
+
                         <s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CarParkAdminActionBean" event="editCar">
                             <s:param name="car.id" value="${car.id}" />
                             <s:format formatPattern="yyyy" value="${car.creationYear}" />                            
-                        </s:link>     
-                    </td>
-                    <td> 
-                        <c:out value="${car.companyLevel.name}" />
-                    </td>
-                    <td class="available">
-                        <img align="center" src="${pageContext.request.contextPath}${(car.available) ? '/images/available.png' : '/images/unavailable.png'}" />
-                    </td>
-                    <td> 
-                        <s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CarParkAdminActionBean" event="deleteCar">
-                            <s:param name="car.id" value="${car.id}" />
-                            <img align="center" src="${pageContext.request.contextPath}/images/delete.png"  />
-                        </s:link>
-                    </td>
-                </tr>
-            </c:forEach>  
-        </table>
-    </s:layout-component>
+                        </s:link>   
+
+                    </center></td>
+            <td> 
+                <c:out value="${car.companyLevel.name}" />
+            </td>
+            <td class="available">
+                <img align="center" src="${pageContext.request.contextPath}${(car.available) ? '/images/available.png' : '/images/unavailable.png'}" />
+            </td>
+            <td> 
+                <s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CarParkAdminActionBean" event="deleteCar">
+                    <s:param name="car.id" value="${car.id}" />
+                    <img align="center" src="${pageContext.request.contextPath}/images/delete.png"  />
+                </s:link>
+            </td>
+        </tr>
+    </c:forEach>  
+</table>
+</s:layout-component>
 </s:layout-render>

@@ -29,9 +29,9 @@
                     <td>${ae.id}</td>
                     <td><c:out value="${ae.name}" />
                     <td><c:out value="${ae.position}" />
-                    <td><c:out value="${ae.approve}" />
                     <td><c:out value="${ae.address}" />
                     <td><c:out value="${ae.companyLevel.name}" />
+                    <td><c:out value="${ae.login}" />
                     <td>
                         <s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" event="editEmployee">
                             <s:param name="employee.id" value="${ae.id}"/>
