@@ -62,4 +62,5 @@ public interface CarDAO {
      * @return List of all cars with the same hierarchy level or higher
      */
     public List<Car> getAllCarsWithHigherLevel(CompanyLevel companyLevel);
+    
 }
