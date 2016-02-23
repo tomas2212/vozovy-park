@@ -148,3 +148,19 @@ td a {
     clear: both;
 }
 
+.center{
+    text-align: center;
+}
+
+.redColor{
+    text-decoration-color: red;
+}
+
+#roundedCorners{
+    border-radius: 25px;
+    border: 2px solid black;
+    padding: 20px;
+    width: 200px;
+    height: 150px;
+}
+

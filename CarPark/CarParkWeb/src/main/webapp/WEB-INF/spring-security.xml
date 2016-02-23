@@ -8,6 +8,7 @@
     <global-method-security pre-post-annotations="enabled" />
     <http use-expressions="true">
         <intercept-url pattern="/reservation/**" access="isAuthenticated()" />
+        <!--pridam moju url-->
         <intercept-url pattern="/reservation/acceptReservations/**" access="hasRole('manager')" />
         <intercept-url pattern="/carPark/**" access="hasRole('carAdmin')" />
         <intercept-url pattern="/company/**" access="hasRole('sysAdmin')" />

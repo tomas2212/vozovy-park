@@ -8,13 +8,13 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
 "
-       default-autowire="byName" >
+       default-autowire="byName">
 
     <context:component-scan base-package="cz.muni.fi.pa165.vozovypark"/>
     <context:annotation-config/>
     <tx:annotation-driven/>
-    <import resource="classpath*:applicationContext.xml" />
-    
+    <import resource="classpath*:applicationContext.xml"/>
+
     <bean class="org.springframework.web.context.support.ServletContextAttributeExporter">
         <property name="attributes">
             <map>
@@ -22,13 +22,13 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
                     <ref bean="CompanyLevelService"/>
                 </entry>
                 <entry key="carService">
-                    <ref bean="CarService" />
+                    <ref bean="CarService"/>
                 </entry>
-<!--                <entry key="employeeService">
-                    <ref bean="EmployeeService" />
-                </entry>-->
+                <entry key="employeeService">
+                    <ref bean="EmployeeService"/>
+                </entry>
             </map>
         </property>
     </bean>
-    
+
 </beans>

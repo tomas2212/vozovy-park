@@ -4,8 +4,8 @@
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
-<f:message key="companyAdmin.employees" var="title" />
-<s:layout-render name="/layout.jsp" title="${title}" 
+<f:message key="companyAdmin.employees" var="title"/>
+<s:layout-render name="/layout.jsp" title="${title}"
                  mainMenu="${actionBean.mainMenu}" subMenu="${actionBean.subMenu}">
 
     <s:layout-component name="content">
@@ -13,39 +13,40 @@
         <br/>
         <table>
             <thead>
-                <tr>
-                    <td>ID</td>
-                    <td><s:label name="companyAdmin.name" /></td>
-                    <td><s:label name="companyAdmin.position" /></td>
-                    <td><s:label name="companyAdmin.address" /></td>
-                    <td><s:label name="companyAdmin.companyLevel" /></td>
-                    <td><s:label name="companyAdmin.login" /></td>
-                    <td><s:label name="companyAdmin.edit" /></td>
-                    <td><s:label name="companyAdmin.delete" /></td>
-                </tr>
+            <tr>
+                <td>ID</td>
+                <td><s:label name="companyAdmin.name"/></td>
+                <td><s:label name="companyAdmin.position"/></td>
+                <td><s:label name="companyAdmin.address"/></td>
+                <td><s:label name="companyAdmin.companyLevel"/></td>
+                <td><s:label name="companyAdmin.login"/></td>
+                <td><s:label name="companyAdmin.edit"/></td>
+                <td><s:label name="companyAdmin.delete"/></td>
+            </tr>
             </thead>
             <c:forEach items="${actionBean.allEmployees}" var="ae">
                 <tr>
                     <td>${ae.id}</td>
-                    <td><c:out value="${ae.name}" />
-                    <td><c:out value="${ae.position}" />
-                    <td><c:out value="${ae.address}" />
-                    <td><c:out value="${ae.companyLevel.name}" />
-                    <td><c:out value="${ae.login}" />
+                    <td><c:out value="${ae.name}"/>
+                    <td><c:out value="${ae.position}"/>
+                    <td><c:out value="${ae.address}"/>
+                    <td class="center"><c:out value="${ae.companyLevel.name}"/></td>
+                    <td><c:out value="${ae.login}"/>
                     <td>
                         <s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" event="editEmployee">
                             <s:param name="employee.id" value="${ae.id}"/>
-                            <s:label name="companyAdmin.edit" />
+                            <s:label name="companyAdmin.edit"/>
                         </s:link>
                     </td>
                     <td>
-                        <s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean" event="deleteEmployee">
+                        <s:link beanclass="cz.muni.fi.pa165.vozovypark.web.CompanyAdminActionBean"
+                                event="deleteEmployee">
                             <s:param name="employee.id" value="${ae.id}"/>
-                            <s:label name="companyAdmin.delete" />
+                            <s:label name="companyAdmin.delete"/>
                         </s:link>
                     </td>
                 </tr>
-            </c:forEach>  
+            </c:forEach>
         </table>
     </s:layout-component>
 </s:layout-render>
