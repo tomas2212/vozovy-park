@@ -5,4 +5,4 @@
 --%>
 
 <%@page contentType="application/json" pageEncoding="UTF-8"%>
-{"services": ["companyLevels", "cars", "employees"]}
+{"services": ["companyLevels", "cars"]}
